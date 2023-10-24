@@ -3,7 +3,8 @@ from streamlit_gsheets import GSheetsConnection
 import gspread 
 
 st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
-
+env:
+    secret: ${{ secrets.Secret }}
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 # Define the scope and credentials file
