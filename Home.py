@@ -19,7 +19,7 @@ lastRow_Season = len(results.col_values(11)) - 1
 
 week = conn.read(worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
-st.session_state['Consolidated'] = conn.read(spreadsheet="NFL Pick Log 2023-24", worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
+st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
 st.session_state["Users"] = season['User'].to_list()
 
 st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
