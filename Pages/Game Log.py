@@ -5,7 +5,7 @@ import pandas as pd
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\credentials-sheets.json")
+gc = gspread.service_account(filename = "credentials-sheets.json")
 
 
 st.title("Game Log")
