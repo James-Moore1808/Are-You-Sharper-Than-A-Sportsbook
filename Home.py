@@ -31,6 +31,7 @@ with st.container():
         "What user's results do you want to see?",
         (season['User'].to_list()),
         index= None,
+        placeholder ="Select user...",
     )
     left_column, right_column = st.columns(2)
     with left_column:
