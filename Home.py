@@ -23,7 +23,7 @@ st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, u
 st.session_state["Users"] = season['User'].to_list()
 
 st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
-st.write("##")
+st.write(st.session_state["Users"])
 
 #Weekly Results and Season Long Results
 with st.container():
