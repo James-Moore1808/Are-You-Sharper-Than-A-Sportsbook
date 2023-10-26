@@ -3,13 +3,13 @@ from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread 
 
-st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
+st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\credentials-sheets.json")
+gc = gspread.service_account(filename = "credentials-sheets.json")
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
