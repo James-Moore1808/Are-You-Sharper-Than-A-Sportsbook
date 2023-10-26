@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
+from streamlit_extras.switch_page_button import switch_page
 import gspread 
 
 st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
@@ -25,16 +26,22 @@ st.session_state["Users"] = season['User'].to_list()
 st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
 st.write("##")
 
+def reroute():
+    reroute_button = st.button("Make This Weeks Picks")
+    if reroute_button:
+        switch_page("Pick Entry")
+
+
 #Weekly Results and Season Long Results
 with st.container():
-    user_selection = st.selectbox(
+    left_column, right_column = st.columns(2)
+    with left_column:
+        user_selection = st.selectbox(
         "What user's results do you want to see?",
         (season['User'].to_list()),
         index= None,
         placeholder ="Select user...",
-    )
-    left_column, right_column = st.columns(2)
-    with left_column:
+        )
         st.header("Weekly Results", divider='gray')
         st.write("##")
         week_by_user = week[week.Name == user_selection]
@@ -48,6 +55,8 @@ with st.container():
                     use_container_width=True
                      )
     with right_column:
+        st.write("##")
+        reroute()
         st.header("Season Long Leaderboard", divider="gray")
         st.write("##")
         st.dataframe(season, 
