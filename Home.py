@@ -28,7 +28,7 @@ cred_data = {
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = service_account.Credentials.from_service_account_info(toml.loads(st.secrets["credentials"]))
+gc = service_account.Credentials.from_service_account_info(st.secrets["credentials"])
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
