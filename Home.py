@@ -2,8 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread
-from gspread_pandas import Spread,Client
-from google.oauth2 import service_account
+
 
 
 
@@ -28,19 +27,17 @@ cred_data = {
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 credentials = service_account.Credentials.from_service_account_info(st.secrets["credentials"], scopes = scope)
-client = Client(scope=scope, creds = credentials)
-spreadsheetname = "NFL Pick Log 2023-24"
-spread = Spread(spreadsheetname,client = client)
 
+gc = gspread.service_account_from_dict(st.secrets["credentials"])
 #Opening the spreadsheet
-pickLog = client.open(spreadsheetname)
+pickLog = gc.open("NFL Pick Log 2023-24")
 results = pickLog.worksheet("Results")
 consolidated = pickLog.worksheet('Consolidated')
 lastRow_consolidated = len(consolidated.col_values(1)) - 1
 lastRow_Week = len(results.col_values(1)) - 1
 lastRow_Season = len(results.col_values(11)) - 1  
 
-week = conn.read(spreadsheet = "15I6KN07iOd8N_OKJUgG6Nvyh9pC2scDN-MTVTilULYs", worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
+week = conn.read(worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
 st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
 st.session_state["Users"] = season['User'].to_list()
