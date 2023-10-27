@@ -24,7 +24,7 @@ cred_data = {
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = gspread.service_account(filename = dummy.json)
+gc = gspread.service_account(cred_data)
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
