@@ -3,6 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread 
 import toml
+import os
 from google.oauth2 import service_account
 
 
@@ -24,7 +25,7 @@ cred_data = {
   "client_x509_cert_url":  st.secrets["credentials"]["client_x509_cert_url"],
   "universe_domain":  st.secrets["credentials"]["universe_domain"]
 }
-credentials-sheet = toml.loads(st.secrets["credentials"])
+os.environ["credentials-sheet"] = toml.loads(st.secrets["credentials"])
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 gc = service_account.Credentials.from_service_account_info(credentials-sheet)
