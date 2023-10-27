@@ -1,9 +1,8 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
-import gspread 
-import toml
-import os
+import gspread
+from gspread_pandas import Spread,Client
 from google.oauth2 import service_account
 
 
@@ -28,9 +27,12 @@ cred_data = {
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = service_account.Credentials.from_service_account_info(st.secrets["credentials"])
+credentials = service_account.Credentials.from_service_account_info(st.secrets["credentials"], scopes = scope)
+client = client(scope=scope, creds = credentials)
+spreadsheetname = "NFL Pick Log 2023-24"
+spread = Spread(spreadsheetname,client = client)
 #Opening the spreadsheet
-pickLog = gc.open('NFL Pick Log 2023-24')
+pickLog = client.open(spreadsheetname)
 results = pickLog.worksheet("Results")
 consolidated = pickLog.worksheet('Consolidated')
 lastRow_consolidated = len(consolidated.col_values(1)) - 1
