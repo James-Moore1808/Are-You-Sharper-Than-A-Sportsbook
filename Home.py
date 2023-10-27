@@ -25,10 +25,10 @@ cred_data = {
   "client_x509_cert_url":  st.secrets["credentials"]["client_x509_cert_url"],
   "universe_domain":  st.secrets["credentials"]["universe_domain"]
 }
-os.environ["credentials-sheet"] = toml.loads(st.secrets["credentials"])
+
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = service_account.Credentials.from_service_account_info(credentials-sheet)
+gc = service_account.Credentials.from_service_account_info(toml.loads(st.secrets["credentials"])
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
