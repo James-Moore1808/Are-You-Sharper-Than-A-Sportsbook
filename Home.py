@@ -11,7 +11,7 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-toml_dict=toml.loads(st.secrets["creds"])
+toml_dict=toml.loads(st.secrets["connections.gsheets"])
 json_data = json.dumps(toml_dict, indent=4)
 gc = gspread.service_account(filename = json_data )
 
