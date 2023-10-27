@@ -2,8 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread 
-import toml
-import json
+from google.oath2 import service_account
 st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
