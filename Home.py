@@ -31,6 +31,7 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 client = Client(scope=scope, creds = credentials)
 spreadsheetname = "NFL Pick Log 2023-24"
 spread = Spread(spreadsheetname,client = client)
+
 #Opening the spreadsheet
 pickLog = client.open(spreadsheetname)
 results = pickLog.worksheet("Results")
@@ -39,7 +40,7 @@ lastRow_consolidated = len(consolidated.col_values(1)) - 1
 lastRow_Week = len(results.col_values(1)) - 1
 lastRow_Season = len(results.col_values(11)) - 1  
 
-week = conn.read(spreadsheet = "15I6KN07iOd8N_OKJUgG6Nvyh9pC2scDN-MTVTilULYs" worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
+week = conn.read(spreadsheet = "15I6KN07iOd8N_OKJUgG6Nvyh9pC2scDN-MTVTilULYs", worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
 st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
 st.session_state["Users"] = season['User'].to_list()
