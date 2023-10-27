@@ -12,7 +12,7 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 
-gc = gspread.service_account.Credentials.from_service_account_info(st.secrets["creds"], scopes = scope)
+gc = service_account.Credentials.from_service_account_info(st.secrets["creds"], scopes = scope)
 
 
 
