@@ -2,6 +2,10 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread 
+import toml
+from google.oauth2 import service_account
+
+
 
 st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
 
@@ -20,10 +24,10 @@ cred_data = {
   "client_x509_cert_url":  st.secrets["credentials"]["client_x509_cert_url"],
   "universe_domain":  st.secrets["credentials"]["universe_domain"]
 }
-
+credentials-sheet = toml.loads(st.secrets["credentials"])
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = service_account.Credentials.from_service_account_info(cred_data)
+gc = service_account.Credentials.from_service_account_info(credentials-sheet)
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
