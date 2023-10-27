@@ -26,8 +26,6 @@ cred_data = {
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-credentials = service_account.Credentials.from_service_account_info(st.secrets["credentials"], scopes = scope)
-
 gc = gspread.service_account_from_dict(st.secrets["credentials"])
 #Opening the spreadsheet
 pickLog = gc.open("NFL Pick Log 2023-24")
