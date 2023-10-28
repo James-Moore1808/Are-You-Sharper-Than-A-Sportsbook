@@ -26,7 +26,7 @@ def verification():
     elif username in (accounts['Username']) == False:
         login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
     else:
-        ":red[Please enter a Username and/or a Password]"
+        login_status = ":red[Please enter a Username and/or a Password]"
 
 def submit_button():
     submit = st.button("Submit login information")
