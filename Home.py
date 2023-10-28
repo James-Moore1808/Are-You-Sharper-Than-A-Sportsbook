@@ -21,7 +21,7 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
 #Opening the spreadsheet
-pickLog = gc.open('NFL Pick Log 2023-24')
+pickLog = gc.open("NFL Pick Log 2023-24")
 results = pickLog.worksheet("Results")
 consolidated = pickLog.worksheet('Consolidated')
 lastRow_consolidated = len(consolidated.col_values(1)) - 1
