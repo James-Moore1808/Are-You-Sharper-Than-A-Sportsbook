@@ -23,7 +23,7 @@ def verification():
             login_status = ":green[Sucessful Login]"
         elif password != st.secrets[password][username]:
             login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
-    elif username.isin(accounts['Username']) == False:
+    elif username in (accounts['Username']) == False:
         login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
     else:
         ":red[Please enter a Username and/or a Password]"
