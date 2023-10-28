@@ -8,6 +8,45 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
-st.write("What are you doing in this mf")
+#use to deploy
+#gc = gspread.service_account_from_dict(st.secrets["credentials"])
+
+#for local
+gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
+
+accounts = pd.read_excel("accounts.xlsx")
+
+def verification():
+    if username.isin(accounts['Username']) == True:
+        if password == st.secrets[password][username]:
+            login_status = ":green[Sucessful Login]"
+        elif password != st.secrets[password][username]:
+            login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
+    elif username.isin(accounts['Username']) == False:
+        login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
+    else:
+        ":red[Please enter a Username and/or a Password]"
+
+def submit_button():
+    submit = st.button("Submit login information")
+    if submit_button:
+        verification()
+
+
+st.title("Pick Entry")
+st.divider()
+
+login_status = "To enter and/or view picks you must enter a valid Username and Password"
+
+
+
+with st.container():
+    left_column, right_column = st.columns(2)
+    with left_column:
+        username = st.text_input("Username", value=None)
+    with right_column:
+        password = st.text_input("Password", value= None , type="password")
+
+st.subheader(login_status)
+submit_button()
