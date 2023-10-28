@@ -59,7 +59,7 @@ while i < len(Scoreboard):
         i += 1
         output = pd.concat([output,data], ignore_index=True)
 
-print(output)
+
 
 day = datetime.date.today()
 
