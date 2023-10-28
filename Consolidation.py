@@ -48,6 +48,6 @@ dummy = consolidated.col_values(1)
 dummy2 = consolidated.col_values(6)
 first_row = len(dummy)
 last_row2 = len(dummy2)
-for i in range((int(first_row)),(int(last_row2)+1)):
+for i in range((int(first_row)+1),(int(last_row2)+1)):
     consolidated.update_cell(i,1,week_no)
 
