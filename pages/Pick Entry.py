@@ -18,7 +18,7 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 accounts = pd.read_excel("accounts.xlsx")
 
 def verification():
-    if username.isin(accounts['Username']) == True:
+    if username in (accounts['Username']) == True:
         if password == st.secrets[password][username]:
             login_status = ":green[Sucessful Login]"
         elif password != st.secrets[password][username]:
