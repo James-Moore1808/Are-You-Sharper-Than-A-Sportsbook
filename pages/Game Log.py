@@ -8,10 +8,10 @@ import pandas as pd
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 #use to deploy
-#gc = gspread.service_account_from_dict(st.secrets["credentials"])
+gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 #for local
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
+#gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
 st.title("Game Log")
 st.divider()
