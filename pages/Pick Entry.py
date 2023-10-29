@@ -43,11 +43,8 @@ login_status = "To enter and/or view picks you must enter a valid Username and P
 
 
 with st.form("Login"):
-    left_column, right_column = st.columns(2)
-    with left_column:
-        username = st.text_input("Username", placeholder = None)
-    with right_column:
-        password = st.text_input("Password", placeholder = None , type="password")
+    username = st.text_input("Username", placeholder = None)
+    password = st.text_input("Password", placeholder = None , type="password")
     submit_button()
 st.subheader(login_status)
 
