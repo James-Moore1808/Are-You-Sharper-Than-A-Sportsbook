@@ -42,7 +42,7 @@ message = "To enter and/or view picks you must enter a valid Username and Passwo
 with st.form("Login"):
     username = st.text_input("Username", placeholder = None)
     password = st.text_input("Password", placeholder = None , type="password")
-    submit = st.form_submit_button("Submit login information", on_click = verification, args =(username,password,)
+    submit = st.form_submit_button("Submit login information", on_click = verification, args =(username,password,))
     
     
 st.subheader(message)    
