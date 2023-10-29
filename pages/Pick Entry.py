@@ -44,7 +44,7 @@ with st.form(key = "Login"):
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
     st.write(username, password)
-    submit_button = st.form_submit_button("Submit login information", on_click = verification, args = (username,passowrd))
+    submit_button = st.form_submit_button("Submit login information", on_click = verification, args = (username,password))
    
     
     
