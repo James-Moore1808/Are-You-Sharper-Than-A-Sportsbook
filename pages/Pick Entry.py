@@ -37,6 +37,7 @@ def verification():
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
         st.write(accounts_users)
+        st.write(username)
 
 
 with st.form("Login"):
