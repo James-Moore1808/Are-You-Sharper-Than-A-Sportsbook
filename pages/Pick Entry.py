@@ -41,6 +41,7 @@ def verification():
 
 with st.form("Login"):
     username = st.text_input("Username", placeholder = None)
+    username = "'"+username+"'"
     password = st.text_input("Password", placeholder = None , type="password")
     submit = st.form_submit_button("Submit login information", on_click = verification, args = None)
     
