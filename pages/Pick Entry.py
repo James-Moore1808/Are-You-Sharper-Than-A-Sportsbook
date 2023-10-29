@@ -22,16 +22,13 @@ def verification(u,p):
         if p == st.secrets["password"][u]:
             st.write(":green[Sucessful Login]")
         elif p != st.secrets["password"][u]:
-            login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
+            st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif u in (accounts['Username']) == False:
-        login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
+        st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
-        login_status = ":red[Please enter a Username and/or a Password]"
+        st.write(":red[Please enter a Username and/or a Password]")
 
-def submit_button(u,p):
-    submit = st.form_submit_button("Submit login information")
-    if submit:
-        verification()
+
 
 
 st.title("Pick Entry")
@@ -45,9 +42,8 @@ message = "To enter and/or view picks you must enter a valid Username and Passwo
 with st.form("Login"):
     username = st.text_input("Username", placeholder = None)
     password = st.text_input("Password", placeholder = None , type="password")
-    submit = st.form_submit_button("Submit login information")
-    if submit:
-        verification(username,password)
+    submit = st.form_submit_button("Submit login information", on_click = verification, args =(username,password,)
+    
     
 st.subheader(message)    
 
