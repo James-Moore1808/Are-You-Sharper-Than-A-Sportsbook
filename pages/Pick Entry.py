@@ -45,7 +45,7 @@ with st.form(key = "Login"):
     password = st.text_input(label = "Password", placeholder = None , type="password")
     submit_button = st.form_submit_button("Submit login information")
     if submit_button:
-        if username in (accounts_users[0]) == True:
+        if username in (accounts_users[0]):
         #if password == st.secrets["password"][str(username)]:
             st.write(":green[Sucessful Login]")
     
