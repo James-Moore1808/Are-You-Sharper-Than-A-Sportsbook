@@ -40,10 +40,14 @@ def verification():
         st.write(username)
 
 
-with st.form("Login"):
-    username = str(st.text_input("Username", placeholder = None))
-    password = st.text_input("Password", placeholder = None , type="password")
-    submit = st.form_submit_button("Submit login information", on_click = verification, args = None)
+with st.form(key = "Login"):
+    username = st.text_input(label = "Username", placeholder = None)
+    password = st.text_input(label = "Password", placeholder = None , type="password")
+    submit_button = st.form_submit_button("Submit login information")
+    if submit_button:
+        if username in (accounts_users[]) == True:
+        #if password == st.secrets["password"][str(username)]:
+        st.write(":green[Sucessful Login]")
     
     
 st.subheader(message)    
