@@ -27,7 +27,7 @@ st.divider()
 
 message = "To enter and/or view picks you must enter a valid Username and Password"
 
-def verification():
+def verification(username,password):
     st.write(username, password)
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
@@ -44,7 +44,7 @@ with st.form(key = "Login"):
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
     st.write(username, password)
-    submit_button = st.form_submit_button("Submit login information", on_click = verification, args = None)
+    submit_button = st.form_submit_button("Submit login information", on_click = verification, args = (username,passowrd))
    
     
     
