@@ -27,13 +27,13 @@ st.divider()
 
 message = "To enter and/or view picks you must enter a valid Username and Password"
 
-def verification(u,p):
-    if u in (accounts['Username']) == True:
-        if p == st.secrets["password"][u]:
+def verification():
+    if username in (accounts['Username']) == True:
+        if password == st.secrets["password"][username]:
             st.write(":green[Sucessful Login]")
-        elif p != st.secrets["password"][u]:
+        elif password != st.secrets["password"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
-    elif u in (accounts['Username']) == False:
+    elif username in (accounts['Username']) == False:
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
         st.write(":red[Please enter a Username and/or a Password]")
@@ -42,7 +42,7 @@ def verification(u,p):
 with st.form("Login"):
     username = st.text_input("Username", placeholder = None)
     password = st.text_input("Password", placeholder = None , type="password")
-    submit = st.form_submit_button("Submit login information", on_click = verification, args =(username,password,))
+    submit = st.form_submit_button("Submit login information", on_click = verification, args = None)
     
     
 st.subheader(message)    
