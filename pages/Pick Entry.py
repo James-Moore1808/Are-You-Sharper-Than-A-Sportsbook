@@ -29,7 +29,7 @@ def verification():
         login_status = ":red[Please enter a Username and/or a Password]"
 
 def submit_button():
-    submit = st.button("Submit login information")
+    submit = st.form_submit_button("Submit login information")
     if submit_button:
         verification()
 
