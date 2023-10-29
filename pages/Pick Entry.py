@@ -34,16 +34,15 @@ def verification(username,password):
             st.write(":green[Sucessful Login]")
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
-    elif username in (accounts['Username']):
+    elif username not in (accounts['Username']):
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
-        st.write(accounts_users)
+        st.write("Please enter a Username and Password above.")
 
 
 with st.form(key = "Login"):
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
-    st.write(username, password)
     submit_button = st.form_submit_button("Submit login information")
     if submit_button:
         verification(username,password)
