@@ -20,7 +20,7 @@ accounts = pd.read_excel("accounts.xlsx")
 def verification():
     if username in (accounts['Username']) == True:
         if password == st.secrets[password][username]:
-            login_status = ":green[Sucessful Login]"
+            st.write(":green[Sucessful Login]")
         elif password != st.secrets[password][username]:
             login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
     elif username in (accounts['Username']) == False:
