@@ -37,7 +37,7 @@ def submit_button():
 st.title("Pick Entry")
 st.divider()
 
-login_status = "To enter and/or view picks you must enter a valid Username and Password"
+message = "To enter and/or view picks you must enter a valid Username and Password"
 
 
 
@@ -46,5 +46,7 @@ with st.form("Login"):
     username = st.text_input("Username", placeholder = None)
     password = st.text_input("Password", placeholder = None , type="password")
     submit_button()
+    
+st.subheader(message)    
 st.subheader(login_status)
 
