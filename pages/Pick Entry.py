@@ -17,6 +17,16 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 accounts = pd.read_excel("accounts.xlsx")
 
+
+
+
+
+
+st.title("Pick Entry")
+st.divider()
+
+message = "To enter and/or view picks you must enter a valid Username and Password"
+
 def verification(u,p):
     if u in (accounts['Username']) == True:
         if p == st.secrets["password"][u]:
@@ -27,16 +37,6 @@ def verification(u,p):
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
         st.write(":red[Please enter a Username and/or a Password]")
-
-
-
-
-st.title("Pick Entry")
-st.divider()
-
-message = "To enter and/or view picks you must enter a valid Username and Password"
-
-
 
 
 with st.form("Login"):
