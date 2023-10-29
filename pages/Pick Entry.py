@@ -10,43 +10,42 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 #use to deploy
-#gc = gspread.service_account_from_dict(st.secrets["credentials"])
+gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 #for local
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
+#gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
 accounts = pd.read_excel("accounts.xlsx")
 
-def verification():
-    if username.isin(accounts['Username']) == True:
-        if password == st.secrets[password][username]:
-            login_status = ":green[Sucessful Login]"
-        elif password != st.secrets[password][username]:
-            login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
-    elif username.isin(accounts['Username']) == False:
-        login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
-    else:
-        ":red[Please enter a Username and/or a Password]"
+accounts_users = list(accounts['Username'])
 
-def submit_button():
-    submit = st.button("Submit login information")
-    if submit_button:
-        verification()
+
 
 
 st.title("Pick Entry")
 st.divider()
 
-login_status = "To enter and/or view picks you must enter a valid Username and Password"
+message = "To enter and/or view picks you must enter a valid Username and Password"
+
+def verification(username,password):
+    st.write(username, password)
+    if username in (accounts_users):
+        if password == st.secrets["Passwords"][username]:
+            st.write(":green[Sucessful Login]")
+        elif password != st.secrets["Passwords"][username]:
+            st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
+    elif username not in (accounts['Username']):
+        st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
+    else:
+        st.write("Please enter a Username and Password above.")
 
 
-
-with st.container():
-    left_column, right_column = st.columns(2)
-    with left_column:
-        username = st.text_input("Username", value=None)
-    with right_column:
-        password = st.text_input("Password", value= None , type="password")
-
-st.subheader(login_status)
-submit_button()
+with st.form(key = "Login"):
+    username = st.text_input(label = "Username", placeholder = None)
+    password = st.text_input(label = "Password", placeholder = None , type="password")
+    submit_button = st.form_submit_button("Submit login information")
+    if submit_button:
+        verification(username,password)
+    
+    
+st.subheader(message)    
