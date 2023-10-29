@@ -15,10 +15,10 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 #use to deploy
-#gc = gspread.service_account_from_dict(st.secrets["credentials"])
+gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 #for local
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
+#gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
 #Opening the spreadsheet
 pickLog = gc.open("NFL Pick Log 2023-24")
