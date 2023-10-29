@@ -36,7 +36,7 @@ def verification():
     elif username in (accounts['Username']) == False:
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
-        st.write(accounts['Username'])
+        st.write(accounts_users)
 
 
 with st.form("Login"):
