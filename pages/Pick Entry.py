@@ -29,8 +29,8 @@ message = "To enter and/or view picks you must enter a valid Username and Passwo
 
 def verification():
     if username in (accounts_users):
-        if password == st.secrets["password"][str(username)]:
-        st.write(":green[Sucessful Login]")
+        if password == st.secrets["password"][username]:
+            st.write(":green[Sucessful Login]")
         elif password != st.secrets["password"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username in (accounts['Username']):
