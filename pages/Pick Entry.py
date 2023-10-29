@@ -17,13 +17,13 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 accounts = pd.read_excel("accounts.xlsx")
 
-def verification():
-    if username in (accounts['Username']) == True:
-        if password == st.secrets["password"][username]:
+def verification(u,p):
+    if u in (accounts['Username']) == True:
+        if p == st.secrets["password"][u]:
             st.write(":green[Sucessful Login]")
-        elif password != st.secrets["password"][username]:
+        elif p != st.secrets["password"][u]:
             login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
-    elif username in (accounts['Username']) == False:
+    elif u in (accounts['Username']) == False:
         login_status = ":red[Incorrect Username/Password. Please check for incorrect spelling.]"
     else:
         login_status = ":red[Please enter a Username and/or a Password]"
