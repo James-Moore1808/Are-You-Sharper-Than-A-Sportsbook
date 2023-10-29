@@ -28,7 +28,7 @@ def verification(u,p):
     else:
         login_status = ":red[Please enter a Username and/or a Password]"
 
-def submit_button():
+def submit_button(u,p):
     submit = st.form_submit_button("Submit login information")
     if submit:
         verification()
@@ -45,8 +45,10 @@ message = "To enter and/or view picks you must enter a valid Username and Passwo
 with st.form("Login"):
     username = st.text_input("Username", placeholder = None)
     password = st.text_input("Password", placeholder = None , type="password")
-    submit_button()
+    submit = st.form_submit_button("Submit login information")
+    if submit:
+        verification(username,password)
     
 st.subheader(message)    
-st.subheader(login_status)
+
 
