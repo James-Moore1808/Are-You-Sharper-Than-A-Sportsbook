@@ -30,7 +30,7 @@ def verification():
 
 def submit_button():
     submit = st.form_submit_button("Submit login information")
-    if submit_button:
+    if submit:
         verification()
 
 
