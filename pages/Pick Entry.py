@@ -28,7 +28,6 @@ st.divider()
 message = "To enter and/or view picks you must enter a valid Username and Password"
 
 def verification(username,password):
-    st.write(username, password)
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
             st.write(":green[Sucessful Login]")
