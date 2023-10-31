@@ -39,7 +39,7 @@ def reroute():
         switch_page("Pick Entry")
 
 
-with st.container:
+with st.container():
     left_column, right_column = st.columns(2)
     with left_column:
         st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
