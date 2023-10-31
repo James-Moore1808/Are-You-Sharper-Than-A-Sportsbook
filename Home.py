@@ -43,7 +43,7 @@ def reroute():
 
 
 #Weekly Results and Season Long Results
-with st.form():
+with st.form("Weekly Results"):
     left_column, right_column = st.columns(2)
     with left_column:
         user_selection = st.multiselect(
