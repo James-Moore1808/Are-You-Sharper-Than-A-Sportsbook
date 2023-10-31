@@ -33,13 +33,21 @@ season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrow
 st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
 st.session_state["Users"] = season['User'].to_list()
 
-st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
-st.write("##")
-
 def reroute():
     reroute_button = st.button("Make This Weeks Picks")
     if reroute_button:
         switch_page("Pick Entry")
+
+
+with st.container:
+    left_column, right_column = st.columns(2)
+    with left_column:
+        st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
+    with right_column:
+        reroute()
+st.write("##")
+
+
 
 
 #Weekly Results and Season Long Results
@@ -67,7 +75,6 @@ with st.form("Weekly Results"):
                      )
     with right_column:
         st.write("##")
-        reroute()
         st.header("Season Long Leaderboard", divider="gray")
         st.write("##")
         st.dataframe(season, 
