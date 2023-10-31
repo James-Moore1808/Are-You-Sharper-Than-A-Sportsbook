@@ -43,7 +43,7 @@ def reroute():
 
 
 #Weekly Results and Season Long Results
-with st.container():
+with st.form():
     left_column, right_column = st.columns(2)
     with left_column:
         user_selection = st.multiselect(
@@ -55,6 +55,7 @@ with st.container():
         st.header("Weekly Results", divider='gray')
         st.write("##")
         week_by_user = week[week['Name'].isin(user_selection)]
+        st.form_submit_button("Select Users")
         st.dataframe(week_by_user,
                     column_config={
                     "Weekly Winnings": st.column_config.NumberColumn(
@@ -79,3 +80,5 @@ with st.container():
                     use_container_width=True
                     ) 
         
+    
+
