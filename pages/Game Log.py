@@ -16,34 +16,35 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 st.title("Game Log")
 st.divider()
 
+with st.form("Game Log"):
+    with st.container():
+        left_column, right_column = st.columns(2)
+        with left_column:
+            user_selection = st.multiselect(
+                "Which user(s) results are you interested in seeing?",
+                options=st.session_state["Users"],
+                default=None,
+                placeholder="Select user(s)...",
+            )
+        with right_column:
+            week_selection = st.multiselect(
+                'Which week(s) are you interested in seeing?',
+                options = list(range(1,19)),
+                default = None,
+                placeholder="Select Week(s)"
+            )
 
-with st.container():
-    left_column, right_column = st.columns(2)
-    with left_column:
-        user_selection = st.multiselect(
-            "Which user(s) results are you interested in seeing?",
-            options=st.session_state["Users"],
-            default=None,
-            placeholder="Select user(s)...",
-        )
-    with right_column:
-        week_selection = st.multiselect(
-            'Which week(s) are you interested in seeing?',
-            options = list(range(1,19)),
-            default = None,
-            placeholder="Select Week(s)"
-        )
-
-consolidated = st.session_state["Consolidated"]
-with st.container():
-    dummy = consolidated[consolidated['Week'].isin(week_selection)]
-    log = dummy[dummy['Name'].isin(user_selection)]
-    st.dataframe(log,
-                column_config={
-                "Weekly Winnings": st.column_config.NumberColumn(
-                format="$%d"
-                ) 
-                },
-                hide_index=True,
-                use_container_width=True
-                )
+    consolidated = st.session_state["Consolidated"]
+    with st.container():
+        dummy = consolidated[consolidated['Week'].isin(week_selection)]
+        log = dummy[dummy['Name'].isin(user_selection)]
+        st.dataframe(log,
+                    column_config={
+                    "Weekly Winnings": st.column_config.NumberColumn(
+                    format="$%d"
+                    ) 
+                    },
+                    hide_index=True,
+                    use_container_width=True
+                    )
+    st.form_submit_button("Select Users", use_container_width=True)
