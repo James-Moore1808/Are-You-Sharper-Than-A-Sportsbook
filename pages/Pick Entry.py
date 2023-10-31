@@ -23,9 +23,9 @@ accounts_users = list(accounts['Username'])
 
 
 st.title("Pick Entry")
+st.subheader("To enter and/or view picks you must enter a valid Username and Password")
 st.divider()
 
-message = "To enter and/or view picks you must enter a valid Username and Password"
 
 def verification(username,password):
     if username in (accounts_users):
@@ -46,5 +46,3 @@ with st.form(key = "Login"):
     if submit_button:
         verification(username,password)
     
-    
-st.subheader(message)    

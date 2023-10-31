@@ -45,4 +45,4 @@ while i < len(users):
         i += 1
 
 user_df = pd.DataFrame(user_list)
-user_df.to_excel(r"C:\Users\jmu81\NFL Picks 2023-24\Python\UsersWeek"+ week_no + ".xlsx", index = False)
+user_df.to_excel(r"C:\Users\jmu81\NFL Picks 2023-24\Folder\UsersWeek"+ week_no + ".xlsx", index = False)

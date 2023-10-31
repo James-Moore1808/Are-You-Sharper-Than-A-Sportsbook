@@ -36,8 +36,6 @@ i = 0
 
 #Adding the Opponent_Score column to the dataframe
 for i in range(len(master)):
-    print(master)
-    print(i)
     if i == 0:
         master['Opponent_Score'][i] = master['Score'][i+1]
         i +=1
@@ -63,7 +61,7 @@ for i in range(len(master)):
         master['Result'][i] = 'L'
         i += 1
     else:
-        master['Result'] = 'Push'
+        master['Result'][i] = 'Push'
         i += 1
 
 

@@ -6,7 +6,7 @@ import gspread
 
 
 
-st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
+st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -46,10 +46,10 @@ def reroute():
 with st.container():
     left_column, right_column = st.columns(2)
     with left_column:
-        user_selection = st.selectbox(
+        user_selection = st.multiselect(
         "What user's results do you want to see?",
-        (season['User'].to_list()),
-        index= None,
+        options=(season['User'].to_list()),
+        default= None,
         placeholder ="Select user...",
         )
         st.header("Weekly Results", divider='gray')
