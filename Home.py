@@ -63,7 +63,6 @@ with st.form("Weekly Results"):
         st.header("Weekly Results", divider='gray')
         st.write("##")
         week_by_user = week[week['Name'].isin(user_selection)]
-        st.form_submit_button("Select Users")
         st.dataframe(week_by_user,
                     column_config={
                     "Weekly Winnings": st.column_config.NumberColumn(
@@ -86,6 +85,8 @@ with st.form("Weekly Results"):
                     hide_index=True,
                     use_container_width=True
                     ) 
+        
+    st.form_submit_button("Select Users")
         
     
 
