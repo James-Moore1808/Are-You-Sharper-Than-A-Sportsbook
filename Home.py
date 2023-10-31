@@ -48,14 +48,14 @@ st.write("##")
 
 #Weekly Results and Season Long Results
 with st.form("Weekly Results"):
-    left_column, right_column = st.columns(2)
-    with left_column:
-        user_selection = st.multiselect(
+    user_selection = st.multiselect(
         "What user's results do you want to see?",
         options=(season['User'].to_list()),
         default= None,
         placeholder ="Select user...",
         )
+    left_column, right_column = st.columns(2)
+    with left_column:
         st.header("Weekly Results", divider='gray')
         st.write("##")
         week_by_user = week[week['Name'].isin(user_selection)]
@@ -69,7 +69,6 @@ with st.form("Weekly Results"):
                     use_container_width=True
                      )
     with right_column:
-        st.write("##")
         st.header("Season Long Leaderboard", divider="gray")
         st.write("##")
         st.dataframe(season, 
