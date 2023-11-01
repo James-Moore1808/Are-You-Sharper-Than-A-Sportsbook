@@ -30,7 +30,7 @@ u = st.empty()
 p = st.empty()
 
 def week_selection():
-    week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, value= int, placeholder = None)
+    week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
     submit_button = st.form_submit_button("Submit")
     #pickLog = gc.open('NFL Pick Log 2023-24')
 
