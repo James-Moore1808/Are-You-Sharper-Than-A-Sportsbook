@@ -58,7 +58,7 @@ def verification(username,password):
 with x.form(key = "Login"):
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
-    submit_button = sub.button("Submit login information")
+    submit_button = st.form_submit_button("Submit login information")
     if submit_button:
         verification(username,password)
         
