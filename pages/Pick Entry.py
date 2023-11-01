@@ -26,15 +26,15 @@ st.title("Pick Entry")
 st.subheader("To enter and/or view picks you must enter a valid Username and Password")
 st.divider()
 
-username = st.empty()
-password = st.empty()
-submit_button = st.empty()
+u = st.empty()
+p = st.empty()
+s = st.empty()
 
 def verification(username,password):
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
-            username.empty()
-            password.empty()
+            u.empty()
+            p.empty()
             st.write("Successful login! Welcome back "+username+"!")
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
@@ -44,18 +44,18 @@ def verification(username,password):
         st.write("Please enter a Username and Password above.")
 
 def week_selection():
-    submit_button.empty()
+    s.empty()
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, value= int, placeholder = None)
     submit_button = st.form_submit_button("Submit")
     #pickLog = gc.open('NFL Pick Log 2023-24')
 
 
 with st.form(key = "Login"):
-    username = st.text_input(label = "Username", placeholder = None)
-    password = st.text_input(label = "Password", placeholder = None , type="password")
-    submit_button = st.form_submit_button("Submit login information")
+    username = u.text_input(label = "Username", placeholder = None)
+    password = p.text_input(label = "Password", placeholder = None , type="password")
+    submit_button = s.form_submit_button("Submit login information")
     if submit_button:
         verification(username,password)
-        week_selection()
+        #week_selection()
 
     
