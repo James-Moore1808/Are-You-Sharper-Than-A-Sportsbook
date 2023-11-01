@@ -39,9 +39,9 @@ def week_selection():
 def verification(username,password):
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
-            u.empty()
-            p.empty()
-            sub.empty()
+            #u.empty()
+            #p.empty()
+            #sub.empty()
             x.empty()
             week_selection()
             st.write("Successful login! Welcome back "+username+"!")
@@ -56,8 +56,8 @@ def verification(username,password):
 
 
 with x.form(key = "Login"):
-    username = u.text_input(label = "Username", placeholder = None)
-    password = p.text_input(label = "Password", placeholder = None , type="password")
+    username = st.text_input(label = "Username", placeholder = None)
+    password = st.text_input(label = "Password", placeholder = None , type="password")
     submit_button = sub.button("Submit login information")
     if submit_button:
         verification(username,password)
