@@ -42,6 +42,7 @@ def verification(username,password):
             u.empty()
             p.empty()
             sub.empty()
+            x.empty()
             week_selection()
             st.write("Successful login! Welcome back "+username+"!")
         elif password != st.secrets["Passwords"][username]:
@@ -54,7 +55,7 @@ def verification(username,password):
 
 
 
-with st.form(key = "Login"):
+with x.form(key = "Login"):
     username = u.text_input(label = "Username", placeholder = None)
     password = p.text_input(label = "Password", placeholder = None , type="password")
     submit_button = sub.button("Submit login information")
