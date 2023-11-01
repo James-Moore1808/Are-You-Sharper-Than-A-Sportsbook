@@ -29,16 +29,19 @@ st.divider()
 u = st.empty()
 p = st.empty()
 sub = st.empty()
+
+
 def week_selection():
-    week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
-    submit_button = st.form_submit_button("Submit")
-    #pickLog = gc.open('NFL Pick Log 2023-24')
+    week_no = u.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
+    submit_button_week = sub.form_submit_button("Submit")
+    pickLog = gc.open('NFL Pick Log 2023-24')
 
 def verification(username,password):
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
             u.empty()
             p.empty()
+            sub.empty()
             week_selection()
             st.write("Successful login! Welcome back "+username+"!")
         elif password != st.secrets["Passwords"][username]:
