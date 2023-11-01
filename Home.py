@@ -6,7 +6,7 @@ import gspread
 
 
 
-st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
+st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
