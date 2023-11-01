@@ -28,7 +28,7 @@ st.divider()
 
 u = st.empty()
 p = st.empty()
-s = st.empty()
+
 
 def verification(username,password):
     if username in (accounts_users):
@@ -44,7 +44,6 @@ def verification(username,password):
         st.write("Please enter a Username and Password above.")
 
 def week_selection():
-    s.empty()
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, value= int, placeholder = None)
     submit_button = st.form_submit_button("Submit")
     #pickLog = gc.open('NFL Pick Log 2023-24')
@@ -53,7 +52,7 @@ def week_selection():
 with st.form(key = "Login"):
     username = u.text_input(label = "Username", placeholder = None)
     password = p.text_input(label = "Password", placeholder = None , type="password")
-    submit_button = s.form_submit_button("Submit login information")
+    submit_button = st.form_submit_button("Submit login information")
     if submit_button:
         verification(username,password)
         #week_selection()
