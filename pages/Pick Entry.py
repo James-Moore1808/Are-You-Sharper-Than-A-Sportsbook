@@ -29,11 +29,11 @@ st.divider()
 u = st.empty()
 p = st.empty()
 sub = st.empty()
-
+x = st.empty()
 
 def week_selection():
     week_no = u.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
-    submit_button_week = sub.form_submit_button("Submit")
+    submit_button_week = sub.button("Submit")
     pickLog = gc.open('NFL Pick Log 2023-24')
 
 def verification(username,password):
