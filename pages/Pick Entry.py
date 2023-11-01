@@ -28,7 +28,7 @@ st.divider()
 
 u = st.empty()
 p = st.empty()
-
+sub = st.empty()
 def week_selection():
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
     submit_button = st.form_submit_button("Submit")
@@ -54,7 +54,7 @@ def verification(username,password):
 with st.form(key = "Login"):
     username = u.text_input(label = "Username", placeholder = None)
     password = p.text_input(label = "Password", placeholder = None , type="password")
-    submit_button = st.form_submit_button("Submit login information")
+    submit_button = sub.form_submit_button("Submit login information")
     if submit_button:
         verification(username,password)
         
