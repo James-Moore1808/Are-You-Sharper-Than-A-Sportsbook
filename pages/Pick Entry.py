@@ -23,7 +23,7 @@ accounts_users = list(accounts['Username'])
 
 
 st.title("Pick Entry")
-subhead= st.subheader("To enter and/or view picks you must enter a valid Username and Password")
+
 st.divider()
 
 
@@ -34,8 +34,8 @@ x = st.empty()
 def verification(username,password):
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
-            subhead = st.write("Successful login! Welcome back "+username+"!")
             x.empty()
+            subhead = st.write("Successful login! Welcome back "+username+"!")  
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username not in (accounts['Username']):
@@ -54,7 +54,7 @@ with x.form(key = "Login"):
     if submit_button:
         verification(username,password)
     
-
+subhead= st.subheader("To enter and/or view picks you must enter a valid Username and Password")
         
 
     
