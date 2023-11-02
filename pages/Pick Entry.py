@@ -34,7 +34,7 @@ x = st.empty()
 def verification(username,password):
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
-            subhead = st.write("Successful login! Welcome back "+username+"!")
+            subhead1 = st.write("Successful login! Welcome back "+username+"!")
             x.empty()  
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
@@ -42,7 +42,7 @@ def verification(username,password):
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     else:
         st.write("Please enter a Username and Password above.")
-    return(subhead)
+    return(subhead1)
 
 
 
@@ -54,8 +54,18 @@ with x.form(key = "Login"):
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
     submit_button = st.form_submit_button("Submit login information", use_container_width=True)
     if submit_button:
-        verification(username,password)
+        if username in (accounts_users):
+            if password == st.secrets["Passwords"][username]:
+                subhead = st.write("Successful login! Welcome back "+username+"!")
+                x.empty()  
+            elif password != st.secrets["Passwords"][username]:
+                st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
+        elif username not in (accounts['Username']):
+            st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
+        else:
+            st.write("Please enter a Username and Password above.")
     
+        
 st.subheader(subhead)
         
 
