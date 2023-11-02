@@ -63,7 +63,7 @@ if submit_button:
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
             x.empty()
-            with st.container:
+            with st.container():
                 left, right = st.columns = 2
                 with left:
                     st.subheader(":green[Successful login! Welcome back "+username+"!]")
