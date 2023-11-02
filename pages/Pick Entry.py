@@ -66,9 +66,7 @@ if submit_button:
             with st.container():
                 left, middle, right = st.columns(3)
                 with left:
-                    st.subheader(":green[Successful login! Welcome back "+username+"!]")
-                with middle:
-                    st.subheader("Picks for Week " + week_no)  
+                    st.subheader(":green[Successful login! Welcome back "+username+"!] \n Picks for Week " + week_no)
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username not in (accounts['Username']):
