@@ -25,7 +25,7 @@ accounts_users = list(accounts['Username'])
 st.title("Pick Entry")
 st.divider()
 
-subhead= "To enter and/or view picks you must enter a valid Username and Password"
+
 
 x = st.empty()
 
@@ -48,25 +48,26 @@ def verification(username,password):
 
 
 with x.form(key = "Login"):
-    st.subheader(subhead)
+    st.subheader("To enter and/or view picks you must enter a valid Username and Password")
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
     submit_button = st.form_submit_button("Submit login information", use_container_width=True)
-    if submit_button:
-        if username in (accounts_users):
-            if password == st.secrets["Passwords"][username]:
-                subhead = st.write("Successful login! Welcome back "+username+"!")
-                x.empty()  
-            elif password != st.secrets["Passwords"][username]:
-                st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
-        elif username not in (accounts['Username']):
-            st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
-        else:
-            st.write("Please enter a Username and Password above.")
     
-        
-st.subheader(subhead)
+    
+if submit_button:
+    if username in (accounts_users):
+        if password == st.secrets["Passwords"][username]:
+            st.write("Successful login! Welcome back "+username+"!")
+            x.empty()  
+        elif password != st.secrets["Passwords"][username]:
+            st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
+    elif username not in (accounts['Username']):
+        st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
+    else:
+        st.write("Please enter a Username and Password above.")
+
+    
         
 
     
