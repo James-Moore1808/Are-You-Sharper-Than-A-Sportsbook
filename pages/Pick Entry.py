@@ -36,10 +36,10 @@ def verification(username,password):
         if password == st.secrets["Passwords"][username]:
             x.empty()
             with st.container:
-                left, right = st.columns = 2
+                left, middle, right = st.columns = 2
                 with left:
                     st.subheader(":green[Successful login! Welcome back "+username+"!]")
-                with right:
+                with middle:
                     st.subheader("Picks for Week" + week_no)
         elif password != st.secrets["Passwords"][username]:
             st.subheader(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
@@ -64,10 +64,10 @@ if submit_button:
         if password == st.secrets["Passwords"][username]:
             x.empty()
             with st.container():
-                left, right = st.columns(2)
+                left, middle, right = st.columns(2)
                 with left:
                     st.subheader(":green[Successful login! Welcome back "+username+"!]")
-                with right:
+                with middle:
                     st.subheader("Picks for Week" + week_no)  
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
