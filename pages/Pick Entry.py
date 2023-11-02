@@ -47,7 +47,7 @@ def verification(username,password):
 
 
 with x.form(key = "Login"):
-    st.subheader(subhead ,use_container_width=True)
+    st.subheader(subhead)
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
