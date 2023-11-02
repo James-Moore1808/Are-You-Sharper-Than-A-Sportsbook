@@ -23,9 +23,9 @@ accounts_users = list(accounts['Username'])
 
 
 st.title("Pick Entry")
-
 st.divider()
 
+subhead= "To enter and/or view picks you must enter a valid Username and Password"
 
 x = st.empty()
 
@@ -34,8 +34,8 @@ x = st.empty()
 def verification(username,password):
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
-            x.empty()
-            subhead = st.write("Successful login! Welcome back "+username+"!")  
+            subhead = st.write("Successful login! Welcome back "+username+"!")
+            x.empty()  
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username not in (accounts['Username']):
@@ -47,6 +47,7 @@ def verification(username,password):
 
 
 with x.form(key = "Login"):
+    st.subheader(subhead ,use_container_width=True)
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
     week_no = st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = None)
@@ -54,7 +55,7 @@ with x.form(key = "Login"):
     if submit_button:
         verification(username,password)
     
-subhead= st.subheader("To enter and/or view picks you must enter a valid Username and Password")
+st.subheader(subhead)
         
 
     
