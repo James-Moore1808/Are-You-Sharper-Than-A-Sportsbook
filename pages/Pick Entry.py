@@ -11,6 +11,10 @@ scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/au
 
 #use to deploy
 gc = gspread.service_account_from_dict(st.secrets["credentials"])
+pickLog = gc.open('NFL Pick Log 2023-24')
+sheets = pickLog.worksheets()
+ws_names = [worksheet.title for worksheet in sheets]
+
 
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
@@ -31,23 +35,6 @@ x = st.empty()
 
     
 
-def verification(username,password):
-    if username in (accounts_users):
-        if password == st.secrets["Passwords"][username]:
-            x.empty()
-            with st.container:
-                left, middle, right = st.columns = 2
-                with left:
-                    st.subheader(":green[Successful login! Welcome back "+username+"!]")
-                with middle:
-                    st.subheader("Picks for Week" + week_no)
-        elif password != st.secrets["Passwords"][username]:
-            st.subheader(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
-    elif username not in (accounts['Username']):
-        st.subheader(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
-    else:
-        st.subheader("Please enter a Username and Password above.")
-
 
 
 
@@ -66,7 +53,14 @@ if submit_button:
             with st.container():
                 left, middle, right = st.columns(3)
                 with left:
+                    user_sheetname = "Week"+week_no+"."+username
+                    user_sheet = pickLog.worksheet(user_sheetname)
+                    lastrow_user = len(user_sheet.col_values(2))-1
                     st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
+        if user_sheetname in ws_names:
+            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6,9,10,11,12], nrows = lastrow_user)
+            with st.container():
+                st.dataframe(sheet, hide_index=True, use_container_width=True)
         elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username not in (accounts['Username']):
