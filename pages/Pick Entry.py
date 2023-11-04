@@ -66,6 +66,8 @@ if submit_button:
             sheet = pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
             master_list = week_master.get_all_values()
             sheet.update("A1:Q33", master_list)
+            lastrow_user = len(sheet.col_values(2))-1
+            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6,9,10,11,12], nrows = lastrow_user)
             with st.container():
                 st.dataframe(sheet, hide_index=True, use_container_width=True)
 
