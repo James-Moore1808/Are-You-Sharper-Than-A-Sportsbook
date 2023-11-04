@@ -82,8 +82,8 @@ if submit_button:
                 with left:
                     st.dataframe(sheet, hide_index=True, use_container_width=True,
                                  column_config={
-                                     "Name": st.column_config.NumberColumn(
-                                         username,
+                                     "Name": st.column_config.TextColumn(
+                                         disabled=True
                                      )
                                  })
                 with right:
