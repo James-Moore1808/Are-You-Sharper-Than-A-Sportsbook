@@ -54,7 +54,7 @@ if submit_button:
                 left, middle, right = st.columns(3)
                 with left:
                     user_sheetname = "Week"+week_no+"."+username
-                    week_master = pickLog.worksheet("week "+week_no+" Master")
+                    week_master = pickLog.worksheet("Week "+week_no+" Master")
                     user_sheet = pickLog.worksheet(user_sheetname)
                     lastrow_user = len(user_sheet.col_values(2))-1
                     st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
