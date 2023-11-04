@@ -67,7 +67,7 @@ if submit_button:
                 with left:
                     st.dataframe(sheet, hide_index=True, use_container_width=True)
                 with right:
-                    st.dataframe(scoreboard, hide_index=True, use_container_width=True)
+                    st.dataframe(scoreboard, hide_index=True, use_container_width=True, disabled =['Team',"Odds", "Spread", "Opponent"])
         else:
             user_sheet= pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
             master_list = week_master.get_all_values()
@@ -82,12 +82,15 @@ if submit_button:
                 with left:
                     st.dataframe(sheet, hide_index=True, use_container_width=True,
                                  column_config={
-                                     "Name": st.column_config.TextColumn(
-                                         disabled=True
+                                     "Pick": st.column_config.SelectboxColumn(
+                                         help = "Pick a team", 
+                                         options=[sheet["Home"], sheet['Away']]
                                      )
-                                 })
+                                 },
+                                 #disabled =['Name', "Game", "Away", "Home"]
+                                 )
                 with right:
-                    st.dataframe(scoreboard, hide_index=True, use_container_width=True)
+                    st.dataframe(scoreboard, hide_index=True, use_container_width=True, disabled =['Team',"Odds", "Spread", "Opponent"])
 
     elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
