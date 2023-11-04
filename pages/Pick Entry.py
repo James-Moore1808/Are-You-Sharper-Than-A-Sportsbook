@@ -63,7 +63,7 @@ if submit_button:
             with st.container():
                 st.dataframe(sheet, hide_index=True, use_container_width=True)
         else:
-            sheet = pickLog.add_worksheet(title=user_sheetname)
+            sheet = pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
             master_list = week_master.get_all_values()
             sheet.update("A1:Q33", master_list)
     elif password != st.secrets["Passwords"][username]:
