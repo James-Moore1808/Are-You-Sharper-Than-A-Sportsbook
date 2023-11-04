@@ -54,6 +54,7 @@ if submit_button:
                 left, middle, right = st.columns(3)
                 with left:
                     user_sheetname = "Week"+week_no+"."+username
+                    week_master = pickLog.worksheet("week "+week_no+" Master")
                     user_sheet = pickLog.worksheet(user_sheetname)
                     lastrow_user = len(user_sheet.col_values(2))-1
                     st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
@@ -61,7 +62,11 @@ if submit_button:
             sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6,9,10,11,12], nrows = lastrow_user)
             with st.container():
                 st.dataframe(sheet, hide_index=True, use_container_width=True)
-        elif password != st.secrets["Passwords"][username]:
+        else:
+            sheet = pickLog.add_worksheet(title=user_sheetname)
+            master_list = week_master.get_all_values()
+            sheet.update("A1:Q33", master_list)
+    elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username not in (accounts['Username']):
         st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
