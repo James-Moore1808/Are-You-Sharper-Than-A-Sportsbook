@@ -58,18 +58,30 @@ if submit_button:
                     st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
         if user_sheetname in ws_names:
             user_sheet = pickLog.worksheet(user_sheetname)
-            lastrow_user = len(user_sheet.col_values(2))-1
-            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6,9,10,11,12], nrows = lastrow_user)
+            lastrow_picks = len(user_sheet.col_values(2))-1
+            lastrow_scoreboard = len(user_sheet.col_values(10))-1
+            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+            scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             with st.container():
-                st.dataframe(sheet, hide_index=True, use_container_width=True)
+                left, right = st.columns(2)
+                with left:
+                    st.dataframe(sheet, hide_index=True, use_container_width=True)
+                with right:
+                    st.dataframe(scoreboard, hide_index=True, use_container_width=True)
         else:
-            sheet = pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
+            user_sheet= pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
             master_list = week_master.get_all_values()
-            sheet.update("A1:Q33", master_list)
-            lastrow_user = len(sheet.col_values(2))-1
-            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6,9,10,11,12], nrows = lastrow_user)
+            user_sheet.update("A1:Q33", master_list)
+            lastrow_picks = len(user_sheet.col_values(2))-1
+            lastrow_scoreboard = len(user_sheet.col_values(10))-1
+            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+            scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             with st.container():
-                st.dataframe(sheet, hide_index=True, use_container_width=True)
+                left, right = st.columns(2)
+                with left:
+                    st.dataframe(sheet, hide_index=True, use_container_width=True)
+                with right:
+                    st.dataframe(scoreboard, hide_index=True, use_container_width=True)
 
     elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
