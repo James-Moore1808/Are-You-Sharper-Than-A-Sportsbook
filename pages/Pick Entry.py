@@ -82,9 +82,8 @@ if submit_button:
                 with left:
                     st.dataframe(sheet, hide_index=True, use_container_width=True,
                                  column_config={
-                                     "Pick": st.column_config.SelectboxColumn(
+                                     "Pick": st.column_config.Column(
                                          help = "Pick a team", 
-                                         options=[sheet["Home"], sheet['Away']]
                                      )
                                  },
                                  #disabled =['Name', "Game", "Away", "Home"]
