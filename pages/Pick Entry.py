@@ -75,11 +75,17 @@ if submit_button:
             lastrow_picks = len(user_sheet.col_values(2))-1
             lastrow_scoreboard = len(user_sheet.col_values(10))-1
             sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+            sheet['Name'] = username
             scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             with st.container():
                 left, right = st.columns(2)
                 with left:
-                    st.dataframe(sheet, hide_index=True, use_container_width=True)
+                    st.dataframe(sheet, hide_index=True, use_container_width=True,
+                                 column_config={
+                                     "Name": st.column_config.NumberColumn(
+                                         username,
+                                     )
+                                 })
                 with right:
                     st.dataframe(scoreboard, hide_index=True, use_container_width=True)
 
