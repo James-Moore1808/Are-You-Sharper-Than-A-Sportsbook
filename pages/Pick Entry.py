@@ -66,6 +66,9 @@ if submit_button:
             sheet = pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
             master_list = week_master.get_all_values()
             sheet.update("A1:Q33", master_list)
+            with st.container():
+                st.dataframe(sheet, hide_index=True, use_container_width=True)
+
     elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
     elif username not in (accounts['Username']):
