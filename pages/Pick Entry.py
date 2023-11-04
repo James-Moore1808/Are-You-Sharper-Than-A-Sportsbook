@@ -55,10 +55,10 @@ if submit_button:
                 with left:
                     user_sheetname = "Week"+week_no+"."+username
                     week_master = pickLog.worksheet("Week "+week_no+" Master")
-                    user_sheet = pickLog.worksheet(user_sheetname)
-                    lastrow_user = len(user_sheet.col_values(2))-1
                     st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
         if user_sheetname in ws_names:
+            user_sheet = pickLog.worksheet(user_sheetname)
+            lastrow_user = len(user_sheet.col_values(2))-1
             sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6,9,10,11,12], nrows = lastrow_user)
             with st.container():
                 st.dataframe(sheet, hide_index=True, use_container_width=True)
