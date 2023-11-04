@@ -60,7 +60,7 @@ if submit_button:
             user_sheet = pickLog.worksheet(user_sheetname)
             lastrow_picks = len(user_sheet.col_values(2))-1
             lastrow_scoreboard = len(user_sheet.col_values(10))-1
-            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+            sheet = conn.read(worksheet= "Week 10 Master", ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
             scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             with st.container():
                 left, right = st.columns(2)
