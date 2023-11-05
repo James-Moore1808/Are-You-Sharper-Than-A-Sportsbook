@@ -80,7 +80,7 @@ if submit_button:
             i = 0
             while i < lastrow_scoreboard:
                 dummy = "A"+str(i)
-                dummy = st.empty
+                dummy = st.empty()
                 with dummy.form(key = "pickForm"):
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
