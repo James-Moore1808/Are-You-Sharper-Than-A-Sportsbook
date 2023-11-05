@@ -73,8 +73,8 @@ if submit_button:
             user_sheet.update("A1:Q33", master_list)
             lastrow_picks = len(user_sheet.col_values(2))-1
             lastrow_scoreboard = len(user_sheet.col_values(10))-1
-            sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
-            scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
+            sheet = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+            scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             sheet['Name'] = username
             picks = []
             i = 0
