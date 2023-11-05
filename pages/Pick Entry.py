@@ -90,7 +90,7 @@ if submit_button:
                         [sheet['Home'][i], sheet['Away'][i]],
                         captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
                         index = None,
-                        key = str(i)
+                        key = str(time.time())
                     )
                     
                     #BUTTON INITIALIZATION 
