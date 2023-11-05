@@ -79,8 +79,8 @@ if submit_button:
             sheet['Name'] = username
             picks = []
             i = 0
-            while i <= lastrow_picks:
-                with a.form(key = "pickForm"):
+            with a.form(key = "pickForm"):
+                while i <= lastrow_picks:
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
                     game = st.radio(
@@ -134,8 +134,8 @@ if submit_button:
                                 a.empty()
                                 sheet['Pick'] = picks
                             else:
-                                i += 1
                                 picks.append(game)
+                                i += 1
                                 a.empty()
                                 sheet['Pick'] = picks
                     else:
