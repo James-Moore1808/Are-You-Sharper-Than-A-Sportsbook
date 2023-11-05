@@ -90,7 +90,7 @@ if submit_button:
                     key = str(i)
                 )
                 #BUTTON INITIALIZATION 
-                if i > 1:
+                if i > 0:
                     with st.container:
                         left, right = st.columns(2)
                         with right:
@@ -138,7 +138,7 @@ if submit_button:
                             i += 1
                             a.empty()
                             sheet['Pick'] = picks
-                else:
+                elif i == 0:
                     next_button = st.form_submit_button(label="Next", use_container_width=True)
                     #Button Bhevaior
                     if next_button:
