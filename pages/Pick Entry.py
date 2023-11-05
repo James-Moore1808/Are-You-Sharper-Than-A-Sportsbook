@@ -33,7 +33,7 @@ st.divider()
 
 x = st.empty()
 a = st.empty()
-    
+rd = st.empty()    
 
 
 
@@ -83,7 +83,7 @@ if submit_button:
                 while i <= lastrow_picks:
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
-                    game = st.radio(
+                    game = rd.radio(
                         sheet['Game'][i],
                         [sheet['Home'][i], sheet['Away'][i]],
                         captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
