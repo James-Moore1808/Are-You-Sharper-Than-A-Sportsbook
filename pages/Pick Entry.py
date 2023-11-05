@@ -32,7 +32,6 @@ st.divider()
 
 
 x = st.empty()
-a = st.empty()
 rd = st.empty()    
 
 
@@ -79,20 +78,23 @@ if submit_button:
             sheet['Name'] = username
             picks = []
             i = 0
-            with a.form(key = "pickForm"):
-                home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
-                away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
-                game = st.radio(
-                    sheet['Game'][i],
-                    [sheet['Home'][i], sheet['Away'][i]],
-                    captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
-                    index = None,
-                    key = str(i)
-                )
-                while i < lastrow_scoreboard:
+            while i < lastrow_scoreboard:
+                dummy = "A"+str(i)
+                dummy = st.empty
+                with dummy.form(key = "pickForm"):
+                    home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
+                    away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
+                    game = st.radio(
+                        sheet['Game'][i],
+                        [sheet['Home'][i], sheet['Away'][i]],
+                        captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
+                        index = None,
+                        key = str(i)
+                    )
+                    
                     #BUTTON INITIALIZATION 
                     if i > 0:
-                        with st.container(key=f"container_{i}"):
+                        with st.container():
                             left, right = st.columns(2)
                             with right:
                                 next_button = st.form_submit_button(label="Next", use_container_width=True)
@@ -114,7 +116,7 @@ if submit_button:
                             else:
                                 i = i - 1
                     elif i == lastrow_picks-1:
-                        with st.container(key=f"container_2{i}"):
+                        with st.container():
                             left, right = st.columns(2)
                             with right:
                                 submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
@@ -132,15 +134,15 @@ if submit_button:
                                 st.write(":red[Pick a Team]")
                             elif game in picks:
                                 i += 1
-                                a.empty()
+                                dummy.empty()
                                 sheet['Pick'] = picks
                             else:
                                 picks.append(game)
                                 i += 1
-                                a.empty()
+                                dummy.empty()
                                 sheet['Pick'] = picks
                     else:
-                        with st.container(key=f"container_3{i}"):
+                        with st.container():
                             next_button = st.form_submit_button(label="Next", use_container_width=True)
                         #Button Bhevaior
                         if next_button:
