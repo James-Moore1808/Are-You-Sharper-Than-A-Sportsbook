@@ -134,18 +134,18 @@ if submit_button:
                             a.empty()
                             sheet['Pick'] = picks
 
-            with st.container():
-                left, right = st.columns(2)
-                with left:
-                    st.dataframe(sheet, hide_index=True, use_container_width=True,
-                                 column_config={
-                                     "Pick": st.column_config.Column(
-                                         help = "Pick a team",
-                                     )
-                                 },
-                                 )
-                with right:
-                    st.dataframe(scoreboard, hide_index=True, use_container_width=True, disabled =['Team',"Odds", "Spread", "Opponent"])
+            #with st.container():
+                #left, right = st.columns(2)
+                #with left:
+                    #st.dataframe(sheet, hide_index=True, use_container_width=True,
+                                 #column_config={
+                                     #"Pick": st.column_config.Column(
+                                         #help = "Pick a team",
+                                     #)
+                                 #},
+                                 #)
+                #with right:
+                    #st.dataframe(scoreboard, hide_index=True, use_container_width=True, disabled =['Team',"Odds", "Spread", "Opponent"])
 
     elif password != st.secrets["Passwords"][username]:
             st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
