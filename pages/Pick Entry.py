@@ -81,8 +81,8 @@ if submit_button:
             i = 1
             while i <= lastrow_picks:
                 with a.form(key = "picks"):
-                    home = scoreboard['Team'==sheet['Home'][i]]
-                    away= scoreboard['Team'==sheet['Away'][i]]
+                    home = scoreboard[scoreboard['Team'].isin(sheet['Home'][i])]
+                    away= scoreboard[scoreboard['Team'].isin(sheet['Away'][i])]
                     game = st.radio(
                         sheet['Game'][i],
                         [sheet['Home'][i], sheet['Away'][i]],
