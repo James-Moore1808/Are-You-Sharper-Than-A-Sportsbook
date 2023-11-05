@@ -81,7 +81,7 @@ if submit_button:
             while i < lastrow_scoreboard:
                 dummy = "A"+str(i)
                 dummy = st.empty()
-                with dummy.form(key = "pickForm"):
+                with dummy.form(key = "pickForm"+dummy):
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
                     game = st.radio(
