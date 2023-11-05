@@ -89,66 +89,67 @@ if submit_button:
                     index = None,
                     key = str(i)
                 )
-                #BUTTON INITIALIZATION 
-                if i > 0:
-                    with st.container:
-                        left, right = st.columns(2)
-                        with right:
-                            next_button = st.form_submit_button(label="Next", use_container_width=True)
-                        with left:
-                            back_button = st.form_submit_button(label="Back", use_container_width=True)
-                    #Button Behavior
-                    if next_button:
-                        if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                            st.write(":red[Pick a Team]")
-                        elif game in picks:
-                            i += 1
-                        else:
-                            picks.append(game)
-                            i += 1
-                    if back_button:
-                        if game in picks:
-                            picks.pop(i-1)
-                            i = i - 1
-                        else:
-                            i = i - 1
-                elif i == lastrow_picks:
-                    with st.container:
-                        left, right = st.columns(2)
-                        with right:
-                            submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
-                        with left:
-                            back_button = st.form_submit_button(label="Back", use_container_width=True)
-                    #Button Behavior        
-                    if back_button:
-                        if game in picks:
-                            picks.pop(i-1)
-                            i = i - 1
-                        else:
-                            i = i - 1
-                    if submit_button2:
-                        if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                            st.write(":red[Pick a Team]")
-                        elif game in picks:
-                            i += 1
-                            a.empty()
-                            sheet['Pick'] = picks
-                        else:
-                            picks.append(game)
-                            i += 1
-                            a.empty()
-                            sheet['Pick'] = picks
-                elif i == 0:
-                    next_button = st.form_submit_button(label="Next", use_container_width=True)
-                    #Button Bhevaior
-                    if next_button:
-                        if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                            st.write(":red[Pick a Team]")
-                        elif game in picks:
-                            i += 1
-                        else:
-                            picks.append(game)
-                            i += 1
+                while i < lastrow_scoreboard:
+                    #BUTTON INITIALIZATION 
+                    if i > 0:
+                        with st.container:
+                            left, right = st.columns(2)
+                            with right:
+                                next_button = st.form_submit_button(label="Next", use_container_width=True)
+                            with left:
+                                back_button = st.form_submit_button(label="Back", use_container_width=True)
+                        #Button Behavior
+                        if next_button:
+                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
+                                st.write(":red[Pick a Team]")
+                            elif game in picks:
+                                i += 1
+                            else:
+                                picks.append(game)
+                                i += 1
+                        if back_button:
+                            if game in picks:
+                                picks.pop(i-1)
+                                i = i - 1
+                            else:
+                                i = i - 1
+                    elif i == lastrow_picks-1:
+                        with st.container:
+                            left, right = st.columns(2)
+                            with right:
+                                submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
+                            with left:
+                                back_button = st.form_submit_button(label="Back", use_container_width=True)
+                        #Button Behavior        
+                        if back_button:
+                            if game in picks:
+                                picks.pop(i-1)
+                                i = i - 1
+                            else:
+                                i = i - 1
+                        if submit_button2:
+                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
+                                st.write(":red[Pick a Team]")
+                            elif game in picks:
+                                i += 1
+                                a.empty()
+                                sheet['Pick'] = picks
+                            else:
+                                picks.append(game)
+                                i += 1
+                                a.empty()
+                                sheet['Pick'] = picks
+                    elif i == 0:
+                        next_button = st.form_submit_button(label="Next", use_container_width=True)
+                        #Button Bhevaior
+                        if next_button:
+                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
+                                st.write(":red[Pick a Team]")
+                            elif game in picks:
+                                i += 1
+                            else:
+                                picks.append(game)
+                                i += 1
             #with st.container():
                 #left, right = st.columns(2)
                 #with left:
