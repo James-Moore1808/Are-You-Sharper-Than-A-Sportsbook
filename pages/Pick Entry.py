@@ -92,12 +92,12 @@ if submit_button:
                 while i < lastrow_scoreboard:
                     #BUTTON INITIALIZATION 
                     if i > 0:
-                        with st.container:
+                        with st.container(key=f"container_{i}"):
                             left, right = st.columns(2)
                             with right:
-                                next_button = st.form_submit_button(label="Next", use_container_width=True, key=f"next_button_1{i}")
+                                next_button = st.form_submit_button(label="Next", use_container_width=True)
                             with left:
-                                back_button = st.form_submit_button(label="Back", use_container_width=True, key=f"back_button_{i}")
+                                back_button = st.form_submit_button(label="Back", use_container_width=True)
                         #Button Behavior
                         if next_button:
                             if game != sheet['Home'][i] and game != sheet['Away'][i]:
@@ -114,12 +114,12 @@ if submit_button:
                             else:
                                 i = i - 1
                     elif i == lastrow_picks-1:
-                        with st.container:
+                        with st.container(key=f"container_2{i}"):
                             left, right = st.columns(2)
                             with right:
-                                submit_button2 = st.form_submit_button(label="Submit", use_container_width=True, key=f"submit_button_{i}")
+                                submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
                             with left:
-                                back_button = st.form_submit_button(label="Back", use_container_width=True, key=f"back_button_2{i}")
+                                back_button = st.form_submit_button(label="Back", use_container_width=True)
                         #Button Behavior        
                         if back_button:
                             if game in picks:
@@ -139,8 +139,9 @@ if submit_button:
                                 i += 1
                                 a.empty()
                                 sheet['Pick'] = picks
-                    elif i == 0:
-                        next_button = st.form_submit_button(label="Next", use_container_width=True, key=f"next_button_2{i}")
+                    else:
+                        with st.container(key=f"container_3{i}"):
+                            next_button = st.form_submit_button(label="Next", use_container_width=True)
                         #Button Bhevaior
                         if next_button:
                             if game != sheet['Home'][i] and game != sheet['Away'][i]:
