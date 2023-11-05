@@ -3,6 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread 
 import pandas as pd
+import time
 st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", layout= "wide", initial_sidebar_state="collapsed" )
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -80,9 +81,8 @@ if submit_button:
             i = 0
             while i < lastrow_scoreboard:
                 dummy = "A"+str(i)
-                dummy2 = "B"+str(i)
                 dummy = st.empty()
-                with dummy.form(key = "pickForm"+dummy2):
+                with dummy.form(key = time.time()):
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
                     game = st.radio(
