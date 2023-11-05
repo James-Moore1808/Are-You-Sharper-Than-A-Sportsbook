@@ -95,9 +95,9 @@ if submit_button:
                         with st.container:
                             left, right = st.columns(2)
                             with right:
-                                next_button = st.form_submit_button(label="Next", use_container_width=True)
+                                next_button = st.form_submit_button(label="Next", use_container_width=True, key=f"next_button_1{i}")
                             with left:
-                                back_button = st.form_submit_button(label="Back", use_container_width=True)
+                                back_button = st.form_submit_button(label="Back", use_container_width=True, key=f"back_button_{i}")
                         #Button Behavior
                         if next_button:
                             if game != sheet['Home'][i] and game != sheet['Away'][i]:
@@ -117,9 +117,9 @@ if submit_button:
                         with st.container:
                             left, right = st.columns(2)
                             with right:
-                                submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
+                                submit_button2 = st.form_submit_button(label="Submit", use_container_width=True, key=f"submit_button_{i}")
                             with left:
-                                back_button = st.form_submit_button(label="Back", use_container_width=True)
+                                back_button = st.form_submit_button(label="Back", use_container_width=True, key=f"back_button_2{i}")
                         #Button Behavior        
                         if back_button:
                             if game in picks:
@@ -140,7 +140,7 @@ if submit_button:
                                 a.empty()
                                 sheet['Pick'] = picks
                     elif i == 0:
-                        next_button = st.form_submit_button(label="Next", use_container_width=True)
+                        next_button = st.form_submit_button(label="Next", use_container_width=True, key=f"next_button_2{i}")
                         #Button Bhevaior
                         if next_button:
                             if game != sheet['Home'][i] and game != sheet['Away'][i]:
