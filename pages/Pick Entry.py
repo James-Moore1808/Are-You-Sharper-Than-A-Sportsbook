@@ -79,10 +79,10 @@ if submit_button:
             sheet['Name'] = username
             picks = []
             i = 0
-            while i < lastrow_scoreboard:
-                dummy = "A"+str(i)
-                dummy = st.empty()
-                with dummy.form(key = str(time.time())):
+            dummy = "A"+str(i)
+            dummy = st.empty()
+            with dummy.form(key = str(time.time())):
+                while i < lastrow_scoreboard:
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
                     game = st.radio(
