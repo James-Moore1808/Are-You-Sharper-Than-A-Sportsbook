@@ -83,11 +83,12 @@ if submit_button:
                 while i <= lastrow_picks:
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
                     away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
-                    game = rd.radio(
+                    game = st.radio(
                         sheet['Game'][i],
                         [sheet['Home'][i], sheet['Away'][i]],
                         captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
-                        index = None
+                        index = None,
+                        key = i
                     )
                    #BUTTON INITIALIZATION 
                     if i > 1:
