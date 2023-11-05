@@ -78,7 +78,7 @@ if submit_button:
             scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             sheet['Name'] = username
             picks = []
-            i = 1
+            i = 0
             while i <= lastrow_picks:
                 with a.form(key = "picks"):
                     home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
@@ -97,6 +97,21 @@ if submit_button:
                                 next_button = st.form_submit_button(label="Next", use_container_width=True)
                             with left:
                                 back_button = st.form_submit_button(label="Back", use_container_width=True)
+                        #Button Behavior
+                        if next_button:
+                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
+                                st.write(":red[Pick a Team]")
+                            elif game in picks:
+                                i += 1
+                            else:
+                                picks.append(game)
+                                i += 1
+                        if back_button:
+                            if game in picks:
+                                picks.pop(i-1)
+                                i = i - 1
+                            else:
+                                i = i - 1
                     elif i == lastrow_picks:
                         with st.container:
                             left, right = st.columns(2)
@@ -104,36 +119,36 @@ if submit_button:
                                 submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
                             with left:
                                 back_button = st.form_submit_button(label="Back", use_container_width=True)
+                        #Button Behavior        
+                        if back_button:
+                            if game in picks:
+                                picks.pop(i-1)
+                                i = i - 1
+                            else:
+                                i = i - 1
+                        if submit_button2:
+                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
+                                st.write(":red[Pick a Team]")
+                            elif game in picks:
+                                i += 1
+                                a.empty()
+                                sheet['Pick'] = picks
+                            else:
+                                i += 1
+                                picks.append(game)
+                                a.empty()
+                                sheet['Pick'] = picks
                     else:
-                       next_button = st.form_submit_button(label="Next", use_container_width=True)
-                    #BUTTTON BEHAVIOR
-                    if next_button:
-                        if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                            st.write(":red[Pick a Team]")
-                        elif game in picks:
-                            i += 1
-                        else:
-                            picks.append(game)
-                            i += 1
-                    if back_button:
-                        if game in picks:
-                            picks.pop(i-1)
-                            i = i - 1
-                        else:
-                            i = i - 1
-                    if submit_button:
-                        if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                            st.write(":red[Pick a Team]")
-                        elif game in picks:
-                            i += 1
-                            a.empty()
-                            sheet['Pick'] = picks
-                        else:
-                            i += 1
-                            picks.append(game)
-                            a.empty()
-                            sheet['Pick'] = picks
-
+                        next_button = st.form_submit_button(label="Next", use_container_width=True)
+                        #Button Bhevaior
+                        if next_button:
+                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
+                                st.write(":red[Pick a Team]")
+                            elif game in picks:
+                                i += 1
+                            else:
+                                picks.append(game)
+                                i += 1
             #with st.container():
                 #left, right = st.columns(2)
                 #with left:
