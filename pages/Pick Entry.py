@@ -86,7 +86,7 @@ if submit_button:
                     game = st.radio(
                         sheet['Game'][i],
                         [sheet['Home'][i], sheet['Away'][i]],
-                        captions = ["Spread: "+home['Spread'], "Spread: "+away['Spread']],
+                        captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
                         index = None
                     )
                    #BUTTON INITIALIZATION 
