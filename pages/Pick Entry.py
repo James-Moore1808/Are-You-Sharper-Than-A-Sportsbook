@@ -78,82 +78,10 @@ if submit_button:
             scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             sheet['Name'] = username
             picks = []
-            i = 0
-            dummy = "A"+str(i)
-            dummy = st.empty()
-            with dummy.form(key = str(time.time())):
-                while i < lastrow_scoreboard:
-                    home = scoreboard[scoreboard['Team'] == sheet['Home'][i]]
-                    away= scoreboard[scoreboard['Team'] == sheet['Away'][i]]
-                    game = st.radio(
-                        sheet['Game'][i],
-                        [sheet['Home'][i], sheet['Away'][i]],
-                        captions = ["Spread: "+str(home['Spread']), "Spread: "+ str(away['Spread'])],
-                        index = None,
-                        key = str(time.time())
-                    )
-                    
-                    #BUTTON INITIALIZATION 
-                    if i > 0:
-                        with st.container():
-                            left, right = st.columns(2)
-                            with right:
-                                next_button = st.form_submit_button(label="Next", use_container_width=True)
-                            with left:
-                                back_button = st.form_submit_button(label="Back", use_container_width=True)
-                        #Button Behavior
-                        if next_button:
-                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                                st.write(":red[Pick a Team]")
-                            elif game in picks:
-                                i += 1
-                            else:
-                                picks.append(game)
-                                i += 1
-                        if back_button:
-                            if game in picks:
-                                picks.pop(i-1)
-                                i = i - 1
-                            else:
-                                i = i - 1
-                    elif i == lastrow_picks-1:
-                        with st.container():
-                            left, right = st.columns(2)
-                            with right:
-                                submit_button2 = st.form_submit_button(label="Submit", use_container_width=True)
-                            with left:
-                                back_button = st.form_submit_button(label="Back", use_container_width=True)
-                        #Button Behavior        
-                        if back_button:
-                            if game in picks:
-                                picks.pop(i-1)
-                                i = i - 1
-                            else:
-                                i = i - 1
-                        if submit_button2:
-                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                                st.write(":red[Pick a Team]")
-                            elif game in picks:
-                                i += 1
-                                dummy.empty()
-                                sheet['Pick'] = picks
-                            else:
-                                picks.append(game)
-                                i += 1
-                                dummy.empty()
-                                sheet['Pick'] = picks
-                    else:
-                        with st.container():
-                            next_button = st.form_submit_button(label="Next", use_container_width=True)
-                        #Button Bhevaior
-                        if next_button:
-                            if game != sheet['Home'][i] and game != sheet['Away'][i]:
-                                st.write(":red[Pick a Team]")
-                            elif game in picks:
-                                i += 1
-                            else:
-                                picks.append(game)
-                                i += 1
+            Games_col = sheet['Game']
+            Away_col = sheet['Away']
+            Home_col = sheet['Home']
+            st.write(Away_col, Games_col)
             #with st.container():
                 #left, right = st.columns(2)
                 #with left:
