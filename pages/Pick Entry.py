@@ -79,7 +79,7 @@ if submit_button:
             sheet['Name'] = username
             picks = []
             Games_col = sheet['Game']
-            Away_col = sheet['Away']
+            Away_col = list(sheet['Away'])
             Home_col = sheet['Home']
             st.write(Away_col)
             #with st.container():
