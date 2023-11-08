@@ -81,7 +81,7 @@ if submit_button:
             Games_col = sheet['Game']
             Away_col = sheet['Away']
             Home_col = sheet['Home']
-            st.write(Away_col, Games_col)
+            st.write(Away_col)
             #with st.container():
                 #left, right = st.columns(2)
                 #with left:
