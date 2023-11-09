@@ -11,14 +11,14 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 #use to deploy
-gc = gspread.service_account_from_dict(st.secrets["credentials"])
+gc = gspread.service_account_from_dict(st.secrets["pick_entry_credentials"])
 pickLog = gc.open('NFL Pick Log 2023-24')
 sheets = pickLog.worksheets()
 ws_names = [worksheet.title for worksheet in sheets]
 
 
 #for local
-#gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
+#gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\pickentry_credentials.json")
 
 accounts = pd.read_excel("accounts.xlsx")
 
