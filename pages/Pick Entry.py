@@ -124,7 +124,7 @@ if submit_button:
 
 
             dummy = 0
-            with st.container():
+            with st.form("picks"):
                 if st.session_state.counter == 0:
                     game = st.radio(
                         st.session_state.games_col[st.session_state.counter],
