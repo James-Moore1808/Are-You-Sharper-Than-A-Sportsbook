@@ -77,11 +77,59 @@ if submit_button:
             sheet = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
             scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             sheet['Name'] = username
+
+            #The Magic
             picks = []
-            Games_col = sheet['Game']
-            Away_col = list(sheet['Away'])
-            Home_col = sheet['Home']
-            st.write(Away_col)
+            st.session_state.games_col = list(sheet['Game'])
+            st.session_state.away_col = list(sheet['Away'])
+            st.session_state.home_col = list(sheet['Home'])
+
+            #initializing a session state counter
+            if "counter" not in st.session_state:
+                st.session_state.counter = 0
+
+            #initializing the picks list
+            if "picks" not in st.session_state:
+                st.session_state.picks = []
+
+            #initializing the picks list
+            if "spreads" not in st.session_state:
+                st.session_state.spreads = []
+
+
+            #function to save the counter
+            def save_counter():
+                st.session_state.counter += 1
+            #function to save the picks
+            def save_picks(list):
+                st.session_state['picks'].append(list)
+            #fucntioon to save spreads
+            def save_spreads(list):
+                st.session_state['spreads'].append(list)
+
+            #defining on click function to advance    
+            def next_clicked(selection):
+                if selection != st.session_state.home_col[st.session_state.counter] and selection != st.session_state.away_col[st.session_state.counter]:
+                    st.write(":red[Pick a team before moving to the next selection]")
+                else:
+                    save_picks(game)
+                    save_spreads(scoreboard.query(f'Team=={game}')['Spread'])
+                    save_counter()
+
+
+            dummy = 0
+            with st.container():
+                if st.session_state.counter == 0:
+                    game = st.radio(
+                        st.session_state.games_col[st.session_state.counter],
+                        [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]],
+                        captions = [scoreboard.query(f'Team=={st.session_state.home_col[st.session_state.counter]}')['Spread'],scoreboard.query(f'Team=={st.session_state.away_col[st.session_state.counter]}')['Spread']],
+                    )
+                    next_button = st.button("Next", on_click= next_clicked, args= game)
+                else:
+                    st.write(st.session_state.counter)
+
+            
             #with st.container():
                 #left, right = st.columns(2)
                 #with left:
