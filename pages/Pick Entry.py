@@ -81,7 +81,7 @@ if submit_button:
             scoreboard_df = scoreboard_df.get(range1)
             headers = scoreboard_df.pop(0)
             scoreboard_df = pd.DataFrame(scoreboard_df, columns=headers)
-            st.write(scoreboard_df)
+            
             sheet['Name'] = username
             
             #The Magic
