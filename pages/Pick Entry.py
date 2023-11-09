@@ -77,7 +77,7 @@ if submit_button:
             sheet = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
             scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
             sheet['Name'] = username
-
+            st.write(scoreboard['Team'])
             #The Magic
             picks = []
             st.session_state.games_col = list(sheet['Game'])
