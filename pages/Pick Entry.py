@@ -131,9 +131,10 @@ if submit_button:
                         [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]],
                         captions = [scoreboard_df.query(f"Team=='{st.session_state.home_col[st.session_state.counter]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{st.session_state.away_col[st.session_state.counter]}'")['Spread'].to_list()[0]],
                     )
-                    next_button = st.button("Next", on_click= next_clicked, args= game)
+                    next_button = st.form_submit_button("Next", on_click= next_clicked, args= game)
                 else:
                     st.write(st.session_state.counter)
+                    next_button = st.form_submit_button("Next", on_click= next_clicked, args= game)
 
             
             #with st.container():
