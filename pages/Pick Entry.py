@@ -79,6 +79,8 @@ if submit_button:
             scoreboard_df = pickLog.worksheet(user_sheetname)
             range1 = "J1:M"+str(lastrow_scoreboard+1)
             scoreboard_df = scoreboard_df.get(range1)
+            headers = scoreboard_df.pop(0)
+            scoreboard_df = pd.DataFrame(scoreboard_df, columns=headers)
             sheet['Name'] = username
             
             #The Magic
