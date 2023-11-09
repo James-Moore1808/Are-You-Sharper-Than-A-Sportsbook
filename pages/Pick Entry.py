@@ -76,7 +76,7 @@ if submit_button:
             lastrow_scoreboard = len(user_sheet.col_values(10))-1
             sheet = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
             scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
-            scoreboard_df = pickLog(user_sheetname)
+            scoreboard_df = pickLog.worksheet(user_sheetname)
             range1 = "J1:M"+str(lastrow_scoreboard+1)
             scoreboard_df = scoreboard_df.get(range1)
             sheet['Name'] = username
