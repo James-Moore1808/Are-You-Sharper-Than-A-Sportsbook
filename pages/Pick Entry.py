@@ -76,8 +76,11 @@ if submit_button:
             lastrow_scoreboard = len(user_sheet.col_values(10))-1
             sheet = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
             scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
+            scoreboard_df = pickLog(user_sheetname)
+            range1 = "J1:M"+str(lastrow_scoreboard+1)
+            scoreboard_df = scoreboard_df.get(range1)
             sheet['Name'] = username
-            st.write(scoreboard['Team'])
+            
             #The Magic
             picks = []
             st.session_state.games_col = list(sheet['Game'])
@@ -113,7 +116,7 @@ if submit_button:
                     st.write(":red[Pick a team before moving to the next selection]")
                 else:
                     save_picks(game)
-                    save_spreads(scoreboard.query(f'Team=={game}')['Spread'])
+                    save_spreads(scoreboard_df.query(f'Team=={game}')['Spread'])
                     save_counter()
 
 
@@ -123,7 +126,7 @@ if submit_button:
                     game = st.radio(
                         st.session_state.games_col[st.session_state.counter],
                         [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]],
-                        captions = [scoreboard.query(f'Team=={st.session_state.home_col[st.session_state.counter]}')['Spread'],scoreboard.query(f'Team=={st.session_state.away_col[st.session_state.counter]}')['Spread']],
+                        captions = [scoreboard_df.query(f'Team=={st.session_state.home_col[st.session_state.counter]}')['Spread'],scoreboard_df.query(f'Team=={st.session_state.away_col[st.session_state.counter]}')['Spread']],
                     )
                     next_button = st.button("Next", on_click= next_clicked, args= game)
                 else:
