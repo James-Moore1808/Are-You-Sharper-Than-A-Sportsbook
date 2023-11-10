@@ -76,7 +76,7 @@ if st.session_state.account_counter == 0:
 
 
     
-#ACCOUNT COUNTER == 1 RESULTS IN SHEET CREATION OR SHOWING THE CURRENT PICKS SHEET    
+#RESULTS IN SHEET CREATION OR SHOWING THE CURRENT PICKS SHEET    
 if st.session_state.account_counter == 1:
     if st.session_state.dummy_counter == 0:
         user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
@@ -100,6 +100,7 @@ if st.session_state.account_counter == 1:
         st.session_state.dummy_counter = 2
         st.session_state.account_counter = 2
 
+#PICK SELECTION BLOCK
 if st.session_state.account_counter == 2:
     master_df = pickLog.worksheet(st.session_state.user_sheetname)
     picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
@@ -135,6 +136,10 @@ if st.session_state.account_counter == 2:
     #function to save the counter
     def save_counter():
         st.session_state.counter += 1
+    #function to decrease the counter
+    def dec_counter():
+        st.session_state.counter -= 1
+
     #function to save the picks
     def save_picks(list):
         st.session_state['picks'].append(list)
@@ -151,25 +156,45 @@ if st.session_state.account_counter == 2:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
             save_counter()
-            return(st.write(st.session_state.counter), st.write(selection))
+            return(st.write("You picked the " + selection))
 
-
+    def back_clicked():
+        if team_list[0] in st.session_state.picks or team_list[1] in st.session_state.picks :
+            st.session_state['picks'].pop(st.session_state.counter)
+            st.session_state['spreads'].pop(st.session_state.counter)
+        dec_counter()
 
     selected_team = None
     if st.session_state.counter == 0:
-        game_name = st.session_state.games_col[st.session_state.counter]
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
             game = st.radio(
-                game_name,
+                st.session_state.games_col[st.session_state.counter],
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
             selected_team = game
-            next_button = st.form_submit_button("Next")
-    else:
-        st.write(st.session_state.counter)
+            next_button = st.form_submit_button(label="Next", use_container_width=True)
+    elif st.session_state.counter > 0 and st.session_state.counter < st.session_state.lastrow_picks:
+        team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
+        with st.form("pick_selection"):
+            game2 = st.radio(
+                st.session_state.games_col[st.session_state.counter],
+                team_list,
+                captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+            )
+            selected_team = game2
+            with st.container():
+                left, right = st.columns(2)
+                with right:
+                    next_button = st.form_submit_button(label="Next", use_container_width=True)
+                with left:
+                    back_button = st.form_submit_button(label="Back", use_container_width=True)
+
 
     if next_button:
         st.session_state.selected_team = selected_team
         next_clicked()
+    
+    if back_button:
+        back_clicked()
