@@ -148,8 +148,8 @@ if st.session_state.account_counter == 2:
         st.session_state['spreads'].append(list)
 
     #defining on click function to advance    
-    def next_clicked(selected_team):
-        selection = selected_team
+    def next_clicked():
+        selection = st.session_state.selected_team
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
         else:
@@ -174,7 +174,7 @@ if st.session_state.account_counter == 2:
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
             selected_team = game
-            next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked, args=selected_team)
+            next_button = st.form_submit_button(label="Next", use_container_width=True)
             back_button = None
     elif st.session_state.counter > 0 and st.session_state.counter < st.session_state.lastrow_picks:
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
