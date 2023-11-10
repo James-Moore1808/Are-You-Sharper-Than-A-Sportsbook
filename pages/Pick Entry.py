@@ -99,18 +99,24 @@ if st.session_state.account_counter == 1:
         st.session_state.lastrow_scoreboard = len(user_sheet.col_values(10))
         st.session_state.dummy_counter = 2
         st.session_state.account_counter = 2
+        
+        master_df = pickLog.worksheet(st.session_state.user_sheetname)
+        picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
+        scoreboard_range = "J1:M"+str(st.session_state.lastrow_scoreboard)
+        picks_df = master_df.get(picks_range)
+        scoreboard_df = master_df.get(scoreboard_range)
+        picks_headers = picks_df.pop(0)
+        scoreboard_headers = scoreboard_df.pop(0)
+        picks_df = pd.DataFrame(picks_df, columns=picks_headers)
+        st.session_state.picks_df = picks_df
+        scoreboard_df = pd.DataFrame(scoreboard_df, columns=scoreboard_headers)
+        st.session_state.scoreboard_df = scoreboard_df
+
 
 #PICK SELECTION BLOCK
 if st.session_state.account_counter == 2:
-    master_df = pickLog.worksheet(st.session_state.user_sheetname)
-    picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
-    scoreboard_range = "J1:M"+str(st.session_state.lastrow_scoreboard)
-    picks_df = master_df.get(picks_range)
-    scoreboard_df = master_df.get(scoreboard_range)
-    picks_headers = picks_df.pop(0)
-    scoreboard_headers = scoreboard_df.pop(0)
-    picks_df = pd.DataFrame(picks_df, columns=picks_headers)
-    scoreboard_df = pd.DataFrame(scoreboard_df, columns=scoreboard_headers)
+    picks_df = st.session_state.picks_df
+    scoreboard_df = st.session_state.scoreboard_df
     picks_df['Name'] = st.session_state.username
 
     
