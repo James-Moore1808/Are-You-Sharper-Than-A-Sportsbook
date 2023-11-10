@@ -178,7 +178,7 @@ if st.session_state.account_counter == 2:
             st.write(":red[Pick a team before moving to the next selection]")
         else:
             save_picks(selection)
-            save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
+            save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
             save_counter()
             return(st.write(st.session_state.picks), st.write(st.session_state.spreads))
 
