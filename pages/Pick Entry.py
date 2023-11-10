@@ -38,7 +38,7 @@ rd = st.empty()
 
 
 
-with x.form(key = "Login"):
+with st.form(key = "Login"):
     st.subheader("To enter and/or view picks you must enter a valid Username and Password")
     username = st.text_input(label = "Username", placeholder = None)
     password = st.text_input(label = "Password", placeholder = None , type="password")
@@ -49,7 +49,7 @@ with x.form(key = "Login"):
 if submit_button:
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
-            x.empty()
+            #x.empty()
             with st.container():
                 left, middle, right = st.columns(3)
                 with left:
