@@ -36,10 +36,11 @@ x = st.empty()
 rd = st.empty()    
 
 
-#initializing the picks list
+#initializing the picks list - LOGGING IN COUNTER
 if "account_counter" not in st.session_state:
     st.session_state.account_counter = 0
 
+#LOGGING IN
 if st.session_state.account_counter == 0:
     with x.form(key = "Login"):
         st.subheader("To enter and/or view picks you must enter a valid Username and Password")
@@ -56,8 +57,15 @@ if st.session_state.account_counter == 0:
                     with left:
                         st.session_state.username = username
                         st.session_state.week_no = week_no
-                        st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")    
-                st.session_state.account_counter +=1
+                        st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
+                st.session_state.user_sheetname = "Week"+week_no+"."+username
+                #SETTING THE SHEET THAT WILL BE SHOWN NEXT
+                if st.session_state.user_sheetname in ws_names:
+                    st.session_state.dummy_counter = 0
+                else:
+                    st.session_state.dummy_counter = 1
+                #HIDING THIS LOGGING IN BLOCK OF CODE
+                st.session_state.account_counter = 1
         elif password != st.secrets["Passwords"][username]:
                 st.write(":red[Incorrect Username/Password. Please check for incorrect spelling.]")
         elif username not in (accounts['Username']):
@@ -68,111 +76,100 @@ if st.session_state.account_counter == 0:
 
 
     
-        
+#ACCOUNT COUNTER == 1 RESULTS IN SHEET CREATION OR SHOWING THE CURRENT PICKS SHEET    
 if st.session_state.account_counter == 1:
-    user_sheetname = "Week"+st.session_state.week_no+"."+st.session_state.username
-    week_master = pickLog.worksheet("Week "+st.session_state.week_no+" Master")
-    if user_sheetname in ws_names:
-        user_sheet = pickLog.worksheet(user_sheetname)
+    if st.session_state.dummy_counter == 0:
+        user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
         lastrow_picks = len(user_sheet.col_values(2))-1
         lastrow_scoreboard = len(user_sheet.col_values(10))-1
-        sheet = conn.read(worksheet= user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
-        scoreboard = conn.read(worksheet= user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
+        sheet = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+        scoreboard = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
         with st.container():
             left, right = st.columns(2)
             with left:
                 st.dataframe(sheet, hide_index=True, use_container_width=True)
             with right:
                 st.dataframe(scoreboard, hide_index=True, use_container_width=True)
-    else:
-        user_sheet= pickLog.add_worksheet(title=user_sheetname, rows= 50, cols= 25 )
+    elif st.session_state.dummy_counter == 1:
+        user_sheet= pickLog.add_worksheet(title=st.session_state.user_sheetname, rows= 50, cols= 25 )
+        week_master = pickLog.worksheet("Week "+st.session_state.week_no+" Master")
         master_list = week_master.get_all_values()
         user_sheet.update("A1:Q33", master_list)
-        lastrow_picks = len(user_sheet.col_values(2))-1
-        lastrow_scoreboard = len(user_sheet.col_values(10))-1
-        sheet = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
-        scoreboard = conn.read(worksheet= user_sheetname, ttl="60m", usecols = [9,10,11,12], nrows = lastrow_scoreboard)
-        scoreboard_df = pickLog.worksheet(user_sheetname)
-        range1 = "J1:M"+str(lastrow_scoreboard+1)
-        scoreboard_df = scoreboard_df.get(range1)
-        headers = scoreboard_df.pop(0)
-        scoreboard_df = pd.DataFrame(scoreboard_df, columns=headers)
-        
-        sheet['Name'] = st.session_state.username
-        
-        #The Magic
-        picks = []
-        st.session_state.games_col = list(sheet['Game'])
-        st.session_state.away_col = list(sheet['Away'])
-        st.session_state.home_col = list(sheet['Home'])
+        st.session_state.lastrow_picks = len(user_sheet.col_values(2))
+        st.session_state.lastrow_scoreboard = len(user_sheet.col_values(10))
+        st.session_state.dummy_counter = 2
+        st.session_state.account_counter = 2
+elif st.session_state.account_counter == 2:
+    master_df = pickLog.worksheet(st.session_state.user_sheetname)
+    picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
+    scoreboard_range = "J1:M"+str(st.session_state.lastrow_scoreboard)
+    picks_df = master_df.get(picks_range)
+    scoreboard_df = master_df.get(scoreboard_range)
+    picks_headers = picks_df.pop(0)
+    scoreboard_headers = scoreboard_df.pop(0)
+    picks_df = pd.DataFrame(picks_df, columns=picks_headers)
+    scoreboard_df = pd.DataFrame(scoreboard_df, columns=scoreboard_headers)
+    picks_df['Name'] = st.session_state.username
 
-        #initializing a session state counter
-        if "counter" not in st.session_state:
-            st.session_state.counter = 0
+    
+    #THE MAGIC
+    picks = []
+    st.session_state.games_col = list(picks_df['Game'])
+    st.session_state.away_col = list(picks_df['Away'])
+    st.session_state.home_col = list(picks_df['Home'])
 
-        #initializing the picks list
-        if "picks" not in st.session_state:
-            st.session_state.picks = []
+    #initializing a session state counter
+    if "counter" not in st.session_state:
+        st.session_state.counter = 0
 
-        #initializing the picks list
-        if "spreads" not in st.session_state:
-            st.session_state.spreads = []
+    #initializing the picks list
+    if "picks" not in st.session_state:
+        st.session_state.picks = []
 
-
-        #function to save the counter
-        def save_counter():
-            st.session_state.counter += 1
-        #function to save the picks
-        def save_picks(list):
-            st.session_state['picks'].append(list)
-        #fucntioon to save spreads
-        def save_spreads(list):
-            st.session_state['spreads'].append(list)
-
-        #defining on click function to advance    
-        def next_clicked():
-            selection = st.session_state.selected_team
-            if selection != st.session_state.home_col[st.session_state.counter] and selection != st.session_state.away_col[st.session_state.counter]:
-                st.write(":red[Pick a team before moving to the next selection]")
-            else:
-                
-                save_picks(selection)
-                save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
-                save_counter()
-                return(st.write(st.session_state.counter), st.write(selection))
+    #initializing the picks list
+    if "spreads" not in st.session_state:
+        st.session_state.spreads = []
 
 
+    #function to save the counter
+    def save_counter():
+        st.session_state.counter += 1
+    #function to save the picks
+    def save_picks(list):
+        st.session_state['picks'].append(list)
+    #fucntioon to save spreads
+    def save_spreads(list):
+        st.session_state['spreads'].append(list)
 
-        selected_team = None
-        if st.session_state.counter == 0:
-            game_name = st.session_state.games_col[st.session_state.counter]
-            team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
-            with st.container():
-                game = st.radio(
-                    game_name,
-                    team_list,
-                    captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
-                )
-                selected_team = game
-                next_button = st.button("Next")
+    #defining on click function to advance    
+    def next_clicked():
+        selection = st.session_state.selected_team
+        if selection not in team_list:
+            st.write(":red[Pick a team before moving to the next selection]")
         else:
-            st.write(st.session_state.counter)
+            
+            save_picks(selection)
+            save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
+            save_counter()
+            return(st.write(st.session_state.counter), st.write(selection))
 
-        
 
-        if next_button:
-            st.session_state.selected_team = selected_team
-            next_clicked()
 
-            #with st.container():
-                #left, right = st.columns(2)
-                #with left:
-                    #st.dataframe(sheet, hide_index=True, use_container_width=True,
-                                 #column_config={
-                                     #"Pick": st.column_config.Column(
-                                         #help = "Pick a team",
-                                     #)
-                                 #},
-                                 #)
-                #with right:
-                    #st.dataframe(scoreboard, hide_index=True, use_container_width=True, disabled =['Team',"Odds", "Spread", "Opponent"])    
+    selected_team = None
+    if st.session_state.counter == 0:
+        game_name = st.session_state.games_col[st.session_state.counter]
+        team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
+        with st.container():
+            game = st.radio(
+                game_name,
+                team_list,
+                captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+            )
+            selected_team = game
+            next_button = st.button("Next")
+    else:
+        st.write(st.session_state.counter)
+
+    if next_button:
+        st.session_state.selected_team = selected_team
+        next_clicked()
