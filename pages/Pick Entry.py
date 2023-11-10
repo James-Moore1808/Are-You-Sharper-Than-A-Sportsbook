@@ -147,7 +147,7 @@ if st.session_state.account_counter == 1:
         if st.session_state.counter == 0:
             game_name = st.session_state.games_col[st.session_state.counter]
             team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
-            with st.container("picks"):
+            with st.container():
                 game = st.radio(
                     game_name,
                     team_list,
