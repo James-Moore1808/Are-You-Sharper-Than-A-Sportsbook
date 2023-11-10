@@ -175,6 +175,7 @@ if st.session_state.account_counter == 2:
             )
             selected_team = game
             next_button = st.form_submit_button(label="Next", use_container_width=True)
+            back_button = None
     elif st.session_state.counter > 0 and st.session_state.counter < st.session_state.lastrow_picks:
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
