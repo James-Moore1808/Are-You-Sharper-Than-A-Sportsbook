@@ -143,8 +143,8 @@ if st.session_state.account_counter == 1:
 
 
         dummy = 0
-        with st.form("picks"):
-            if st.session_state.counter == 0:
+        if st.session_state.counter == 0:
+            with rd.form("picks"):
                 game = st.radio(
                     st.session_state.games_col[st.session_state.counter],
                     [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]],
@@ -155,11 +155,11 @@ if st.session_state.account_counter == 1:
                 if next_button:
                     next_clicked()
 
-            else:
-                st.write(st.session_state.counter)
-                next_button = st.form_submit_button("Next")
-                if next_button:
-                    next_clicked()
+        else:
+            st.write(st.session_state.counter)
+            next_button = st.form_submit_button("Next")
+            if next_button:
+                next_clicked()
 
             
             #with st.container():
