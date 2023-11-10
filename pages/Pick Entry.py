@@ -135,11 +135,11 @@ if st.session_state.account_counter == 1:
             if selection != st.session_state.home_col[st.session_state.counter] and selection != st.session_state.away_col[st.session_state.counter]:
                 st.write(":red[Pick a team before moving to the next selection]")
             else:
-                st.write(selection)
+                
                 save_picks(selection)
                 save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
                 save_counter()
-                st.write(st.session_state.counter)
+                return(st.write(st.session_state.counter), st.write(selection))
 
 
 
