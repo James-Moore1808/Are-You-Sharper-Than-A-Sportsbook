@@ -36,20 +36,24 @@ x = st.empty()
 rd = st.empty()    
 
 
+#initializing the picks list
+if "account_counter" not in st.session_state:
+    st.session_state.account_counter = 0
 
-
-with st.form(key = "Login"):
-    st.subheader("To enter and/or view picks you must enter a valid Username and Password")
-    username = st.text_input(label = "Username", placeholder = None)
-    password = st.text_input(label = "Password", placeholder = None , type="password")
-    week_no = str(st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = ""))
-    submit_button = st.form_submit_button("Submit login information", use_container_width=True)
+if st.session_state.account_counter == 0:
+    with st.form(key = "Login"):
+        st.subheader("To enter and/or view picks you must enter a valid Username and Password")
+        username = st.text_input(label = "Username", placeholder = None)
+        password = st.text_input(label = "Password", placeholder = None , type="password")
+        week_no = str(st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = ""))
+        submit_button = st.form_submit_button("Submit login information", use_container_width=True)
     
     
 if submit_button:
     if username in (accounts_users):
         if password == st.secrets["Passwords"][username]:
             #x.empty()
+            st.session_state.account_counter +=1
             with st.container():
                 left, middle, right = st.columns(3)
                 with left:
