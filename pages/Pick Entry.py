@@ -114,12 +114,13 @@ if submit_button:
                 st.session_state['spreads'].append(list)
 
             #defining on click function to advance    
-            def next_clicked(selection):
+            def next_clicked():
+                selection = st.session_state.selected_team
                 if selection != st.session_state.home_col[st.session_state.counter] and selection != st.session_state.away_col[st.session_state.counter]:
                     st.write(":red[Pick a team before moving to the next selection]")
                 else:
-                    save_picks(game)
-                    save_spreads(scoreboard_df.query(f'Team=={game}')['Spread'])
+                    save_picks(selection)
+                    save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
                     save_counter()
 
 
@@ -131,10 +132,17 @@ if submit_button:
                         [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]],
                         captions = [scoreboard_df.query(f"Team=='{st.session_state.home_col[st.session_state.counter]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{st.session_state.away_col[st.session_state.counter]}'")['Spread'].to_list()[0]],
                     )
-                    next_button = st.form_submit_button("Next", on_click= next_clicked, args= game)
+                    next_button = st.form_submit_button("Next")
+                    if next_button:
+                        st.session_state.selected_team = game
+                        next_clicked()
+
                 else:
                     st.write(st.session_state.counter)
-                    next_button = st.form_submit_button("Next", on_click= next_clicked, args= game)
+                    next_button = st.form_submit_button("Next")
+                    if next_button:
+                        st.session_state.selected_team = 1
+                        next_clicked()
 
             
             #with st.container():
