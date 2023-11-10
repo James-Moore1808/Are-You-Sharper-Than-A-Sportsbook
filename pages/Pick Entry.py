@@ -99,7 +99,7 @@ if st.session_state.account_counter == 1:
         st.session_state.lastrow_scoreboard = len(user_sheet.col_values(10))
         st.session_state.dummy_counter = 2
         st.session_state.account_counter = 2
-elif st.session_state.account_counter == 2:
+elif st.session_state.account_counter <= 1:
     master_df = pickLog.worksheet(st.session_state.user_sheetname)
     picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
     scoreboard_range = "J1:M"+str(st.session_state.lastrow_scoreboard)
