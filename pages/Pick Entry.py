@@ -98,7 +98,7 @@ if st.session_state.account_counter == 1:
         headers = scoreboard_df.pop(0)
         scoreboard_df = pd.DataFrame(scoreboard_df, columns=headers)
         
-        sheet['Name'] = username
+        sheet['Name'] = st.session_state.username
         
         #The Magic
         picks = []
