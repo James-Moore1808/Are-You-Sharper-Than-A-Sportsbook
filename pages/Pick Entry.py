@@ -164,7 +164,6 @@ if st.session_state.account_counter == 1:
             st.session_state.selected_team = selected_team
             next_clicked()
 
-            
             #with st.container():
                 #left, right = st.columns(2)
                 #with left:
