@@ -151,7 +151,7 @@ if st.session_state.account_counter == 1:
                 game = st.radio(
                     game_name,
                     team_list,
-                    captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+                    #captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
                 )
                 selected_team = game
                 next_button = st.form_submit_button("Next")
