@@ -99,7 +99,8 @@ if st.session_state.account_counter == 1:
         st.session_state.lastrow_scoreboard = len(user_sheet.col_values(10))
         st.session_state.dummy_counter = 2
         st.session_state.account_counter = 2
-elif st.session_state.account_counter >= 1:
+
+if st.session_state.account_counter == 2:
     master_df = pickLog.worksheet(st.session_state.user_sheetname)
     picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
     scoreboard_range = "J1:M"+str(st.session_state.lastrow_scoreboard)
@@ -147,7 +148,6 @@ elif st.session_state.account_counter >= 1:
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
         else:
-            
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
             save_counter()
