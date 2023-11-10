@@ -156,7 +156,7 @@ if st.session_state.account_counter == 2:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
             save_counter()
-            return(st.write("You picked the " + selection), st.session_state.counter)
+
 
     def back_clicked():
         if team_list[0] in st.session_state.picks or team_list[1] in st.session_state.picks :
@@ -184,18 +184,13 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
-            selected_team = game2
+            st.session_state.selected_team = game2
             with st.container():
                 left, right = st.columns(2)
                 with right:
-                    next_button = st.form_submit_button(label="Next", use_container_width=True)
+                    next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
                 with left:
-                    back_button = st.form_submit_button(label="Back", use_container_width=True)
+                    back_button = st.form_submit_button(label="Back", use_container_width=True, on_click=back_clicked)
 
 
-    #if next_button:
-        #st.session_state.selected_team = selected_team
-        #next_clicked()
-    
-    if back_button:
-        back_clicked()
+
