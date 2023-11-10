@@ -192,7 +192,7 @@ if st.session_state.account_counter == 2:
             st.session_state.selected_team = game
             next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
             back_button = None
-    elif st.session_state.counter > 0 and st.session_state.counter < st.session_state.lastrow_picks:
+    elif st.session_state.counter > 0 and st.session_state.counter < (st.session_state.lastrow_picks-1):
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
             game2 = st.radio(
@@ -207,7 +207,7 @@ if st.session_state.account_counter == 2:
                     next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
                 with left:
                     back_button = st.form_submit_button(label="Back", use_container_width=True, on_click=back_clicked)
-    elif st.session_state.counter == st.session_state.lastrow_picks:
+    elif st.session_state.counter == (st.session_state.lastrow_picks-1):
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
             game3 = st.radio(
