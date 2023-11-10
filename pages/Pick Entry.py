@@ -141,7 +141,7 @@ if st.session_state.account_counter == 2:
 
     #function to save the counter
     def save_counter():
-        st.session_state.counter += 1
+        st.session_state.counter += 13
     #function to decrease the counter
     def dec_counter():
         st.session_state.counter -= 1
@@ -180,7 +180,7 @@ if st.session_state.account_counter == 2:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
             save_counter()
-            return(st.session_state.picks, st.session_state.spreads)
+            return(st.write(st.session_state.picks), st.write(st.session_state.spreads))
 
     selected_team = None
     if st.session_state.counter == 0:
