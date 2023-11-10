@@ -159,10 +159,11 @@ if st.session_state.account_counter == 2:
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
         else:
+            dummy = st.session_state.counter
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
             save_counter()
-            return(st.write(st.session_state.counter))
+            return(st.write(dummy))
 
 
     def back_clicked():
