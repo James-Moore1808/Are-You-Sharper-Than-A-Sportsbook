@@ -162,6 +162,7 @@ if st.session_state.account_counter == 2:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'])
             save_counter()
+            return(st.session_state.counter, st.session_state.lastrow_picks)
 
 
     def back_clicked():
