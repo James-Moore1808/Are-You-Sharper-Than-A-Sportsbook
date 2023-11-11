@@ -158,9 +158,11 @@ if st.session_state.account_counter == 2:
     #Function to save locks
     def save_locks(list):
         st.session_state['locks'].append(list)
-        if list == "Y":
+    #Function to save a Y in locks
+    def update_locks():
+        if lock_box:
+            st.session_state.lock_selection = "Y"
             st.session_state.lock_counter +=1
-
     #defining on click function to advance    
     def next_clicked():
         selection = st.session_state.selected_team
@@ -204,11 +206,9 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
-            lock = "N"
-            lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
-            if lock_box:
-                lock ="Y"
-            st.session_state.lock_selection = lock
+            st.session_state.lock_selection = "N"
+            if st.session_state.lock_counter == 0:
+                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!', on_change=update_locks)
             st.session_state.selected_team = game
             next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
             back_button = None
@@ -220,14 +220,10 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
+            st.session_state.lock_selection = "N"
             if st.session_state.lock_counter == 0:
-                lock = "N"
-                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
-                if lock_box:
-                    lock ="Y"
-            else:
-                lock = "N"
-            st.session_state.lock_selection = lock
+                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!', on_change=update_locks)
+                
             st.session_state.selected_team = game2
             with st.container():
                 left, right = st.columns(2)
@@ -243,14 +239,9 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
+            st.session_state.lock_selection = "N"
             if st.session_state.lock_counter == 0:
-                lock = "N"
-                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
-                if lock_box:
-                    lock ="Y"
-            else:
-                lock = "N"
-            st.session_state.lock_selection = lock
+                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!', on_change=update_locks)
             st.session_state.selected_team = game3
             with st.container():
                 left, right = st.columns(2)
