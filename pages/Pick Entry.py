@@ -231,7 +231,7 @@ if st.session_state.account_counter == 3:
     picks_df['Pick'] = st.session_state.picks
     picks_df['Pick Spread'] = st.session_state.spreads
     with st.form("final"):
-        st.data_editor(picks_df, hide_index=True, use_container_width=True,
+        df = st.data_editor(picks_df, hide_index=True, use_container_width=True,
                         column_config={
                             "Lock?": st.column_config.SelectboxColumn(
                             help="Pick Y for whatever game you feel best about. Choose wisely!",
@@ -250,7 +250,7 @@ if st.session_state.account_counter == 3:
                         })
         final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
         if final_submit:
-            st.write(picks_df["Lock?"].value_counts())
+            st.write(df["Lock?"].value_counts())
             count = picks_df["Lock?"].value_counts().get("Y", 0)
             if count > 1:
                 st.subheader(":warning: :red[TOO MANY LOCKS] :warning:")
