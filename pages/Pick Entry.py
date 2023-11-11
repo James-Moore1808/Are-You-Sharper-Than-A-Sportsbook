@@ -152,6 +152,8 @@ if st.session_state.account_counter == 2:
     #fucntioon to save spreads
     def save_spreads(list):
         st.session_state['spreads'].append(list)
+
+
     #defining on click function to advance    
     def next_clicked(selection):
         
@@ -172,60 +174,28 @@ if st.session_state.account_counter == 2:
     def submit_clicked():
         selection = st.session_state.selected_team
         if selection not in team_list:
-            st.experimental_rerun()
-            st.write(":red[Pick a team before moving to the next selection]")
+            #st.write(":red[Pick a team before moving to the next selection]")
+            st.write(selection)
+            st.write(st.session_state.counter)
         else:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
             save_counter()
             st.session_state.account_counter = 3
 
-    selected_team = None
     if st.session_state.counter == 0:
-        team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
-            game = st.radio(
-                st.session_state.games_col[st.session_state.counter],
-                team_list,
-                captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
-                index=None,
-            )
-            #st.session_state.selected_team = game
-            next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked, args=[f"{game}"])
-            back_button = None
-    elif st.session_state.counter > 0 and st.session_state.counter < (st.session_state.lastrow_picks-2):
-        team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
-        with st.form("pick_selection"):
-            game2 = st.radio(
-                st.session_state.games_col[st.session_state.counter],
-                team_list,
-                captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
-                index=None,
-            )
-            st.session_state.selected_team = game2
-            with st.container():
-                left, right = st.columns(2)
-                with right:
-                    next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
-                with left:
-                    back_button = st.form_submit_button(label="Back", use_container_width=True, on_click=back_clicked)
-    elif st.session_state.counter == (st.session_state.lastrow_picks-2):
-        team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
-        with st.form("pick_selection"):
-            game3 = st.radio(
-                st.session_state.games_col[st.session_state.counter],
-                team_list,
-                captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
-                index=None,
-            )
-            st.session_state.selected_team = game3
-            with st.container():
-                left, right = st.columns(2)
-                with right:
-                    submit_button = st.form_submit_button(label="Submit Picks", use_container_width=True, on_click=submit_clicked)
-                with left:
-                    back_button = st.form_submit_button(label="Back", use_container_width=True, on_click=back_clicked)
+            for i in range(len(st.session_state.spreads)):
+                team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
+                game = st.radio(
+                    st.session_state.games_col[i],
+                    team_list,
+                    captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+                    index=None
+                )
+            button = st.form_submit_button("submit")
 
+    
 
 
 #DATAFRAME DISPLAY AND LOCK SELECTION
