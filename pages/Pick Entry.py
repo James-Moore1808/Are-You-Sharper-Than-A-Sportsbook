@@ -250,8 +250,7 @@ if st.session_state.account_counter == 3:
                         })
         final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
         if final_submit:
-            count = 0
-            count = picks_df["Lock?"].value_counts()['Y']
+            count = picks_df["Lock?"].value_counts().get("Y", 0)
             if count > 1:
                 st.subheader(":warning: :red[TOO MANY LOCKS] :warning:")
             elif count == 0:
