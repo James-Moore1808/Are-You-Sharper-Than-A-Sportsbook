@@ -138,6 +138,9 @@ if st.session_state.account_counter == 2:
     if "spreads" not in st.session_state:
         st.session_state.spreads = []
 
+    #initializing the picks list
+    if "locks" not in st.session_state:
+        st.session_state.locks = []
 
     #function to save the counter
     def save_counter():
@@ -152,6 +155,9 @@ if st.session_state.account_counter == 2:
     #fucntioon to save spreads
     def save_spreads(list):
         st.session_state['spreads'].append(list)
+    #Function to save locks
+    def save_locks(list):
+        st.session_state['locks'].append(list)
 
     #defining on click function to advance    
     def next_clicked():
@@ -159,7 +165,7 @@ if st.session_state.account_counter == 2:
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
         else:
-            
+            save_locks(st.session_state.lock_selection) 
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
             save_counter()
@@ -170,6 +176,7 @@ if st.session_state.account_counter == 2:
         if team_list[0] in st.session_state.picks or team_list[1] in st.session_state.picks :
             st.session_state['picks'].pop(st.session_state.counter)
             st.session_state['spreads'].pop(st.session_state.counter)
+            st.session_state['locks'].pop(st.session_state.counter)
         dec_counter()
 
     def submit_clicked():
@@ -177,6 +184,7 @@ if st.session_state.account_counter == 2:
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
         else:
+            save_locks(st.session_state.lock_selection) 
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
             save_counter()
@@ -191,6 +199,11 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
+            lock = "N"
+            lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
+            if lock_box:
+                lock ="Y"
+            st.session_state.lock_selection = lock
             st.session_state.selected_team = game
             next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
             back_button = None
@@ -202,6 +215,15 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
+            lock = "Y"
+            if lock not in st.session_state.locks:
+                lock = "N"
+                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
+                if lock_box:
+                    lock ="Y"
+            else:
+                lock = "N"
+            st.session_state.lock_selection = lock
             st.session_state.selected_team = game2
             with st.container():
                 left, right = st.columns(2)
@@ -217,6 +239,15 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
+            lock = "Y"
+            if lock not in st.session_state.locks:
+                lock = "N"
+                lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
+                if lock_box:
+                    lock ="Y"
+            else:
+                lock = "N"
+            st.session_state.lock_selection = lock
             st.session_state.selected_team = game3
             with st.container():
                 left, right = st.columns(2)
