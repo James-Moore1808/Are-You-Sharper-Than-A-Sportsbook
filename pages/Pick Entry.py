@@ -234,9 +234,12 @@ if st.session_state.account_counter == 3:
     with st.form("final"):
         st.dataframe(picks_df, hide_index=True, use_container_width=True,
                         column_config={
-                            "Lock?" : st.column_config.SelectboxColumn(
+                            "Lock?": st.column_config.SelectboxColumn(
                             help="Pick Y for whatever game you feel best about. Choose wisely!",
-                            options=["N", "Y"],
+                            options=[
+                                "N",
+                                "Y"
+                                     ],
                             required=True
                             )
                         })
