@@ -172,10 +172,8 @@ if st.session_state.account_counter == 2:
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
         elif team_list[0] in st.session_state.picks or team_list[1] in st.session_state.picks :
-            st.session_state['picks'].pop(st.session_state.counter)
-            st.session_state['spreads'].pop(st.session_state.counter)
-            save_picks(selection)
-            save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
+            st.session_state['picks'][st.session_state.counter] = selection
+            st.session_state['spreads'][st.session_state.counter] = scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0]
             save_counter()
             st.session_state.account_counter = 3
         else:
