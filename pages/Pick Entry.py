@@ -258,8 +258,23 @@ if st.session_state.account_counter == 3:
             elif count == 1:
                 week = pickLog.worksheet(st.session_state.user_sheetname)
                 week.update("A1:G"+str(st.session_state.lastrow_picks), [df.columns.tolist()] + df.values.tolist(), value_input_option='USER_ENTERED' )
-                st.session_state.dummy_counter = 0
-                st.session_state.account_counter = 1
+                st.session_state.account_counter = 4
+
+if st.session_state.account_counter == 4:
+    st.subheader("Picks have been entered, best of luck!")
+    user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
+    lastrow_picks = len(user_sheet.col_values(2))-1
+    lastrow_scoreboard = len(user_sheet.col_values(10))-1
+    sheet = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+    scoreboard = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
+    with st.container():
+        left, right = st.columns(2)
+        with left:
+            st.dataframe(sheet, hide_index=True, use_container_width=True)
+        with right:
+            st.dataframe(scoreboard, hide_index=True, use_container_width=True)
+
+                
 
 
 
