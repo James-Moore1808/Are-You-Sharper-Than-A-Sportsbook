@@ -187,6 +187,7 @@ if st.session_state.account_counter == 2:
                 st.session_state.games_col[st.session_state.counter],
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+                index=None,
             )
             st.session_state.selected_team = game
             next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
@@ -198,6 +199,7 @@ if st.session_state.account_counter == 2:
                 st.session_state.games_col[st.session_state.counter],
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+                index=None,
             )
             st.session_state.selected_team = game2
             with st.container():
@@ -213,6 +215,7 @@ if st.session_state.account_counter == 2:
                 st.session_state.games_col[st.session_state.counter],
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
+                index=None,
             )
             st.session_state.selected_team = game3
             with st.container():
@@ -249,7 +252,8 @@ if st.session_state.account_counter == 3:
                             "Pick Spread":st.column_config.Column(disabled=True, required=True)
                         })
         final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
-        if final_submit:
+        
+if final_submit:
             count = df["Lock?"].value_counts().get("Y", 0)
             if count > 1:
                 st.subheader(":warning: :red[TOO MANY LOCKS] :warning:")
@@ -259,6 +263,7 @@ if st.session_state.account_counter == 3:
                 week = pickLog.worksheet(st.session_state.user_sheetname)
                 week.update("A1:G"+str(st.session_state.lastrow_picks), [df.columns.tolist()] + df.values.tolist(), value_input_option='USER_ENTERED' )
                 st.session_state.account_counter = 4
+
 
 if st.session_state.account_counter == 4:
     st.subheader("Picks have been entered, best of luck!")
