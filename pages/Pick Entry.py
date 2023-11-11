@@ -165,17 +165,14 @@ if st.session_state.account_counter == 2:
 
 
     def back_clicked():
+        st.session_state['picks'] = st.session_state['picks'][:(st.session_state.counter-1)]
+        st.session_state['spreads'] = st.session_state['spreads'][:(st.session_state.counter-1)]
         dec_counter()
 
     def submit_clicked():
         selection = st.session_state.selected_team
         if selection not in team_list:
             st.write(":red[Pick a team before moving to the next selection]")
-        elif team_list[0] in st.session_state.picks or team_list[1] in st.session_state.picks :
-            st.session_state['picks'][st.session_state.counter] = selection
-            st.session_state['spreads'][st.session_state.counter] = scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0]
-            save_counter()
-            st.session_state.account_counter = 3
         else:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
