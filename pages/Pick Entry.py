@@ -229,6 +229,7 @@ if st.session_state.account_counter == 2:
 
 #DATAFRAME DISPLAY AND LOCK SELECTION
 if st.session_state.account_counter == 3:
+    st.write(st.session_state.picks)
     picks_df = st.session_state.picks_df
     picks_df['Name'] = st.session_state.username
     picks_df['Pick'] = st.session_state.picks
