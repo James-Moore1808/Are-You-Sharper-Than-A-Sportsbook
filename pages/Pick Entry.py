@@ -233,7 +233,7 @@ if st.session_state.account_counter == 3:
     picks_df['Name'] = st.session_state.username
     picks_df['Pick'] = st.session_state.picks
     picks_df['Pick Spread'] = st.session_state.spreads
-    with st.form("final"):
+    with rd.form("final"):
         df = st.data_editor(picks_df, hide_index=True, use_container_width=True,
                         column_config={
                             "Lock?": st.column_config.SelectboxColumn(
@@ -262,6 +262,7 @@ if final_submit:
             elif count == 1:
                 week = pickLog.worksheet(st.session_state.user_sheetname)
                 week.update("A1:G"+str(st.session_state.lastrow_picks), [df.columns.tolist()] + df.values.tolist(), value_input_option='USER_ENTERED' )
+                rd.empty()
                 st.session_state.account_counter = 4
 
 
