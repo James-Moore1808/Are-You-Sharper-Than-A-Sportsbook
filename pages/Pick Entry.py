@@ -178,7 +178,7 @@ if st.session_state.account_counter == 2:
             save_picks(selection)
             save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
             save_counter()
-            return(st.write(st.session_state.picks), st.write(st.session_state.spreads))
+            st.session_state.account_counter = 3
 
     selected_team = None
     if st.session_state.counter == 0:
@@ -225,3 +225,15 @@ if st.session_state.account_counter == 2:
 
 
 
+#DATAFRAME DISPLAY AND LOCK SELECTION
+if st.session_state.account_counter == 3:
+    picks_df = st.session_state.picks_df
+    picks_df['Name'] = st.session_state.username
+    picks_df['Pick'] = st.session_state.picks
+    picks_df['Picks Spread'] = st.session_state.spreads
+    with st.container():
+        left, right = st.columns(2)
+        with left:
+            st.dataframe(picks_df, hide_index=True, use_container_width=True)
+        with right:
+            st.dataframe(st.session_state.scoreboard_df, hide_index=True, use_container_width=True)
