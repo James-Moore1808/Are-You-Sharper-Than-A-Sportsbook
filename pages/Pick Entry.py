@@ -183,13 +183,13 @@ if st.session_state.account_counter == 2:
     if st.session_state.counter == 0:
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
-            game = st.radio(
+            st.session_state.selected_team = st.radio(
                 st.session_state.games_col[st.session_state.counter],
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
                 index=None,
             )
-            st.session_state.selected_team = game
+            #st.session_state.selected_team = game
             next_button = st.form_submit_button(label="Next", use_container_width=True, on_click=next_clicked)
             back_button = None
     elif st.session_state.counter > 0 and st.session_state.counter < (st.session_state.lastrow_picks-2):
