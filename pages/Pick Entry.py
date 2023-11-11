@@ -250,15 +250,14 @@ if st.session_state.account_counter == 3:
                         })
         final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
         if final_submit:
-            st.write(df["Lock?"].value_counts())
-            count = picks_df["Lock?"].value_counts().get("Y", 0)
+            count = df["Lock?"].value_counts().get("Y", 0)
             if count > 1:
                 st.subheader(":warning: :red[TOO MANY LOCKS] :warning:")
             elif count == 0:
                 st.subheader(":red[Please select a lock]")
             elif count == 1:
                 week = pickLog.worksheet(st.session_state.user_sheetname)
-                week.update("A1:G"+str(st.session_state.lastrow_picks), [picks_df.columns.tolist()] + picks_df.values.tolist(), value_input_option='USER_ENTERED' )
+                week.update("A1:G"+str(st.session_state.lastrow_picks), [df.columns.tolist()] + df.values.tolist(), value_input_option='USER_ENTERED' )
                 st.session_state.dummy_counter = 0
                 st.session_state.account_counter = 1
 
