@@ -226,7 +226,6 @@ if st.session_state.account_counter == 2:
 
 #DATAFRAME DISPLAY AND LOCK SELECTION
 if st.session_state.account_counter == 3:
-    st.write(st.session_state.picks)
     picks_df = st.session_state.picks_df
     picks_df['Name'] = st.session_state.username
     picks_df['Pick'] = st.session_state.picks
@@ -241,7 +240,13 @@ if st.session_state.account_counter == 3:
                                 "Y"
                                      ],
                             required=True
-                            )
+                            ),
+                            "Name":st.column_config.Column(disabled=True, required=True),
+                            "Game":st.column_config.Column(disabled=True, required=True),
+                            "Away":st.column_config.Column(disabled=True, required=True),
+                            "Home":st.column_config.Column(disabled=True, required=True),
+                            "Pick":st.column_config.Column(disabled=True, required=True),
+                            "Pick Spread":st.column_config.Column(disabled=True, required=True)
                         })
         final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
         if final_submit:
