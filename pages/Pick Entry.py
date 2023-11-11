@@ -158,6 +158,8 @@ if st.session_state.account_counter == 2:
     #Function to save locks
     def save_locks(list):
         st.session_state['locks'].append(list)
+        if list == "Y":
+            st.session_state.lock_counter +=1
 
     #defining on click function to advance    
     def next_clicked():
@@ -176,6 +178,8 @@ if st.session_state.account_counter == 2:
         if team_list[0] in st.session_state.picks or team_list[1] in st.session_state.picks :
             st.session_state['picks'].pop(st.session_state.counter)
             st.session_state['spreads'].pop(st.session_state.counter)
+            if st.session_state['locks'][st.session_state.counter] == "Y":
+                st.session_state.lock_counter = 0
             st.session_state['locks'].pop(st.session_state.counter)
         dec_counter()
 
@@ -192,6 +196,7 @@ if st.session_state.account_counter == 2:
 
     selected_team = None
     if st.session_state.counter == 0:
+        st.session_state.lock_counter = 0
         team_list = [st.session_state.home_col[st.session_state.counter], st.session_state.away_col[st.session_state.counter]]
         with st.form("pick_selection"):
             game = st.radio(
@@ -215,8 +220,7 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
-            lock = "Y"
-            if lock not in st.session_state.locks:
+            if st.session_state.lock_counter == 0:
                 lock = "N"
                 lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
                 if lock_box:
@@ -239,8 +243,7 @@ if st.session_state.account_counter == 2:
                 team_list,
                 captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
             )
-            lock = "Y"
-            if lock not in st.session_state.locks:
+            if st.session_state.lock_counter == 0:
                 lock = "N"
                 lock_box = st.checkbox('Lock', help='Only one lock is allowed per week. Choose wisely!')
                 if lock_box:
