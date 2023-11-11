@@ -230,10 +230,32 @@ if st.session_state.account_counter == 3:
     picks_df = st.session_state.picks_df
     picks_df['Name'] = st.session_state.username
     picks_df['Pick'] = st.session_state.picks
-    picks_df['Picks Spread'] = st.session_state.spreads
-    with st.container():
-        left, right = st.columns(2)
-        with left:
-            st.dataframe(picks_df, hide_index=True, use_container_width=True)
-        with right:
-            st.dataframe(st.session_state.scoreboard_df, hide_index=True, use_container_width=True)
+    picks_df['Pick Spread'] = st.session_state.spreads
+    with st.form("final"):
+        st.dataframe(picks_df, hide_index=True, use_container_width=True,
+                        column_config={
+                            "Lock?" : st.column_config.SelectboxColumn(
+                            help="Pick Y for whatever game you feel best about. Choose wisely!",
+                            options=["N", "Y"],
+                            required=True
+                            )
+                        })
+        final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
+        if final_submit:
+            count = 0
+            count = picks_df["Lock?"].value_counts()['Y']
+            if count > 1:
+                st.subheader(":warning: :red[TOO MANY LOCKS] :warning:")
+            elif count == 0:
+                st.subheader(":red[Please select a lock]")
+            elif count == 1:
+                week = pickLog.worksheet(st.session_state.user_sheetname)
+                week.update("A1:G"+str(st.session_state.lastrow_picks), [picks_df.columns.tolist()] + picks_df.values.tolist(), value_input_option='USER_ENTERED' )
+                st.session_state.dummy_counter = 0
+                st.session_state.account_counter = 1
+
+
+
+            
+
+    
