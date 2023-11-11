@@ -156,6 +156,7 @@ if st.session_state.account_counter == 2:
     def next_clicked():
         selection = st.session_state.selected_team
         if selection not in team_list:
+            st.experimental_rerun()
             st.write(":red[Pick a team before moving to the next selection]")
         else:
             save_picks(selection)
