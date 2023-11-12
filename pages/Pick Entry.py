@@ -146,7 +146,7 @@ if st.session_state.account_counter == 2:
 
 
     #INITIALIZING THE POP UP FOR TOO FEW ENTRIES
-    entries = Modal(key = "Modal_1", title=":red[Warning]")
+    entries = Modal(key = "Modal_1", title="Warning")
 
     #INITIALIZING THE CONFIRMATION POP UP
     confirmation = Modal(key="Modal_2", title="Confirmation")
