@@ -191,7 +191,7 @@ if st.session_state.account_counter == 2:
 
         if confirmation.is_open():
             with confirmation.container():
-                st.write("Click confirm to lock in your picks")
+                st.write(st.session_state.picks)
                 confirm_button = st.button("Confirm", use_container_width=True)
                 if confirm_button:
                     st.session_state.account_counter = 3
@@ -204,8 +204,9 @@ if st.session_state.account_counter == 2:
 if st.session_state.account_counter == 3:
     picks_df = st.session_state.picks_df
     picks_df['Name'] = st.session_state.username
-    picks_df['Pick'] = st.session_state.picks
-    picks_df['Pick Spread'] = st.session_state.spreads
+    for i in range(0,len(st.session_state['picks'])):
+        picks_df['Pick'][i] = st.session_state.picks[i]
+        picks_df['Pick Spread'][i] = st.session_state.spreads[i]
     with rd.form("final"):
         df = st.data_editor(picks_df, hide_index=True, use_container_width=True,
                         column_config={
