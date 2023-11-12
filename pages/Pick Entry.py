@@ -183,7 +183,8 @@ if st.session_state.account_counter == 2:
                     entries.open()
                     
                 else:
-                    confirmation.open()
+                    st.write(st.session_state.picks)
+                    #confirmation.open()
 
         if entries.is_open():
                         with entries.container():
