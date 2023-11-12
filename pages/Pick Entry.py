@@ -34,7 +34,7 @@ st.divider()
 
 
 x = st.empty()
-rd = st.empty()    
+   
 
 
 #initializing the picks list - LOGGING IN COUNTER
@@ -157,6 +157,7 @@ if st.session_state.account_counter == 2:
 
     if st.session_state.counter == 0:
         i = 0
+        rd = st.empty() 
         with rd.form("pick_selection"):
             st.subheader("Select the side you believe will win. Lock in the one game you feel most confident in!")
             for i in range(0,(st.session_state.lastrow_picks-1)):
