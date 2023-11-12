@@ -157,7 +157,7 @@ if st.session_state.account_counter == 2:
 
     if st.session_state.counter == 0:
         i = 0
-        with st.form("pick_selection"):
+        with rd.form("pick_selection"):
             st.subheader("Select the side you believe will win. Lock in the one game you feel most confident in!")
             for i in range(0,(st.session_state.lastrow_picks-1)):
                 team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
@@ -206,6 +206,7 @@ if st.session_state.account_counter == 2:
                 st.write("Click confirm to lock in your picks")
                 confirm_button = st.button("Confirm", use_container_width=True)
                 if confirm_button:
+                    rd.empty()
                     st.session_state.account_counter = 3
 
 
