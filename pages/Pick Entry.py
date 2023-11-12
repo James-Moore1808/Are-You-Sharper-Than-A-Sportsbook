@@ -154,39 +154,13 @@ if st.session_state.account_counter == 2:
         st.session_state['spreads'].append(list)
 
 
-    #defining on click function to advance    
-    def next_clicked(selection):
-        
-        if selection not in team_list:
-            st.write(":red[Pick a team before moving to the next selection]")
-        else:
-            save_picks(selection)
-            save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
-            save_counter()
-            
-
-
-    def back_clicked():
-        st.session_state['picks'] = st.session_state['picks'][:(st.session_state.counter-1)]
-        st.session_state['spreads'] = st.session_state['spreads'][:(st.session_state.counter-1)]
-        dec_counter()
-
     def submit_clicked():
-        selection = st.session_state.selected_team
-        if selection not in team_list:
-            #st.write(":red[Pick a team before moving to the next selection]")
-            st.write(selection)
-            st.write(st.session_state.counter)
-        else:
-            save_picks(selection)
-            save_spreads(scoreboard_df.query(f"Team=='{selection}'")['Spread'].to_list()[0])
-            save_counter()
-            st.session_state.account_counter = 3
+        st.write(game)
 
     if st.session_state.counter == 0:
         i = 0
         with st.form("pick_selection"):
-            for i in range(0,(st.session_state.lastrow_picks-2)):
+            for i in range(0,(st.session_state.lastrow_picks-1)):
                 team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
                 game = st.radio(
                     st.session_state.games_col[i],
@@ -194,7 +168,7 @@ if st.session_state.account_counter == 2:
                     captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
                     index=None
                 )
-            button = st.form_submit_button("Submit")
+            submit_button = st.form_submit_button(label = "Submit", use_container_width=True, on_click=submit_clicked)
 
     
 
