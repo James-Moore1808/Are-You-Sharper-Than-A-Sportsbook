@@ -151,7 +151,7 @@ if st.session_state.account_counter == 2:
     entries = Modal(key = "Modal_1", title=":red[Warning]")
 
     #INITIALIZING THE CONFIRMATION POP UP
-    confirmation = Modal(key="Modal_2", title=":black[Confirmation]")
+    confirmation = Modal(key="Modal_2", title="Confirmation")
 
 
     if st.session_state.counter == 0:
@@ -183,8 +183,7 @@ if st.session_state.account_counter == 2:
                     entries.open()
                     
                 else:
-                    st.write(st.session_state.picks)
-                    #confirmation.open()
+                    confirmation.open()
 
         if entries.is_open():
                         with entries.container():
@@ -192,7 +191,7 @@ if st.session_state.account_counter == 2:
 
         if confirmation.is_open():
             with confirmation.container():
-                st.write(":black[Click confirm to lock in your picks]")
+                st.write("Click confirm to lock in your picks")
                 confirm_button = st.button("Confirm", use_container_width=True)
                 if confirm_button:
                     st.session_state.account_counter = 3
