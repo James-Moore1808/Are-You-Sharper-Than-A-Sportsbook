@@ -157,7 +157,7 @@ if st.session_state.account_counter == 2:
     if st.session_state.counter == 0:
         i = 0
         with st.form("pick_selection"):
-            st.subheader("Select the side you believe will win. Spreads are underneath the corresponding teams.")
+            st.subheader("Select the side you believe will win. Lock in the one game you feel most confident in!")
             for i in range(0,(st.session_state.lastrow_picks-1)):
                 team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
                 
@@ -172,7 +172,6 @@ if st.session_state.account_counter == 2:
                 lock = st.toggle( 
                     f"Lock in {st.session_state.games_col[i]}",
                     value=False,
-                    help = "Pick Y for whatever game you feel best about. Choose wisely!" 
                 )
                 if game != None:
                     st.session_state['picks'].append(game)
