@@ -154,8 +154,8 @@ if st.session_state.account_counter == 2:
         st.session_state['spreads'].append(list)
 
 
-    def submit_clicked():
-        st.write(st.session_state['picks'])
+    #def submit_clicked():
+        #st.write(st.session_state['picks'])
 
     if st.session_state.counter == 0:
         i = 0
@@ -170,7 +170,13 @@ if st.session_state.account_counter == 2:
                 )
                 if game != None:
                     st.session_state['picks'].append(game)
-            submit_button = st.form_submit_button(label = "Submit!", use_container_width=True, on_click=submit_clicked)
+                    st.session_state['spreads'].append(scoreboard_df.query(f"Team=='{game}'")['Spread'].to_list()[0])
+            submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
+            if submit_button:
+                st.write(st.session_state['picks'])
+                st.write(st.session_state.spreads)
+                st.write(len(st.session_state['picks']))
+                st.write((st.session_state.lastrow_picks-1))
 
     
 
