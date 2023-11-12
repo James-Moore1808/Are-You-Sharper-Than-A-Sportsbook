@@ -170,7 +170,7 @@ if st.session_state.account_counter == 2:
                     
                     
                 lock = st.toggle( 
-                    "Lock",
+                    f"Lock in {st.session_state.games_col[i]}",
                     value=False,
                     help = "Pick Y for whatever game you feel best about. Choose wisely!" 
                 )
