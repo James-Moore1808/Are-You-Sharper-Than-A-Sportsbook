@@ -165,7 +165,7 @@ if st.session_state.account_counter == 2:
                     st.session_state.games_col[i],
                     team_list,
                     captions = ["Spread: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Odds'].to_list()[0],
-                                "Spread: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Odds'].to_list()[0]]
+                                "Spread: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Odds'].to_list()[0]],
                     index=None)
                     
                     
