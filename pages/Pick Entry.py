@@ -207,8 +207,8 @@ if st.session_state.account_counter == 2:
                 confirm_button = st.button("Confirm", use_container_width=True)
                 if confirm_button:
                     rd.empty()
-                    confirmation.close()
                     st.session_state.account_counter = 3
+                    confirmation.close()
 
 
     
