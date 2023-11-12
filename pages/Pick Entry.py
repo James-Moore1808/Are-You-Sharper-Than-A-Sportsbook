@@ -143,9 +143,7 @@ if st.session_state.account_counter == 2:
     #function to save the counter
     def save_counter():
         st.session_state.counter += 1
-    #function to decrease the counter
-    def dec_counter():
-        st.session_state.counter -= 1
+
 
     #INITIALIZING THE POP UP FOR TOO FEW ENTRIES
     entries = Modal(key = "Modal_1", title=":red[Warning]")
@@ -153,6 +151,9 @@ if st.session_state.account_counter == 2:
     #INITIALIZING THE CONFIRMATION POP UP
     confirmation = Modal(key="Modal_2", title="Confirmation")
 
+    #INITIALIZING THE LOCKS LIST
+    if "lock_selection" not in st.session_state:
+        st.session_state.lock_selection = []
 
     if st.session_state.counter == 0:
         i = 0
@@ -167,19 +168,23 @@ if st.session_state.account_counter == 2:
                     captions = ["Spread: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Odds'].to_list()[0],
                                 "Spread: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Odds'].to_list()[0]],
                     index=None)
-                    
-                    
+                
                 lock = st.toggle( 
                     f"Lock in {st.session_state.games_col[i]}",
                     value=False,
                 )
+
                 if game != None:
                     st.session_state['picks'].append(game)
                     st.session_state['spreads'].append(scoreboard_df.query(f"Team=='{game}'")['Spread'].to_list()[0])
+                    if lock == False:
+                        st.session_state['lock_selection'].append("N")
+                    elif lock:
+                        st.session_state['lock_selection'].append("Y")
+
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
             if submit_button:
                 if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
-                    
                     st.session_state.missed = []
                     i = 0
                     for i in range(0,len(st.session_state['picks'])):
@@ -189,7 +194,6 @@ if st.session_state.account_counter == 2:
                     st.session_state.picks = []
                     st.write(f"You need to make a pick for these games: \n{st.session_state.missed}")
                     entries.open()
-                    
                 else:
                     confirmation.open()
 
@@ -215,17 +219,11 @@ if st.session_state.account_counter == 3:
     for i in range(0,len(st.session_state['picks'])):
         picks_df['Pick'][i] = st.session_state.picks[i]
         picks_df['Pick Spread'][i] = st.session_state.spreads[i]
+        picks_df['Lock?'][i] = st.session_state.lock_selection[i]
     with rd.form("final"):
         df = st.data_editor(picks_df, hide_index=True, use_container_width=True,
                         column_config={
-                            "Lock?": st.column_config.SelectboxColumn(
-                            help="Pick Y for whatever game you feel best about. Choose wisely!",
-                            options=[
-                                "N",
-                                "Y"
-                                     ],
-                            required=True
-                            ),
+                            "Lock?":st.column_config.Column(disabled=True, required=True),
                             "Name":st.column_config.Column(disabled=True, required=True),
                             "Game":st.column_config.Column(disabled=True, required=True),
                             "Away":st.column_config.Column(disabled=True, required=True),
