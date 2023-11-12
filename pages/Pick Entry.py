@@ -186,21 +186,16 @@ if st.session_state.account_counter == 2:
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
             if submit_button:
                 if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
-                    st.session_state.missed = []
-                    i = 0
-                    for i in range(0,len(st.session_state['picks'])):
-                        if st.session_state.home_col[i] not in st.session_state.picks[i] or st.session_state.away_col[i] not in st.session_state.picks[i]:
-                            st.session_state['missed'].append(f"{st.session_state.home_col[i]} vs {st.session_state.away_col[i]}")
-                    st.session_state.spreads = []
-                    st.session_state.picks = []
-                    st.write(i)
-                    #entries.open()
+                    st.session_state['picks'].clear()
+                    st.session_state['spreads'].clear()
+                    st.session_state['lock_selection'].clear()
+                    entries.open()
                 else:
                     confirmation.open()
 
         if entries.is_open():
                         with entries.container():
-                            st.markdown(f"You need to make a pick for these games: \n{st.session_state.missed}")
+                            st.markdown(f"Please ensure you made a pick for each game")
 
         if confirmation.is_open():
             with confirmation.container():
