@@ -157,13 +157,22 @@ if st.session_state.account_counter == 2:
     if st.session_state.counter == 0:
         i = 0
         with st.form("pick_selection"):
+            st.subheader("Select the side you believe will win. Spreads are underneath the corresponding teams.")
             for i in range(0,(st.session_state.lastrow_picks-1)):
                 team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
+                
                 game = st.radio(
                     st.session_state.games_col[i],
                     team_list,
-                    captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
-                    index=None
+                    captions = ["Spread: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Odds'].to_list()[0],
+                                "Spread: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Odds'].to_list()[0]]
+                    index=None)
+                    
+                    
+                lock = st.toggle( 
+                    "Lock",
+                    value=False,
+                    help = "Pick Y for whatever game you feel best about. Choose wisely!" 
                 )
                 if game != None:
                     st.session_state['picks'].append(game)
@@ -187,11 +196,11 @@ if st.session_state.account_counter == 2:
 
         if entries.is_open():
                         with entries.container():
-                            st.markdown(f":black[You need to make a pick for these games: \n{st.session_state.missed}]")
+                            st.markdown(f"You need to make a pick for these games: \n{st.session_state.missed}")
 
         if confirmation.is_open():
             with confirmation.container():
-                st.write(st.session_state.picks)
+                st.write("Click confirm to lock in your picks")
                 confirm_button = st.button("Confirm", use_container_width=True)
                 if confirm_button:
                     st.session_state.account_counter = 3
