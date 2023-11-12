@@ -184,8 +184,9 @@ if st.session_state.account_counter == 2:
             st.session_state.account_counter = 3
 
     if st.session_state.counter == 0:
+        i = 0
         with st.form("pick_selection"):
-            for i in range(len(st.session_state.spreads)):
+            for i in range(0,(st.session_state.lastrow_picks-2)):
                 team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
                 game = st.radio(
                     st.session_state.games_col[i],
@@ -193,7 +194,7 @@ if st.session_state.account_counter == 2:
                     captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
                     index=None
                 )
-            button = st.form_submit_button("submit")
+            button = st.form_submit_button("Submit")
 
     
 
