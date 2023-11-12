@@ -186,10 +186,14 @@ if st.session_state.account_counter == 2:
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
             if submit_button:
                 if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
-                    st.session_state['spreads'].clear()
+                    st.write(st.session_state['picks'])
+                    st.write(st.session_state['spreads'])
+                    st.write("Please ensure you made a pick for each game")
                     st.session_state['picks'].clear()
+                    st.session_state['spreads'].clear()
                     st.session_state['lock_selection'].clear()
-                    entries.open()
+                    st.write(st.session_state['picks'])
+                    st.write(st.session_state['spreads'])
                 else:
                     confirmation.open()
 
