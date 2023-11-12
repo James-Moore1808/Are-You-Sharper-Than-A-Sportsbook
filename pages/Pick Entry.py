@@ -171,7 +171,9 @@ if st.session_state.account_counter == 2:
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
             if submit_button:
                 if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
+                    st.write(f"You need to make a pick for these games: \n{st.session_state.missed}")
                     st.session_state.missed = []
+                    i = 0
                     for i in range(0,len(st.session_state['picks'])):
                         team_list2 = [st.session_state.home_col[i], st.session_state.away_col[i]]
                         if team_list2[0] not in st.session_state.picks[i] or team_list2[1] not in st.session_state.picks[i]:
