@@ -186,12 +186,13 @@ if st.session_state.account_counter == 2:
                             st.markdown(f"You need to make a pick for these games: \n{st.session_state.missed}")
                 else:
                     confirmation.open()
-                    if confirmation.is_open():
-                        with confirmation.container():
-                            st.markdown("Click confirm to lock in your picks")
-                            confirm_button = st.button("Confirm")
-                            if confirm_button:
-                                st.session_state.account_counter = 3
+            
+            if confirmation.is_open():
+                with confirmation.container():
+                    st.markdown("Click confirm to lock in your picks")
+                    confirm_button = st.button("Confirm")
+                    if confirm_button:
+                        st.session_state.account_counter = 3
 
 
     
