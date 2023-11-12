@@ -155,7 +155,7 @@ if st.session_state.account_counter == 2:
 
 
     def submit_clicked():
-        st.write(game)
+        st.write(st.session_state['picks'])
 
     if st.session_state.counter == 0:
         i = 0
