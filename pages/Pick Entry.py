@@ -168,7 +168,8 @@ if st.session_state.account_counter == 2:
                     captions = [scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0],scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0]],
                     index=None
                 )
-                st.session_state['picks'].append(game)
+                if game != None:
+                    st.session_state['picks'].append(game)
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True, on_click=submit_clicked)
 
     
