@@ -193,8 +193,8 @@ if st.session_state.account_counter == 2:
                             st.session_state['missed'].append(f"{st.session_state.home_col[i]} vs {st.session_state.away_col[i]}")
                     st.session_state.spreads = []
                     st.session_state.picks = []
-                    st.write(f"You need to make a pick for these games: \n{st.session_state.missed}")
-                    entries.open()
+                    st.write(i)
+                    #entries.open()
                 else:
                     confirmation.open()
 
