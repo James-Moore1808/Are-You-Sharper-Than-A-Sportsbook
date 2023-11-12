@@ -192,7 +192,7 @@ if st.session_state.account_counter == 2:
         if confirmation.is_open():
             with confirmation.container():
                 st.write(":black[Click confirm to lock in your picks]")
-                confirm_button = st.button("Confirm")
+                confirm_button = st.button("Confirm", use_container_width=True)
                 if confirm_button:
                     st.session_state.account_counter = 3
 
