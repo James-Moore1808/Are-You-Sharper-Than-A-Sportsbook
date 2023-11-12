@@ -6,4 +6,5 @@ Requests==2.31.0
 st_gsheets_connection==0.0.3
 streamlit==1.27.2
 streamlit-extras==0.3.4
+streamlit-modal==0.1.0
 

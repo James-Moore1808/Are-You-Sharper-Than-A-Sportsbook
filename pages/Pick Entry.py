@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
+from streamlit_modal import Modal
 import gspread 
 import pandas as pd
 import time
@@ -146,16 +147,12 @@ if st.session_state.account_counter == 2:
     def dec_counter():
         st.session_state.counter -= 1
 
-    #function to save the picks
-    def save_picks(list):
-        st.session_state['picks'].append(list)
-    #fucntioon to save spreads
-    def save_spreads(list):
-        st.session_state['spreads'].append(list)
+    #INITIALIZING THE POP UP FOR TOO FEW ENTRIES
+    entries = Modal(key = "Modal_1", title="Warning")
 
+    #INITIALIZING THE CONFIRMATION POP UP
+    confirmation = Modal(key="Modal_2", title="Confirmation")
 
-    #def submit_clicked():
-        #st.write(st.session_state['picks'])
 
     if st.session_state.counter == 0:
         i = 0
@@ -173,10 +170,27 @@ if st.session_state.account_counter == 2:
                     st.session_state['spreads'].append(scoreboard_df.query(f"Team=='{game}'")['Spread'].to_list()[0])
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
             if submit_button:
-                st.write(st.session_state['picks'])
-                st.write(st.session_state.spreads)
-                st.write(len(st.session_state['picks']))
-                st.write((st.session_state.lastrow_picks-1))
+                if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
+                    st.session_state.missed = []
+                    for i in range(0,len(st.session_state['picks'])):
+                        team_list2 = [st.session_state.home_col[i], st.session_state.away_col[i]]
+                        if team_list2[0] not in st.session_state.picks[i] or team_list2[1] not in st.session_state.picks[i]:
+                            st.session_state['missed'].append(f"{team_list2[0]} vs {team_list2[1]}")
+                    st.session_state.spreads = []
+                    st.session_state.picks = []
+                    entries.open()
+                    if entries.is_open():
+                        with entries.container():
+                            st.markdown(f"You need to make a pick for these games: \n{st.session_state.missed}")
+                else:
+                    confirmation.open()
+                    if confirmation.is_open():
+                        with confirmation.container():
+                            st.markdown("Click confirm to lock in your picks")
+                            confirm_button = st.button("Confirm")
+                            if confirm_button:
+                                st.session_state.account_counter = 3
+
 
     
 
