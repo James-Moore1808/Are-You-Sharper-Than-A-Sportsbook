@@ -212,7 +212,7 @@ if st.session_state.account_counter == 2:
     
 
 
-#DATAFRAME DISPLAY AND LOCK SELECTION
+#DATAFRAME UPDATE
 if st.session_state.account_counter == 3:
     picks_df = st.session_state.picks_df
     picks_df['Name'] = st.session_state.username
@@ -220,34 +220,14 @@ if st.session_state.account_counter == 3:
         picks_df['Pick'][i] = st.session_state.picks[i]
         picks_df['Pick Spread'][i] = st.session_state.spreads[i]
         picks_df['Lock?'][i] = st.session_state.lock_selection[i]
-    with rd.form("final"):
-        df = st.data_editor(picks_df, hide_index=True, use_container_width=True,
-                        column_config={
-                            "Lock?":st.column_config.Column(disabled=True, required=True),
-                            "Name":st.column_config.Column(disabled=True, required=True),
-                            "Game":st.column_config.Column(disabled=True, required=True),
-                            "Away":st.column_config.Column(disabled=True, required=True),
-                            "Home":st.column_config.Column(disabled=True, required=True),
-                            "Pick":st.column_config.Column(disabled=True, required=True),
-                            "Pick Spread":st.column_config.Column(disabled=True, required=True)
-                        })
-        final_submit = st.form_submit_button(label="Lock in picks!", use_container_width=True)
-        if final_submit:
-            count = df["Lock?"].value_counts().get("Y", 0)
-            if count > 1:
-                st.subheader(":warning: :red[TOO MANY LOCKS] :warning:")
-            elif count == 0:
-                st.subheader(":red[Please select a lock]")
-            elif count == 1:
-                week = pickLog.worksheet(st.session_state.user_sheetname)
-                week.update("A1:G"+str(st.session_state.lastrow_picks), [df.columns.tolist()] + df.values.tolist(), value_input_option='USER_ENTERED' )
-                rd.empty()
-                st.session_state.account_counter = 4        
+    week = pickLog.worksheet(st.session_state.user_sheetname)
+    week.update("A1:G"+str(st.session_state.lastrow_picks), [picks_df.columns.tolist()] + picks_df.values.tolist(), value_input_option='USER_ENTERED' )
+    st.session_state.account_counter = 4        
 
 
 
 if st.session_state.account_counter == 4:
-    st.subheader("Picks have been entered, best of luck!")
+    st.subheader(f"Picks have been entered, best of luck {st.session_state.username}!")
     user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
     lastrow_picks = len(user_sheet.col_values(2))-1
     lastrow_scoreboard = len(user_sheet.col_values(10))-1
