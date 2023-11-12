@@ -175,9 +175,8 @@ if st.session_state.account_counter == 2:
                     st.session_state.missed = []
                     i = 0
                     for i in range(0,len(st.session_state['picks'])):
-                        team_list2 = [st.session_state.home_col[i], st.session_state.away_col[i]]
-                        if team_list2[0] not in st.session_state.picks[i] or team_list2[1] not in st.session_state.picks[i]:
-                            st.session_state['missed'].append(f"{team_list2[0]} vs {team_list2[1]}")
+                        if st.session_state.home_col[i] not in st.session_state.picks[i] or st.session_state.away_col[i] not in st.session_state.picks[i]:
+                            st.session_state['missed'].append(f"{st.session_state.home_col[i]} vs {st.session_state.away_col[i]}")
                     st.session_state.spreads = []
                     st.session_state.picks = []
                     st.write(f"You need to make a pick for these games: \n{st.session_state.missed}")
