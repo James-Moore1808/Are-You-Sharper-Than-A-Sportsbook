@@ -187,9 +187,9 @@ if st.session_state.account_counter == 2:
             if submit_button:
                 if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
                     #st.session_state['picks'].clear()
-                    #st.session_state['spreads'].clear()
+                    st.write(st.session_state['spreads'])
                     #st.session_state['lock_selection'].clear()
-                    entries.open()
+                    #entries.open()
                 else:
                     confirmation.open()
 
