@@ -169,7 +169,7 @@ if st.session_state.account_counter == 2:
                     index=None
                 )
                 st.session_state['picks'].append(game)
-            submit_button = st.form_submit_button(label = "Submit", use_container_width=True, on_click=submit_clicked)
+            submit_button = st.form_submit_button(label = "Submit!", use_container_width=True, on_click=submit_clicked)
 
     
 
