@@ -148,10 +148,10 @@ if st.session_state.account_counter == 2:
         st.session_state.counter -= 1
 
     #INITIALIZING THE POP UP FOR TOO FEW ENTRIES
-    entries = Modal(key = "Modal_1", title="Warning")
+    entries = Modal(key = "Modal_1", title=":red[Warning]")
 
     #INITIALIZING THE CONFIRMATION POP UP
-    confirmation = Modal(key="Modal_2", title="Confirmation")
+    confirmation = Modal(key="Modal_2", title=":black[Confirmation]")
 
 
     if st.session_state.counter == 0:
@@ -187,8 +187,8 @@ if st.session_state.account_counter == 2:
 
         if entries.is_open():
                         with entries.container():
-                            st.markdown(f"You need to make a pick for these games: \n{st.session_state.missed}")
-                                
+                            st.markdown(f":black[You need to make a pick for these games: \n{st.session_state.missed}]")
+
         if confirmation.is_open():
             with confirmation.container():
                 st.write(":black[Click confirm to lock in your picks]")
