@@ -42,6 +42,7 @@ def reroute():
 with st.container():
     leftleft ,left, right, rightright = st.columns(4)
     with leftleft:
+        st.write("##")
         st.title('_:green[$\\underline{LOCK}$]_ IT IN!')
     with left:
         st.markdown("![Alt Text](https://static.vecteezy.com/system/resources/thumbnails/029/934/764/small/animated-of-a-moving-padlock-free-video.jpg)")
