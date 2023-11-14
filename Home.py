@@ -6,7 +6,7 @@ import gspread
 
 
 
-st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="collapsed" )
+st.set_page_config(page_title="Lock It In", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="collapsed" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -39,8 +39,12 @@ def reroute():
         switch_page("Pick Entry")
 
 
-
-st.title('ARE YOU _:red[SHARPER]_ THAN A SPORTSBOOK?')
+with st.container:
+    left, right = st.columns(2)
+    with left:
+        st.title('_:green[$\underline{"LOCK"}$]_ IT IN!')
+    with right:
+        st.markdown("![Alt Text](https://media.tenor.com/SxnZI6ldj20AAAAC/lock.gif)")
 st.write("##")
 
 
