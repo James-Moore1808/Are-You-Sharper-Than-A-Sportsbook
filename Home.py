@@ -40,7 +40,7 @@ def reroute():
 
 
 with st.container():
-    left, right = st.columns(4)
+    leftleft ,left, right, rightright = st.columns(4)
     with left:
         st.title('_:green[$\\underline{LOCK}$]_ IT IN!')
     with right:
