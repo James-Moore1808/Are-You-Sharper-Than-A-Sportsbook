@@ -44,7 +44,7 @@ with st.container():
     with leftleft:
         st.title('_:green[$\\underline{LOCK}$]_ IT IN!')
     with left:
-        st.markdown("![Alt Text](https://media0.giphy.com/media/ggoKD4cFbqd4nyugH2/giphy.gif?cid=6c09b9525sdrtjn5koavzfs72szs6j2dw9arclzuh8vy75bm&ep=v1_stickers_related&rid=giphy.gif&ct=s)")
+        st.markdown("![Alt Text](https://icon2.cleanpng.com/20180402/ege/kisspng-padlock-animation-stock-footage-lock-screen-privacy-5ac29a8f8ad871.8006361215227029915687.jpg)")
 st.write("##")
 
 
