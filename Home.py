@@ -44,7 +44,7 @@ with st.container():
     with leftleft:
         st.title('_:green[$\\underline{LOCK}$]_ IT IN!')
     with left:
-        st.markdown("![Alt Text](https://icon2.cleanpng.com/20180402/ege/kisspng-padlock-animation-stock-footage-lock-screen-privacy-5ac29a8f8ad871.8006361215227029915687.jpg)")
+        st.markdown("![Alt Text](https://static.vecteezy.com/system/resources/thumbnails/029/934/764/small/animated-of-a-moving-padlock-free-video.jpg)")
 st.write("##")
 
 
