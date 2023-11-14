@@ -39,7 +39,7 @@ def reroute():
         switch_page("Pick Entry")
 
 
-with st.container:
+with st.container():
     left, right = st.columns(2)
     with left:
         st.title('_:green[$\\underline{"LOCK"}$]_ IT IN!')
