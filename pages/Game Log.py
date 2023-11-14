@@ -42,7 +42,7 @@ with st.form("Game Log"):
                     column_config={
                     "Payout": st.column_config.NumberColumn(
                     format="$%d",
-                    help = "If a user were to put 10 dollars on each game (since week 8) \nthis would be their game by game net gain/loss"
+                    help = "If a user were to put 10 dollars on each game (since week 8) \nthis would be their game-by-game net gain/loss"
                     ) 
                     },
                     hide_index=True,
