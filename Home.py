@@ -39,14 +39,8 @@ def reroute():
         switch_page("Pick Entry")
 
 
-with st.container():
-    leftleft ,left, right, rightright = st.columns(4)
-    with left:
-        st.write("##")
-        st.write("##")
-        st.title('_:green[LOCK]_ IT IN!')
-    with right:
-        st.markdown("![Alt Text](https://static.vecteezy.com/system/resources/thumbnails/029/934/764/small/animated-of-a-moving-padlock-free-video.jpg)")
+
+st.title('_:green[LOCK]_ IT IN!')
 st.write("##")
 
 
