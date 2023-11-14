@@ -44,7 +44,7 @@ with st.container():
     with leftleft:
         st.title('_:green[$\\underline{LOCK}$]_ IT IN!')
     with left:
-        st.markdown("![Alt Text](https://media.tenor.com/SxnZI6ldj20AAAAC/lock.gif)")
+        st.markdown("![Alt Text](https://media0.giphy.com/media/ggoKD4cFbqd4nyugH2/giphy.gif?cid=6c09b9525sdrtjn5koavzfs72szs6j2dw9arclzuh8vy75bm&ep=v1_stickers_related&rid=giphy.gif&ct=s)")
 st.write("##")
 
 
