@@ -62,7 +62,8 @@ with st.form("Weekly Results"):
         st.dataframe(week_by_user,
                     column_config={
                     "Weekly Winnings": st.column_config.NumberColumn(
-                        format="$%d"
+                        format="$%d",
+                        help="If a user were to put 10 dollars on each game \n (since week 8) for  a this would be their net gain/loss week-by-week"
                     ) 
                     },
                     hide_index=True,
@@ -74,7 +75,8 @@ with st.form("Weekly Results"):
         st.dataframe(season, 
                     column_config={
                     "Overall Winnings": st.column_config.NumberColumn(
-                        format="$%d"
+                        format="$%d",
+                        help="If a user were to put 10 dollars on each game \n (since week 8) for  a this would be their net gain/loss"
                     ) 
                     },
                     hide_index=True,

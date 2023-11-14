@@ -40,8 +40,9 @@ with st.form("Game Log"):
         log = dummy[dummy['Name'].isin(user_selection)]
         st.dataframe(log,
                     column_config={
-                    "Weekly Winnings": st.column_config.NumberColumn(
-                    format="$%d"
+                    "Payout": st.column_config.NumberColumn(
+                    format="$%d",
+                    help = "If a user were to put 10 dollars on each game (since week 8) \nthis would be their game by game net gain/loss"
                     ) 
                     },
                     hide_index=True,

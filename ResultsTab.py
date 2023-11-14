@@ -1,5 +1,5 @@
 import gspread
-
+import re
 import pandas as pd
 
 def is_empty(input_data):
@@ -15,26 +15,31 @@ pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
 
 #getting a list of all possible usernames 
-max_users = len(results.col_values(11))-1
-names = list(results.col_values(11))
-names = names[1:]
 
+user_row = len(results.col_values(11))
+U_names = list(results.col_values(11))
+names = U_names[1:]
+exp = "Week" + week_no + "."
 #getting a list of all sheets
 sheets = pickLog.worksheets()
 ws_names = [worksheet.title for worksheet in sheets]
-
+ws_names = [name for name in ws_names if re.match(f"^{exp}", name)]
+online_users = []
+for i in range(len(ws_names)):
+    dummy1  = ws_names[i].split(".")
+    online_users.append(dummy1[1])
 i = 0
-users = 0
-users_list = []
-while i < len(names):
-    username = names[i]
-    sheet_name = "Week" + week_no + "." + username
-    if sheet_name in ws_names:
-        users += 1
-        users_list.append(sheet_name)
+users = len(ws_names)+1
+while i < len(online_users):
+    username = online_users[i]
+    if username in names:
         i += 1
     else:
+        user_row += 1
+        results.update('K'+str(user_row), username)
+        names.append(username)
         i += 1
+
 
 dummy = results.col_values(1)
 first_row = len(dummy)
@@ -46,7 +51,7 @@ x = 0
 range1 = "A"+ str(first_row+1)+":A"+str(last_row)
 results.update(range1, week_no)
 while x < users:
-    sheet_spec = users_list[x]
+    sheet_spec = ws_names[x]
     week = pickLog.worksheet(sheet_spec)
     name =week.get('A2') 
     
@@ -59,3 +64,4 @@ while x < users:
     results.update_cell(first_row+counter,7, "=SUMIFS(Consolidated!J:J,Consolidated!A:A,\"=\"&$A"+str(first_row+counter)+",Consolidated!B:B,\"=\"&$B"+str(first_row+counter)+")")
     counter += 1
     x += 1
+
