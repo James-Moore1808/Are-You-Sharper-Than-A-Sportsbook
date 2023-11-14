@@ -41,7 +41,7 @@ def reroute():
 
 with st.container():
     leftleft ,left, right, rightright = st.columns(4)
-    with left:
+    with left and leftleft:
         st.title('_:green[$\\underline{LOCK}$]_ IT IN!')
     with right:
         st.markdown("![Alt Text](https://media.tenor.com/SxnZI6ldj20AAAAC/lock.gif)")
