@@ -54,6 +54,7 @@ with st.form("Weekly Results"):
         default= None,
         placeholder ="Select user...",
         )
+    st.form_submit_button("Select Users", use_container_width=True)
     left_column, right_column = st.columns(2)
     with left_column:
         st.header("Weekly Results", divider='gray')
@@ -82,7 +83,7 @@ with st.form("Weekly Results"):
                     hide_index=True,
                     use_container_width=True
                     ) 
-    st.form_submit_button("Select Users", use_container_width=True)
+    
     
 reroute()    
     

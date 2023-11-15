@@ -55,6 +55,7 @@ while counter < len(ws_names):
    
 
 
-range3 = list(range(first_row,(final_row+1)))
-for i in range(0,(final_row-first_row+1)):
-    consolidated.update("A"+str(range3[i]), week_no , value_input_option='user_entered')
+no_list = [[week_no]] * (final_row - first_row - 1)
+range3 = "A" + str(first_row) + ":A" + str(final_row)
+consolidated.update(range3, no_list, value_input_option='RAW')
+
