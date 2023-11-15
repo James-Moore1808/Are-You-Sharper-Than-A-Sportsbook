@@ -35,7 +35,7 @@ for i in range(len(data)):
             data['Payout'][i] = wager * (odds/100)
 
 counter = len(data)
-week.update('J1:Q33', [data.columns.tolist()] + data.values.tolist(), value_input_option='USER_ENTERED')
+week.update('J1:Q33', [data.columns.tolist()] + data.values.tolist(), value_input_option='Raw')
 
 #Accessing the Results Column
 week.update_cell(1,8,"Results")
