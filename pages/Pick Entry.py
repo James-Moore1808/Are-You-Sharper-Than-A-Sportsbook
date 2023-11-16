@@ -145,8 +145,7 @@ if st.session_state.account_counter == 2:
     #INITIALIZING THE CONFIRMATION POP UP
     confirmation = Modal(key="Modal_2", title="Confirmation")
 
-    #INITIALIZING THE DBLCHK POPUP
-    dblchk = Modal(key = "Modal_2", title="Are you sure?")
+
 
     #INITIALIZING THE LOCKS LIST
     st.session_state.lock_selection = []
@@ -228,6 +227,10 @@ if st.session_state.account_counter == 4:
     sheet = conn.read(worksheet= st.session_state.user_sheetname, ttl=10, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
     scoreboard = conn.read(worksheet= st.session_state.user_sheetname, ttl=10, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
     ending = st.empty()
+
+    #INITIALIZING THE DBLCHK POPUP
+    dblchk = Modal(key = "Modal_2", title="Are you sure?")
+
     with ending.container():
         left, right = st.columns(2)
         with left:
