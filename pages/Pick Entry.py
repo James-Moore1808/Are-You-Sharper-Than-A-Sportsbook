@@ -284,7 +284,8 @@ if st.session_state.account_counter == 4:
                 
                     if continue_btn:
                         pickLog.del_worksheet(user_sheet)
-                        st.session_state.account_counter = 2
+                        st.session_state.account_counter = 1
+                        st.session_state.dummy_counter = 1
                         ending.empty()
                         dblchk2.close()
                         
