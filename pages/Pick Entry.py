@@ -5,6 +5,8 @@ from streamlit_modal import Modal
 import gspread 
 import pandas as pd
 import time
+import re
+
 st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", layout= "wide", initial_sidebar_state="collapsed" )
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -60,6 +62,8 @@ if st.session_state.account_counter == 0:
                         st.session_state.week_no = week_no
                         st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
                 st.session_state.user_sheetname = "Week"+week_no+"."+username
+                exp = "Week" + week_no + "."
+                ws_names = [name for name in ws_names if re.match(f"^{exp}", name)]
                 #SETTING THE SHEET THAT WILL BE SHOWN NEXT
                 if st.session_state.user_sheetname in ws_names:
                     st.session_state.dummy_counter = 0
@@ -80,17 +84,41 @@ if st.session_state.account_counter == 0:
 #RESULTS IN SHEET CREATION OR SHOWING THE CURRENT PICKS SHEET    
 if st.session_state.account_counter == 1:
     if st.session_state.dummy_counter == 0:
+        #INITIALIZING THE DBLCHK1 POP UP
+        dblchk1 = Modal(key="Modal_4", title="Are you sure?")
         user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
         lastrow_picks = len(user_sheet.col_values(2))-1
         lastrow_scoreboard = len(user_sheet.col_values(10))-1
         sheet = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
         scoreboard = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
-        with st.container():
+        display = st.empty()
+        with display.container():
             left, right = st.columns(2)
             with left:
                 st.dataframe(sheet, hide_index=True, use_container_width=True)
             with right:
                 st.dataframe(scoreboard, hide_index=True, use_container_width=True)
+            resubmit = st.button(label="Change picks", use_container_width=True)
+
+        if resubmit:
+            dblchk1.open()
+
+        if dblchk1.is_open():
+            with dblchk1.container():
+                st.write("If you continue you must pick all of the games again. These picks will no longer count.")
+                left, right = st.columns(2)
+                with left:
+                    cancel = st.button("Cancel", use_container_width=True)
+                    if cancel:
+                        dblchk1.close()
+                with right:
+                    continue_btn = st.button("Continue", use_container_width=True)
+                    if continue_btn:
+                        st.session_state.dummy_counter = 1
+                        display.empty()
+                        dblchk1.close()
+                        pickLog.del_worksheet(st.session_state.user_sheetname)
+
     elif st.session_state.dummy_counter == 1:
         user_sheet= pickLog.add_worksheet(title=st.session_state.user_sheetname, rows= 50, cols= 25 )
         week_master = pickLog.worksheet("Week "+st.session_state.week_no+" Master")
@@ -229,7 +257,7 @@ if st.session_state.account_counter == 4:
     ending = st.empty()
 
     #INITIALIZING THE DBLCHK POPUP
-    dblchk = Modal(key = "Modal_2", title="Are you sure?")
+    dblchk2 = Modal(key = "Modal_2", title="Are you sure?")
 
     with ending.container():
         left, right = st.columns(2)
@@ -240,24 +268,23 @@ if st.session_state.account_counter == 4:
         resubmit = st.button(label="Change picks", use_container_width=True)
 
         if resubmit:
-            dblchk.open()
+            dblchk2.open()
 
-        if dblchk.is_open():
-            with dblchk.container():
+        if dblchk2.is_open():
+            with dblchk2.container():
                 st.write("If you continue you must pick all of the games again. These picks will no longer count.")
                 left, right = st.columns(2)
                 with left:
                     cancel = st.button("Cancel", use_container_width=True)
                     if cancel:
-                        dblchk.close()
+                        dblchk2.close()
                 with right:
                     continue_btn = st.button("Continue", use_container_width=True)
                 
                     if continue_btn:
-                        st.session_state.dummy_counter = 1
                         st.session_state.account_counter = 2
                         ending.empty()
-                        dblchk.close()
+                        dblchk2.close()
                         pickLog.del_worksheet(st.session_state.user_sheetname)
 
             
