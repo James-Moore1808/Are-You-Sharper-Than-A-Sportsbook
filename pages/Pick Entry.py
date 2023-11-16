@@ -114,10 +114,11 @@ if st.session_state.account_counter == 1:
                 with right:
                     continue_btn = st.button("Continue", use_container_width=True)
                     if continue_btn:
+                        pickLog.del_worksheet(st.session_state.user_sheetname)
                         st.session_state.dummy_counter = 1
                         display.empty()
                         dblchk1.close()
-                        pickLog.del_worksheet(st.session_state.user_sheetname)
+                        
 
     elif st.session_state.dummy_counter == 1:
         user_sheet= pickLog.add_worksheet(title=st.session_state.user_sheetname, rows= 50, cols= 25 )
@@ -282,11 +283,11 @@ if st.session_state.account_counter == 4:
                     continue_btn = st.button("Continue", use_container_width=True)
                 
                     if continue_btn:
+                        pickLog.del_worksheet(st.session_state.user_sheetname)
                         st.session_state.account_counter = 2
                         ending.empty()
                         dblchk2.close()
-                        pickLog.del_worksheet(st.session_state.user_sheetname)
-
+                        
             
 
 
