@@ -248,17 +248,18 @@ if st.session_state.account_counter == 4:
                 left, right = st.columns(2)
                 with left:
                     cancel = st.button("Cancel", use_container_width=True)
+                    if cancel:
+                        dblchk.close()
                 with right:
                     continue_btn = st.button("Continue", use_container_width=True)
+                
+                    if continue_btn:
+                        st.session_state.dummy_counter = 1
+                        st.session_state.account_counter = 2
+                        ending.empty()
+                        dblchk.close()
+                        pickLog.del_worksheet(st.session_state.user_sheetname)
 
-        if cancel:
-            dblchk.close()
-        if continue_btn:
-            st.session_state.dummy_counter = 1
-            st.session_state.account_counter = 2
-            ending.empty()
-            dblchk.close()
-            pickLog.del_worksheet(st.session_state.user_sheetname)
             
 
 
