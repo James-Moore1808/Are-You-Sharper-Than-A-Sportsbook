@@ -128,22 +128,16 @@ if st.session_state.account_counter == 2:
     st.session_state.home_col = list(picks_df['Home'])
 
     #initializing a session state counter
-    if "counter" not in st.session_state:
-        st.session_state.counter = 0
+    st.session_state.counter = 0
 
     #initializing the picks list
-    if "picks" not in st.session_state:
-        st.session_state.picks = []
+    st.session_state.picks = []
 
     #initializing the picks list
-    if "spreads" not in st.session_state:
-        st.session_state.spreads = []
+    st.session_state.spreads = []
 
 
-    #function to save the counter
-    def save_counter():
-        st.session_state.counter += 1
-
+    
 
     #INITIALIZING THE POP UP FOR TOO FEW ENTRIES
     entries = Modal(key = "Modal_1", title="Warning")
@@ -151,9 +145,11 @@ if st.session_state.account_counter == 2:
     #INITIALIZING THE CONFIRMATION POP UP
     confirmation = Modal(key="Modal_2", title="Confirmation")
 
+    #INITIALIZING THE DBLCHK POPUP
+    dblchk = Modal(key = "Modal_2", title="Are you sure?")
+
     #INITIALIZING THE LOCKS LIST
-    if "lock_selection" not in st.session_state:
-        st.session_state.lock_selection = []
+    st.session_state.lock_selection = []
 
     if st.session_state.counter == 0:
         i = 0
@@ -229,14 +225,41 @@ if st.session_state.account_counter == 4:
     user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
     lastrow_picks = len(user_sheet.col_values(2))-1
     lastrow_scoreboard = len(user_sheet.col_values(10))-1
-    sheet = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
-    scoreboard = conn.read(worksheet= st.session_state.user_sheetname, ttl=0, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
-    with st.container():
+    sheet = conn.read(worksheet= st.session_state.user_sheetname, ttl=10, usecols = [0,1,2,3,4,5,6], nrows = lastrow_picks)
+    scoreboard = conn.read(worksheet= st.session_state.user_sheetname, ttl=10, usecols = [9,10,11,12], nrows = lastrow_scoreboard)
+    ending = st.empty()
+    with ending.container():
         left, right = st.columns(2)
         with left:
             st.dataframe(sheet, hide_index=True, use_container_width=True)
         with right:
             st.dataframe(scoreboard, hide_index=True, use_container_width=True)
+        resubmit = st.button(label="Change picks", use_container_width=True)
+
+        if resubmit:
+            dblchk.open()
+
+        if dblchk.is_open():
+            with dblchk.container():
+                st.write("If you continue you must pick all of the games again. These picks will no longer count.")
+                left, right = st.columns(2)
+                with left:
+                    cancel = st.button("Cancel", use_container_width=True)
+                with right:
+                    continue_btn = st.button("Continue", use_container_width=True)
+
+        if cancel:
+            dblchk.close()
+        if continue_btn:
+            st.session_state.dummy_counter = 1
+            st.session_state.account_counter = 2
+            ending.empty()
+            dblchk.close()
+            pickLog.del_worksheet(st.session_state.user_sheetname)
+            
+
+
+        
 
                 
 
@@ -244,4 +267,4 @@ if st.session_state.account_counter == 4:
 
             
 
-    
+   
