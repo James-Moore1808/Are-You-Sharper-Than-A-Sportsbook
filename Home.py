@@ -19,10 +19,9 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
-st.session_state.home_counter = 1
-
+st.session_state.home_counter = 0
+app_intro = Modal(key = "Intro_modal", title = "Welcome to Lock It In!")
 if st.session_state.home_counter == 0:
-    app_intro = Modal(key = "Intro_modal", title = "Welcome to Lock It In!")
     app_intro.open()
 if app_intro.is_open():
    
