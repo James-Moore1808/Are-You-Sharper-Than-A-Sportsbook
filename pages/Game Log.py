@@ -13,12 +13,15 @@ scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/au
 gc = gspread.service_account_from_dict(st.secrets["credentials"])
 pickLog = gc.open("NFL Pick Log 2023-24")
 consolidated = pickLog.worksheet('Consolidated')
+results = pickLog.worksheet("Results")
 lastRow_consolidated = len(consolidated.col_values(1)) - 1
+lastRow_Season = len(results.col_values(11)) - 1 
 
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
 st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
+season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
 st.title("Game Log")
 st.divider()
 
@@ -28,7 +31,7 @@ with st.form("Game Log"):
         with left_column:
             user_selection = st.multiselect(
                 "Which user(s) results are you interested in seeing?",
-                options=st.session_state["Users"],
+                options=season['User'].to_list(),
                 default=None,
                 placeholder="Select user(s)...",
             )

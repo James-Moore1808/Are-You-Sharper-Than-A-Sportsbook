@@ -25,17 +25,19 @@ if st.session_state.home_counter == 0:
     app_intro = Modal(key = "Intro_modal", title = "Welcome to Lock It In!")
     app_intro.open()
 if app_intro.is_open():
-    st.session_state.home_counter = 1
+   
     with app_intro.container():
         st.write("You are currently on the Home page where you can see the season-long Leaderboard as well as weekly records. \n The Game Log page contains the records of every pick made in the 2023-24 season thus far. \n If you want to make picks you can use the sidebar to navigate to the Picks Entry tab or click the button below.")
         left,right = st.columns(2)
         with left:
             continue_button = st.button("Continue to home", use_container_width=True)
             if continue_button:
+                st.session_state.home_counter = 1
                 app_intro.close()
         with right:
             reroute_button = st.button("Make This Weeks Picks", use_container_width=True)
             if reroute_button:
+                st.session_state.home_counter = 1
                 app_intro.close()
                 switch_page("Pick Entry")
 
@@ -49,7 +51,7 @@ lastRow_Season = len(results.col_values(11)) - 1
 
 week = conn.read(worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
-st.session_state["Users"] = season['User'].to_list()
+
 
 
 
