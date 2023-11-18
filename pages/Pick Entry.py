@@ -7,7 +7,7 @@ import pandas as pd
 import time
 import re
 
-st.set_page_config(page_title="Are You Sharper Than a Sportsbook?", layout= "wide", initial_sidebar_state="collapsed" )
+st.set_page_config(page_title="Pick Entry", layout= "wide", initial_sidebar_state="collapsed" )
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 # Define the scope and credentials file

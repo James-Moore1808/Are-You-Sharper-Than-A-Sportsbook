@@ -1,18 +1,24 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-from streamlit_extras.switch_page_button import switch_page
-import gspread 
-import pandas as pd
+import gspread
+
+
+st.set_page_config(page_title="Game Log", layout= "wide", initial_sidebar_state="collapsed" )
+conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 #use to deploy
 gc = gspread.service_account_from_dict(st.secrets["credentials"])
+pickLog = gc.open("NFL Pick Log 2023-24")
+consolidated = pickLog.worksheet('Consolidated')
+lastRow_consolidated = len(consolidated.col_values(1)) - 1
 
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
+st.session_state['Consolidated'] = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
 st.title("Game Log")
 st.divider()
 
