@@ -83,7 +83,7 @@ with st.form("Weekly Results"):
                     ) 
         
     
-app_intro.open()
+#app_intro.open()
 if app_intro.is_open():
     with app_intro.container():
         st.write("You are currently on the Home page where you can see the season-long Leaderboard as well as weekly records. \n The Game Log page contains the records of every pick made in the 2023-24 season thus far. \n If you want to make picks you can use the sidebar to navigate to the Picks Entry tab or click the button below.")
