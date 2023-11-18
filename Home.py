@@ -19,27 +19,27 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
-st.session_state.home_counter = 0
+st.session_state.home_counter = 1
 
 if st.session_state.home_counter == 0:
     app_intro = Modal(key = "Intro_modal", title = "Welcome to Lock It In!")
     app_intro.open()
-    if app_intro.is_open():
-    
-        with app_intro.container():
-            st.write("You are currently on the Home page where you can see the season-long Leaderboard as well as weekly records. \n The Game Log page contains the records of every pick made in the 2023-24 season thus far. \n If you want to make picks you can use the sidebar to navigate to the Picks Entry tab or click the button below.")
-            left,right = st.columns(2)
-            with left:
-                continue_button = st.button("Continue to home", use_container_width=True)
-                if continue_button:
-                    st.session_state.home_counter = 1
-                    app_intro.close()
-            with right:
-                reroute_button = st.button("Make This Weeks Picks", use_container_width=True)
-                if reroute_button:
-                    st.session_state.home_counter = 1
-                    app_intro.close()
-                    switch_page("Pick Entry")
+if app_intro.is_open():
+   
+    with app_intro.container():
+        st.write("You are currently on the Home page where you can see the season-long Leaderboard as well as weekly records. \n The Game Log page contains the records of every pick made in the 2023-24 season thus far. \n If you want to make picks you can use the sidebar to navigate to the Picks Entry tab or click the button below.")
+        left,right = st.columns(2)
+        with left:
+            continue_button = st.button("Continue to home", use_container_width=True)
+            if continue_button:
+                st.session_state.home_counter = 1
+                app_intro.close()
+        with right:
+            reroute_button = st.button("Make This Weeks Picks", use_container_width=True)
+            if reroute_button:
+                st.session_state.home_counter = 1
+                app_intro.close()
+                switch_page("Pick Entry")
 
 #Opening the spreadsheet
 pickLog = gc.open("NFL Pick Log 2023-24")
