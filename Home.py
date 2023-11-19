@@ -6,7 +6,7 @@ from streamlit_modal import Modal
 import numpy as np
 
 
-st.set_page_config(page_title="Lock It In", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
+st.set_page_config(page_title="Lock It In", layout= "wide", initial_sidebar_state="auto" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -29,8 +29,8 @@ consolidated = pickLog.worksheet('Consolidated')
 lastRow_consolidated = len(consolidated.col_values(1)) - 1
 lastRow_Week = len(results.col_values(1)) - 1
 lastRow_Season = len(results.col_values(11)) - 1 
-week = conn.read(worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
-season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
+week = conn.read(worksheet="Results", ttl = 10, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
+season = conn.read(worksheet="Results",ttl= 10, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
 valid_Week_Nos = np.array(week['Week'].to_list())
 valid_Week_Nos = np.unique(valid_Week_Nos)
 valid_users = np.array(season['User'].to_list())

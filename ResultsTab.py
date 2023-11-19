@@ -1,6 +1,5 @@
 import gspread
 import re
-import pandas as pd
 import datetime
  
 week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
@@ -20,11 +19,11 @@ results = pickLog.worksheet("Results")
 user_row = len(results.col_values(11))
 U_names = list(results.col_values(11))
 names = U_names[1:]
-exp = "Week" + week_no + "."
+week_prefix = "Week" + week_no + "."
 #getting a list of all sheets
 sheets = pickLog.worksheets()
 ws_names = [worksheet.title for worksheet in sheets]
-ws_names = [name for name in ws_names if re.match(f"^{exp}", name)]
+ws_names = [name for name in ws_names if re.match(f"^{week_prefix}", name)]
 online_users = []
 for i in range(len(ws_names)):
     dummy1  = ws_names[i].split(".")
