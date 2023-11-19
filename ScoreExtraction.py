@@ -61,20 +61,24 @@ while i < len(Scoreboard):
 
 
 
-day = datetime.date.today()
+day = datetime.datetime.today()
 
 
 if day.weekday() >= 4:
+    week_dict = dict({46:"11", 47:"12", 48:"13", 49:"14", 50:"15", 51:"16", 52:"17", 1:"18"})
+    week_no = day.isocalendar()[1]
+    week_no = week_dict[week_no]
     excel_file_path = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SCORESWeek"+ week_no +".xlsx"
     output.to_excel(excel_file_path, index=False)
-    print(output)
 else:
+    week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
+    week_no = day.isocalendar()[1]
+    week_no = week_dict[week_no]
     scores = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SCORESWeek"+ week_no +".xlsx"
     scores = pd.read_excel(scores)
     scores = pd.concat([scores, output], ignore_index=True)
     scores = scores.drop_duplicates(subset=['name'])
     scores.to_excel(r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SCORESWeek"+ week_no +".xlsx", index = False)
-    print(scores)
     
 
 

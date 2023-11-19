@@ -1,7 +1,12 @@
 import pandas as pd
 pd.options.mode.chained_assignment = None
 
-week_no =input("What week is it?")
+import datetime
+ 
+week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
+day = datetime.datetime.today()
+week_no = day.isocalendar()[1]
+week_no = week_dict[week_no]
 
 # File Paths to Sheets with spreads + scores
 spread_dummy = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SPREADSWeek"+ week_no +".xlsx"

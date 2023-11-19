@@ -1,11 +1,16 @@
 import gspread
 import re
 import pandas as pd
+import datetime
 
-def is_empty(input_data):
-    return len(input_data) == 0
 
-week_no = str(input("What week is it?"))
+
+
+ 
+week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
+day = datetime.datetime.today()
+week_no = day.isocalendar()[1]
+week_no = week_dict[week_no]
 
 
 # Define the scope and credentials file

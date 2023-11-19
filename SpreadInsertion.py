@@ -2,8 +2,13 @@ import pandas as pd
 pd.options.mode.chained_assignment = None
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import datetime
 
-week_no = input("What week is it?")
+week_dict = dict({46:"11", 47:"12", 48:"13", 49:"14", 50:"15", 51:"16", 52:"17", 1:"18"})
+today = datetime.datetime.today()
+week_no = today.isocalendar()[1]
+
+week_no = week_dict[week_no]
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']

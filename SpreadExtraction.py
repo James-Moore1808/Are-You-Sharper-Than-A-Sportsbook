@@ -1,7 +1,5 @@
 import pandas as pd
 import requests
-import json
-import openpyxl
 import datetime
 
 API_Key = "7f4fd734e771d78e3c5347ae5eef5a4d"   # Key for The Odds API
@@ -57,9 +55,11 @@ while i < len(week):
     i +=1
     output = pd.concat([output,spreads], ignore_index=True)
 
-print(output)
+week_dict = dict({46:"11", 47:"12", 48:"13", 49:"14", 50:"15", 51:"16", 52:"17", 1:"18"})
+today = datetime.datetime.today()
+week_no = today.isocalendar()[1]
 
-week_no = input("What week is it?")
+week_no = week_dict[week_no]
 
 excel_file_path = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SPREADSWeek"+ week_no + ".xlsx"
 
