@@ -79,7 +79,7 @@ with tabWeeklyLeaderboard:
         st.dataframe(filtered_week,
                     column_config={
                     "Weekly Winnings": st.column_config.NumberColumn(
-                        format="$%d",
+                        format="$%.2f",
                         help="If a user were to put $10 on each game (since week 8) this would be their net gain/loss week-by-week"
                     ) ,
                     'Win %': st.column_config.NumberColumn(
