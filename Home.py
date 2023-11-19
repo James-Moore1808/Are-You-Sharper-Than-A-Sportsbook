@@ -6,7 +6,7 @@ from streamlit_modal import Modal
 import numpy as np
 
 
-st.set_page_config(page_title="Lock It In", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
+st.set_page_config(page_title="Lock It In", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="auto" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
