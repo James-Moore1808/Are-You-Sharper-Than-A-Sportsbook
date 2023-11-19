@@ -33,7 +33,7 @@ while counter < len(ws_names):
     dummy = week.col_values(4)
     last_row = len(dummy)
     range1 = "A2:I"+str(last_row)
-    week = week.get(range1)
+    week = week.get(range1, value_render_option = 'FORMATTED_VALUE')
     
 
     if i == 1:
@@ -42,13 +42,13 @@ while counter < len(ws_names):
         last_row2 = len(dummy2) + 1
         first_row = last_row2
         range2 = "B"+str(last_row2)+":J"+str(last_row2+last_row)
-        consolidated.update(range2,week, value_input_option='RAW')
+        consolidated.update(range2,week, value_input_option='USER_ENTERED')
         i += 1
     else:
         last_row2 += (last_row-1)
         final_row = last_row2+last_row
         range2 = "B"+str(last_row2)+":J"+str(final_row)
-        consolidated.update(range2,week, value_input_option='RAW')
+        consolidated.update(range2,week, value_input_option='USER_ENTERED')
         i += 1
     counter += 1  
     

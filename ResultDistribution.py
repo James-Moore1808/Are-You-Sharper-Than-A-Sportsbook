@@ -21,7 +21,7 @@ ws_names = [name for name in ws_names if re.match(f"^{exp}", name)]
 
 master = pickLog.worksheet("Week " + str(week_no) + " Master")
 #Dataframe of Results_data to be pasted into Users' sheet
-Results_table = master.get("J2:Q33")
+Results_table = master.get("J2:Q33", value_render_option = 'FORMATTED_VALUE')
 Results_labels = master.get("J1:Q1")
 results = pd.DataFrame(Results_table, columns = Results_labels)
 
@@ -36,7 +36,7 @@ while i < len(ws_names):
     sheet_name = ws_names[i]
     week = pickLog.worksheet(sheet_name)
     week.update('H2:I17', formulas.values.tolist(), value_input_option='USER_ENTERED')
-    week.update('J2:Q33', results.values.tolist(), value_input_option='RAW')
+    week.update('J2:Q33', results.values.tolist(), value_input_option='USER_ENTERED')
     user_list.append(sheet_name)
     i += 1
 
