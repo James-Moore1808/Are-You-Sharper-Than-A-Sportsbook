@@ -119,7 +119,7 @@ with tabSeasonLongLeaderboard:
 # Filling in the About tab
 
 with tabAbout:
-    st.write("Weclome to lock it in!")
+    st.write("Weclome to ***Lock It In!***")
     st.markdown("""
                 You are currently on the Home page where you can access each users weekly record
                 in addition to the Season Long Leaderbaord. 
