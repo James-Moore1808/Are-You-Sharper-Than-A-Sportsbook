@@ -67,7 +67,7 @@ with tabWeeklyLeaderboard:
                 )
         with right:
             week_selection = st.multiselect(
-               "What user's results do you want to see?",
+               "What week do you want to see?",
                 options=(valid_Week_Nos),
                 default= valid_Week_Nos[-1:],
             )
