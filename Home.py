@@ -3,7 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread
 from streamlit_modal import Modal
-
+import numpy as np
 
 
 st.set_page_config(page_title="Lock It In", page_icon= ":red_apple:", layout= "wide", initial_sidebar_state="expanded" )
@@ -19,85 +19,115 @@ gc = gspread.service_account_from_dict(st.secrets["credentials"])
 
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
-st.session_state.home_counter = 0
-app_intro = Modal(key = "Intro_modal", title = "Welcome to Lock It In!")
 
 
-#Opening the spreadsheet
+
+#Opening the spreadsheet and making necessary connections between google sheets and streamlit
 pickLog = gc.open("NFL Pick Log 2023-24")
 results = pickLog.worksheet("Results")
 consolidated = pickLog.worksheet('Consolidated')
 lastRow_consolidated = len(consolidated.col_values(1)) - 1
 lastRow_Week = len(results.col_values(1)) - 1
-lastRow_Season = len(results.col_values(11)) - 1  
-
+lastRow_Season = len(results.col_values(11)) - 1 
 week = conn.read(worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
+valid_Week_Nos = np.array(week['Week'].to_list())
+valid_Week_Nos = np.unique(valid_Week_Nos)
+valid_users = np.array(season['User'].to_list())
+valid_users = np.unique(valid_users)
+
+#Button to reroute to picks entry
+def reroute(input):
+    reroute_button = st.button(label= "Make This Weeks Picks", key=str(input))
+    if reroute_button:
+        switch_page("Pick Entry")
 
 
+# Title configuration
+image_col, title_col = st.columns([.05,.80])
+with image_col:
+    st.caption("")
+    st.image("https://cdn.dribbble.com/users/3735278/screenshots/9876390/media/a59d044e0ebc39dc295e1c5726236f85.gif", width=80)
+with title_col:
+    st.title('LOCK IT IN!')
 
+#Making the Tabs
+st.write("This app allows you to make picks against the spread and track your performance for the 2023-24 NFL Season")
+tabWeeklyLeaderboard, tabSeasonLongLeaderboard, tabAbout = st.tabs(["Weekly Leaderboard", "Season Long Leaderboard", "About"])
 
-
-st.title('_:green[LOCK]_ IT IN!')
-st.write("##")
-
-
-
-
-#Weekly Results and Season Long Results
-with st.form("Weekly Results"):
-    user_selection = st.multiselect(
-        "What user's results do you want to see?",
-        options=(season['User'].to_list()),
-        default= None,
-        placeholder ="Select user...",
-        )
-    st.form_submit_button("Select Users", use_container_width=True)
-    left_column, right_column = st.columns(2)
-    with left_column:
+#Filling in The Weekly Leaderboard tab
+with tabWeeklyLeaderboard:
+    with st.form("Weekly Results"):
+        left, right = st.columns(2)
+        with left:
+            user_selection = st.multiselect(
+                "What user's results do you want to see?",
+                options=(valid_users),
+                default= valid_users[:],
+                )
+        with right:
+            week_selection = st.multiselect(
+               "What user's results do you want to see?",
+                options=(valid_Week_Nos),
+                default= valid_Week_Nos[-1:],
+            )
+        st.form_submit_button("Select User(s) and Week(s)", use_container_width=True)
         st.header("Weekly Results", divider='gray')
         st.write("##")
         week_by_user = week[week['Name'].isin(user_selection)]
-        st.dataframe(week_by_user,
+        filtered_week = week[week['Week'].isin(week_selection)]
+        st.dataframe(filtered_week,
                     column_config={
                     "Weekly Winnings": st.column_config.NumberColumn(
                         format="$%d",
-                        help="If a user were to put $10 on each game \n (since week 8) this would be their net gain/loss week-by-week"
-                    ) 
+                        help="If a user were to put $10 on each game (since week 8) this would be their net gain/loss week-by-week"
+                    ) ,
+                    'Win %': st.column_config.NumberColumn(
+                        format="%.3f"
+                    )
                     },
                     hide_index=True,
                     use_container_width=True
-                     )
-    with right_column:
-        st.header("Season Long Leaderboard", divider="gray")
-        st.write("##")
-        st.dataframe(season, 
-                    column_config={
-                    "Overall Winnings": st.column_config.NumberColumn(
-                        format="$%d",
-                        help="If a user were to put $10 on each game \n (since week 8) this would be their net gain/loss"
-                    ) 
-                    },
-                    hide_index=True,
-                    use_container_width=True
-                    ) 
-        
-    
-#app_intro.open()
-if app_intro.is_open():
-    with app_intro.container():
-        st.write("You are currently on the Home page where you can see the season-long Leaderboard as well as weekly records. \n The Game Log page contains the records of every pick made in the 2023-24 season thus far. \n If you want to make picks you can use the sidebar to navigate to the Picks Entry tab or click the button below.")
-        left,right = st.columns(2)
-        with left:
-            continue_button = st.button("Continue to home", use_container_width=True)
-            if continue_button:
-                st.session_state.home_counter = 1
-                app_intro.close()
-        with right:
-            reroute_button = st.button("Make This Weeks Picks", use_container_width=True)
-            if reroute_button:
-                st.session_state.home_counter = 1
-                app_intro.close()
-                switch_page("Pick Entry")        
+                        )
+    reroute(1)
+            
+
+# Filling in the Season Long Leaderboard tab
+with tabSeasonLongLeaderboard:
+    st.header("Season Long Leaderboard", divider="gray")
+    st.write("##")
+    st.dataframe(season, 
+                column_config={
+                "Overall Winnings": st.column_config.NumberColumn(
+                    format="$%.2f",
+                    help="If a user were to put $10 on each game (since week 8) this would be their net gain/loss"
+                ),
+                'Win %': st.column_config.NumberColumn(
+                    format="%.3f"
+                ),
+                'Lock Efficiency': st.column_config.NumberColumn(
+                    format="%.3f"
+                )
+                },
+                hide_index=True,
+                use_container_width=True
+                ) 
     
 
+
+
+# Filling in the About tab
+
+with tabAbout:
+    st.write("Weclome to lock it in!")
+    st.markdown("""
+                You are currently on the Home page where you can access each users weekly record
+                in addition to the Season Long Leaderbaord. 
+
+                If you want to see the breakdown of the exact picks for a user for a specific week 
+                or group of weeks use the sidebar to navigate to the ***Game Logs*** page.
+
+                If you want to make picks please use the sidebar to navigate to the Pick Entry page
+                or click the button below ⤵️
+                """)
+    reroute(2)
