@@ -47,6 +47,7 @@ with st.form("Game Log"):
                 options=(valid_Week_Nos),
                 default= valid_Week_Nos[-1:],
             )
+    st.form_submit_button("Select User(s) and Week(s)", use_container_width=True)
     with st.container():
         dummy = games[games['Week'].isin(week_selection)]
         log = dummy[dummy['Name'].isin(user_selection)]
@@ -60,4 +61,3 @@ with st.form("Game Log"):
                     hide_index=True,
                     use_container_width=True
                     )
-    st.form_submit_button("Select Users", use_container_width=True)
