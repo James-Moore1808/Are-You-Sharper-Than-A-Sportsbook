@@ -30,7 +30,7 @@ for i in range(len(ws_names)):
     dummy1  = ws_names[i].split(".")
     online_users.append(dummy1[1])
 i = 0
-no_users = len(ws_names)+1
+no_users = len(ws_names)
 while i < len(online_users):
     username = online_users[i]
     if username in names:
