@@ -12,10 +12,10 @@ week_no = week_dict[week_no]
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-credentials = ServiceAccountCredentials.from_json_keyfile_name(r"C:\Users\jmu81\NFL Picks 2023-24\credentials-sheets.json", scope)
+credentials = ServiceAccountCredentials.from_json_keyfile_name(r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\burner-credentials.json", scope)
 
 # File Path to Sheet with lines 
-excel_file_path = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SPREADSWeek"+ week_no +".xlsx"
+excel_file_path = r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\SPREADSWeek"+ week_no +".xlsx"
 
 # Authenticate using the credentials.
 gc = gspread.authorize(credentials)
@@ -66,5 +66,5 @@ for i in range(len(lines)):
 
 week.update('J1:M33', [lines.columns.tolist()] + lines.values.tolist(), value_input_option='USER_ENTERED')
 
-lines.to_excel(r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SPREADSWeek"+ week_no +".xlsx", index = False)
+lines.to_excel(r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\SPREADSWeek"+ week_no +".xlsx", index = False)
 

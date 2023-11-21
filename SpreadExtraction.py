@@ -44,7 +44,6 @@ sports_response = requests.get(
 
 
 GameLines = sports_response.json()
-print(GameLines)
 week = pd.DataFrame(GameLines)
 
 
@@ -64,7 +63,7 @@ week_no = today.isocalendar()[1]
 
 week_no = week_dict[week_no]
 
-excel_file_path = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SPREADSWeek"+ week_no + ".xlsx"
+excel_file_path = r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\SPREADSWeek"+ week_no + ".xlsx"
 
 output.to_excel(excel_file_path, index=False)
 
