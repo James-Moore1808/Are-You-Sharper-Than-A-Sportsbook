@@ -2,6 +2,5 @@ credentials-sheets.json
 .streamlit/secrets.toml
 pickentry_credentials.json
 pages/dummy
-accounts.xlsx
 Spreads_API_Key.txt
 burner-credentials.json
