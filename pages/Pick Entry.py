@@ -51,7 +51,7 @@ if st.session_state.account_counter == 0:
         st.subheader("To enter and/or view picks you must enter a valid Username and Password")
         username = st.text_input(label = "Username", placeholder = None)
         password = st.text_input(label = "Password", placeholder = None , type="password")
-        week_no = str(st.number_input(label="What week are you making picks for?", min_value=0, max_value=18, placeholder = int(today.isocalendar()[1])))
+        week_no = str(st.number_input(label="What week are you making picks for?", min_value=int(today.isocalendar()[1]), max_value=18, placeholder = "" ))
         submit_button = st.form_submit_button("Submit login information", use_container_width=True)
     if submit_button:
         if username in (accounts_users):
