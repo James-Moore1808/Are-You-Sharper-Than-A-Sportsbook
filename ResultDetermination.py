@@ -10,8 +10,8 @@ week_no = day.isocalendar()[1]
 week_no = week_dict[week_no]
 
 # File Paths to Sheets with spreads + scores
-spread_dummy = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SPREADSWeek"+ week_no +".xlsx"
-scores_dummy = r"C:\Users\jmu81\NFL Picks 2023-24\Folder\SCORESWeek"+ week_no +".xlsx"
+spread_dummy = r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\SPREADSWeek"+ week_no +".xlsx"
+scores_dummy = r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\SCORESWeek"+ week_no +".xlsx"
 
 
 spread = pd.read_excel(spread_dummy)
@@ -71,6 +71,6 @@ for i in range(len(master)):
         i += 1
 
 
-master.to_excel(r"C:\Users\jmu81\NFL Picks 2023-24\Folder\MasterWeek"+ week_no + ".xlsx", index = False)
+master.to_excel(r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\MasterWeek"+ week_no + ".xlsx", index = False)
 print(master)
 

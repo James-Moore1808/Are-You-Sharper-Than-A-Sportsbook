@@ -13,7 +13,7 @@ wager = 10
 
 # Define the scope and credentials file
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\credentials-sheets.json")
+gc = gspread.service_account(filename = r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\burner-credentials.json")
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 
@@ -21,7 +21,7 @@ pickLog = gc.open('NFL Pick Log 2023-24')
 week = pickLog.worksheet("Week " + str(week_no) + " Master")
 
 
-data = pd.read_excel(r"C:\Users\jmu81\NFL Picks 2023-24\Folder\MasterWeek"+ week_no + ".xlsx")
+data = pd.read_excel(r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\LIN_DB\MasterWeek"+ week_no + ".xlsx")
 
 data['Payout'] = None
 

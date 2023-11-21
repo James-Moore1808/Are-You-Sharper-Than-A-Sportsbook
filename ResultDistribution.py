@@ -10,7 +10,7 @@ week_no = day.isocalendar()[1]
 week_no = week_dict[week_no]
 # Define the scope and credentials file
 scopes = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\credentials-sheets.json")
+gc = gspread.service_account(filename = r"C:\Users\jmu81\Lock_It_In\Are-You-Sharper-Than-A-Sportsbook\burner-credentials.json")
 #Opening the spreadsheet
 pickLog = gc.open('NFL Pick Log 2023-24')
 results = pickLog.worksheet("Results")
