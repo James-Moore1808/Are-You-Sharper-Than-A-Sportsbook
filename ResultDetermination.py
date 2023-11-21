@@ -3,6 +3,7 @@ pd.options.mode.chained_assignment = None
 
 import datetime
  
+#ESTABLISHING WEEK NUMBERS
 week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
 day = datetime.datetime.today()
 week_no = day.isocalendar()[1]

@@ -1,17 +1,20 @@
 import requests
 import pandas as pd
-import json
 import datetime
-import openpyxl
 
 def is_empty(input_data):
     return len(input_data) == 0
 
+#ESTABLISHING WEEK NUMBERS
+week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
+day = datetime.datetime.today()
+week_no = day.isocalendar()[1]
+week_no = week_dict[week_no]
 
-week_no = input("What week are these scores from?")
+Key = open('Spreads_API_Key.txt','r')
+Key = Key.read()
 
-
-API_Key = "7f4fd734e771d78e3c5347ae5eef5a4d"   # Key for The Odds API
+API_Key = Key   # Key for The Odds API
 Date_Code = "iso"
 
 
@@ -63,7 +66,7 @@ while i < len(Scoreboard):
 
 day = datetime.datetime.today()
 
-
+# IF RUN ON THU,FRI,SAT THEN DO ONE THING (FOR TNF), ELSE RUN A DIFFERENT WAY FOR THE FOLLOWING GAMES
 if day.weekday() >= 4:
     week_dict = dict({46:"11", 47:"12", 48:"13", 49:"14", 50:"15", 51:"16", 52:"17", 1:"18"})
     week_no = day.isocalendar()[1]

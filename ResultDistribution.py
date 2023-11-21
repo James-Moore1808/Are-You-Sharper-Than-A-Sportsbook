@@ -2,7 +2,8 @@ import gspread
 import pandas as pd
 import re
 import datetime
- 
+
+#ESTABLISHING WEEK NUMBERS
 week_dict = dict({46:"10", 47:"11", 48:"12", 49:"13", 50:"14", 51:"15", 52:"16", 1:"17",2:"18"})
 day = datetime.datetime.today()
 week_no = day.isocalendar()[1]
@@ -16,11 +17,11 @@ results = pickLog.worksheet("Results")
 
 #getting a list of all possible usernames 
 
-exp = "Week" + week_no + "."
+DUMMY = "Week" + week_no + "."
 #getting a list of all sheets
 sheets = pickLog.worksheets()
 ws_names = [worksheet.title for worksheet in sheets]
-ws_names = [name for name in ws_names if re.match(f"^{exp}", name)]
+ws_names = [name for name in ws_names if re.match(f"^{DUMMY}", name)]
 
 
 master = pickLog.worksheet("Week " + str(week_no) + " Master")

@@ -2,7 +2,10 @@ import pandas as pd
 import requests
 import datetime
 
-API_Key = "7f4fd734e771d78e3c5347ae5eef5a4d"   # Key for The Odds API
+Key = open('Spreads_API_Key.txt','r')
+Key = Key.read()
+
+API_Key = Key   # Key for The Odds API 
 
 Sport_key = "americanfootball_nfl"
 

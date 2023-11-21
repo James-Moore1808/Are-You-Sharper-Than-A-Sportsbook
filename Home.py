@@ -2,10 +2,9 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 from streamlit_extras.switch_page_button import switch_page
 import gspread
-from streamlit_modal import Modal
 import numpy as np
 
-
+#NAMING THE PAGE AND ESTABLISHING A CONNECTION BETWEEN STREAMLIT AND GOOGLE SHEETS
 st.set_page_config(page_title="Lock It In", layout= "wide", initial_sidebar_state="auto" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
@@ -31,6 +30,7 @@ lastRow_Week = len(results.col_values(1)) - 1
 lastRow_Season = len(results.col_values(11)) - 1 
 week = conn.read(worksheet="Results", ttl = 10, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 10, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
+#Getting all the unique usernames and week numbers
 valid_Week_Nos = np.array(week['Week'].to_list())
 valid_Week_Nos = np.unique(valid_Week_Nos)
 valid_users = np.array(season['User'].to_list())
@@ -74,8 +74,10 @@ with tabWeeklyLeaderboard:
         st.form_submit_button("Select User(s) and Week(s)", use_container_width=True)
         st.header("Weekly Results", divider='gray')
         st.write("##")
+        #filtering based on name and week values that were selected
         week_by_user = week[week['Name'].isin(user_selection)]
         filtered_week = week[week['Week'].isin(week_selection)]
+        #Weekly leaderboard initialization
         st.dataframe(filtered_week,
                     column_config={
                     "Weekly Winnings": st.column_config.NumberColumn(
@@ -96,6 +98,7 @@ with tabWeeklyLeaderboard:
 with tabSeasonLongLeaderboard:
     st.header("Season Long Leaderboard", divider="gray")
     st.write("##")
+    #Season leaderboard initialization
     st.dataframe(season, 
                 column_config={
                 "Overall Winnings": st.column_config.NumberColumn(
@@ -117,7 +120,6 @@ with tabSeasonLongLeaderboard:
 
 
 # Filling in the About tab
-
 with tabAbout:
     st.write("Weclome to ***Lock It In!***")
     st.markdown("""

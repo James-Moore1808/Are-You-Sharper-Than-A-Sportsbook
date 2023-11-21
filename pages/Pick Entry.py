@@ -1,12 +1,11 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-from streamlit_extras.switch_page_button import switch_page
 from streamlit_modal import Modal
 import gspread 
 import pandas as pd
-import time
 import re
 
+#NAMING THE PAGE AND ESTABLISHING A CONNECTION BETWEEN STREAMLIT AND GOOGLE SHEETS
 st.set_page_config(page_title="Pick Entry", layout= "wide", initial_sidebar_state="collapsed" )
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -23,8 +22,8 @@ ws_names = [worksheet.title for worksheet in sheets]
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\pickentry_credentials.json")
 
+#reading in the officail account names and asigning the usernames to a variable
 accounts = pd.read_excel("accounts.xlsx")
-
 accounts_users = list(accounts['Username'])
 
 
@@ -62,8 +61,8 @@ if st.session_state.account_counter == 0:
                         st.session_state.week_no = week_no
                         st.subheader(":green[Successful login! Welcome back "+username+"!] \n Week " + week_no  + " Games")
                 st.session_state.user_sheetname = "Week"+week_no+"."+username
-                exp = "Week" + week_no + "."
-                ws_names = [name for name in ws_names if re.match(f"^{exp}", name)]
+                dummy = "Week" + week_no + "."
+                ws_names = [name for name in ws_names if re.match(f"^{dummy}", name)]
                 #SETTING THE SHEET THAT WILL BE SHOWN NEXT
                 if st.session_state.user_sheetname in ws_names:
                     st.session_state.dummy_counter = 0
@@ -83,6 +82,7 @@ if st.session_state.account_counter == 0:
     
 #RESULTS IN SHEET CREATION OR SHOWING THE CURRENT PICKS SHEET    
 if st.session_state.account_counter == 1:
+    #picks have been made
     if st.session_state.dummy_counter == 0:
         #INITIALIZING THE DBLCHK1 POP UP
         dblchk1 = Modal(key="Modal_4", title="Are you sure?")
@@ -99,10 +99,10 @@ if st.session_state.account_counter == 1:
             with right:
                 st.dataframe(scoreboard, hide_index=True, use_container_width=True)
             resubmit = st.button(label="Change picks", use_container_width=True)
-
+        #pop up window confirming sheet deleting and pick re-entry
         if resubmit:
             dblchk1.open()
-
+        
         if dblchk1.is_open():
             with dblchk1.container():
                 st.write("If you continue you must pick all of the games again. These picks will no longer count.")
@@ -119,8 +119,9 @@ if st.session_state.account_counter == 1:
                         display.empty()
                         dblchk1.close()
                         
-
+    #Picks have not been made yet
     elif st.session_state.dummy_counter == 1:
+        #Making the new dataframe for the picks to go into
         user_sheet= pickLog.add_worksheet(title=st.session_state.user_sheetname, rows= 50, cols= 25 )
         week_master = pickLog.worksheet("Week "+st.session_state.week_no+" Master")
         master_list = week_master.get_all_values()
@@ -130,6 +131,7 @@ if st.session_state.account_counter == 1:
         st.session_state.dummy_counter = 2
         st.session_state.account_counter = 2
         
+        #Picks is the actual df of games, scoreboard is just the display of teams, spreads and odds
         master_df = pickLog.worksheet(st.session_state.user_sheetname)
         picks_range = "A1:G"+str(st.session_state.lastrow_picks) 
         scoreboard_range = "J1:M"+str(st.session_state.lastrow_scoreboard)
@@ -150,7 +152,7 @@ if st.session_state.account_counter == 2:
     picks_df['Name'] = st.session_state.username
 
     
-    #THE MAGIC
+    #INIITIALIZING THE LISTS OF TEAMS/GAMES
     picks = []
     st.session_state.games_col = list(picks_df['Game'])
     st.session_state.away_col = list(picks_df['Away'])
@@ -186,19 +188,19 @@ if st.session_state.account_counter == 2:
             st.subheader("Select the side you believe will win. Lock in the one game you feel most confident in!")
             for i in range(0,(st.session_state.lastrow_picks-1)):
                 team_list = [st.session_state.home_col[i], st.session_state.away_col[i]]
-                
+                #GAMES
                 game = st.radio(
                     st.session_state.games_col[i],
                     team_list,
                     captions = ["Spread: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[0]}'")['Odds'].to_list()[0],
                                 "Spread: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Spread'].to_list()[0] +"\n Odds: " + scoreboard_df.query(f"Team=='{team_list[1]}'")['Odds'].to_list()[0]],
                     index=None)
-                
+                #LOCKS
                 lock = st.toggle( 
                     f"Lock in {st.session_state.games_col[i]}",
                     value=False,
                 )
-
+                #STORING SELECTIONS OF USER
                 if game != None:
                     st.session_state['picks'].append(game)
                     st.session_state['spreads'].append(scoreboard_df.query(f"Team=='{game}'")['Spread'].to_list()[0])
@@ -208,6 +210,7 @@ if st.session_state.account_counter == 2:
                         st.session_state['lock_selection'].append("Y")
 
             submit_button = st.form_submit_button(label = "Submit!", use_container_width=True)
+            #VALIDATING ENOUGH PICKS WERE MADE
             if submit_button:
                 if len(st.session_state['picks']) != (st.session_state.lastrow_picks-1):
                     st.write("Please ensure you made a pick for each game")
@@ -216,11 +219,11 @@ if st.session_state.account_counter == 2:
                     st.session_state['lock_selection'].clear()
                 else:
                     confirmation.open()
-
+        #DENIAL POP UP
         if entries.is_open():
                         with entries.container():
                             st.markdown(f"Please ensure you made a pick for each game")
-
+        #CONFIRMATION POP UP
         if confirmation.is_open():
             with confirmation.container():
                 st.write("Click confirm to lock in your picks")
@@ -247,7 +250,7 @@ if st.session_state.account_counter == 3:
     st.session_state.account_counter = 4        
 
 
-
+#DISPLAYING THE USERS PICKS AND ALL THE GAMES
 if st.session_state.account_counter == 4:
     st.subheader(f"Picks have been entered, best of luck {st.session_state.username}!")
     user_sheet = pickLog.worksheet(st.session_state.user_sheetname)
@@ -259,7 +262,7 @@ if st.session_state.account_counter == 4:
 
     #INITIALIZING THE DBLCHK POPUP
     dblchk2 = Modal(key = "Modal_2", title="Are you sure?")
-
+    #INITALIZING THE DATAFRAMES
     with ending.container():
         left, right = st.columns(2)
         with left:
@@ -270,7 +273,7 @@ if st.session_state.account_counter == 4:
 
         if resubmit:
             dblchk2.open()
-
+        #CONFIRMATION POP UP
         if dblchk2.is_open():
             with dblchk2.container():
                 st.write("If you continue you must pick all of the games again. These picks will no longer count.")

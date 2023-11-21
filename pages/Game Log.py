@@ -3,6 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 import gspread
 import numpy as np
 
+#NAMING THE PAGE AND ESTABLISHING A CONNECTION BETWEEN STREAMLIT AND GOOGLE SHEETS
 st.set_page_config(page_title="Game Log", layout= "wide", initial_sidebar_state="collapsed" )
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
@@ -19,6 +20,7 @@ lastRow_Week = len(results.col_values(1)) - 1
 lastRow_Season = len(results.col_values(11)) - 1 
 week = conn.read(worksheet="Results", ttl = 0, usecols=[0,1,2,3,4,5,6], nrows = lastRow_Week)
 season = conn.read(worksheet="Results",ttl= 0, usecols=[10,11,12,13,14,15], nrows = lastRow_Season)
+#Getting all the unique usernames and week numbers
 valid_Week_Nos = np.array(week['Week'].to_list())
 valid_Week_Nos = np.unique(valid_Week_Nos)
 valid_users = np.array(season['User'].to_list())
@@ -27,6 +29,7 @@ valid_users = np.unique(valid_users)
 #for local
 #gc = gspread.service_account(filename = r"C:\Users\jmu81\NFL Picks 2023-24\Python\credentials-sheets.json")
 
+#Making live connection between streamlit and the consolidated sheet
 games = conn.read(worksheet="Consolidated", ttl= 0, usecols =[0,1,2,3,4,5,6,7,8,9], nrows = lastRow_consolidated )
 
 st.title("Game Log")
@@ -34,6 +37,7 @@ st.divider()
 
 with st.form("Game Log"):
     with st.container():
+        #making the buttons
         left_column, right_column = st.columns(2)
         with left_column:
            user_selection = st.multiselect(
@@ -49,6 +53,7 @@ with st.form("Game Log"):
             )
     st.form_submit_button("Select User(s) and Week(s)", use_container_width=True)
     with st.container():
+        #filtering based on name and week values that were selected
         dummy = games[games['Week'].isin(week_selection)]
         log = dummy[dummy['Name'].isin(user_selection)]
         st.dataframe(log,
