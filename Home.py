@@ -5,7 +5,7 @@ import gspread
 import numpy as np
 
 #NAMING THE PAGE AND ESTABLISHING A CONNECTION BETWEEN STREAMLIT AND GOOGLE SHEETS
-st.set_page_config(page_title="Lock It In", layout= "wide", initial_sidebar_state="auto" )
+st.set_page_config(page_title="Lock It In", layout= "wide", initial_sidebar_state="expanded" )
 
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
